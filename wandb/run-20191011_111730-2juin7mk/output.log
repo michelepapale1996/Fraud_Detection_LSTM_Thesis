@@ -1,0 +1,19 @@
+Preparing training and test sets...
+Creating samples using as look_back = 4
+Traceback (most recent call last):
+  File "/Applications/PyCharm.app/Contents/helpers/pydev/pydev_run_in_console.py", line 52, in run_file
+    pydev_imports.execfile(file, globals, locals)  # execute the script
+  File "/Applications/PyCharm.app/Contents/helpers/pydev/_pydev_imps/_pydev_execfile.py", line 18, in execfile
+    exec(compile(contents+"\n", file, 'exec'), glob, loc)
+  File "/Users/michele/Fraud_Detection_LSTM_Thesis/LSTM_classifier.py", line 185, in <module>
+    x, y = create_dataset_for_single_user(bonifici, 4)
+  File "/Users/michele/Fraud_Detection_LSTM_Thesis/LSTM_classifier.py", line 133, in create_dataset_for_single_user
+    sequence_x, sequence_y = get_sequences(transactions, look_back)
+  File "/Users/michele/Fraud_Detection_LSTM_Thesis/LSTM_classifier.py", line 96, in get_sequences
+    sequence = np.concatenate(sequence, transactions.iloc[i][cols].values)
+  File "<__array_function__ internals>", line 6, in concatenate
+TypeError: only integer scalar arrays can be converted to a scalar index
+PyDev console: starting.
+
+Python 3.6.3 (v3.6.3:2c5fed86e0, Oct  3 2017, 00:32:08) 
+[GCC 4.2.1 (Apple Inc. build 5666) (dot 3)] on darwin

@@ -1,0 +1,58 @@
+Preparing training and test sets...
+Creating samples using as look_back = 5
+                            Importo  NumConfermaSMS  isFraud  isItalianSender  \
+indice                                                                          
+20141028114543449000435075  0.27415               1        0                1   
+
+                            isItalianReceiver  
+indice                                         
+20141028114543449000435075                  1  
+                            Importo  NumConfermaSMS  isFraud  isItalianSender  \
+indice                                                                          
+20141103154518888000502681    0.005               1        0                1   
+
+                            isItalianReceiver  
+indice                                         
+20141103154518888000502681                  1  
+                            Importo  NumConfermaSMS  isFraud  isItalianSender  \
+indice                                                                          
+20141103154519060000154637    0.005               1        0                1   
+
+                            isItalianReceiver  
+indice                                         
+20141103154519060000154637                  1  
+                            Importo  NumConfermaSMS  isFraud  isItalianSender  \
+indice                                                                          
+20141103154519138000501656  0.00361               1        0                1   
+
+                            isItalianReceiver  
+indice                                         
+20141103154519138000501656                  1  
+                             Importo  NumConfermaSMS  isFraud  \
+indice                                                          
+20141103154519185000901445  0.003902               1        0   
+
+                            isItalianSender  isItalianReceiver  
+indice                                                          
+20141103154519185000901445                1                  1  
+PyDev console: starting.
+
+Python 3.6.3 (v3.6.3:2c5fed86e0, Oct  3 2017, 00:32:08) 
+[GCC 4.2.1 (Apple Inc. build 5666) (dot 3)] on darwin
+Empty DataFrame
+Columns: [Importo, NumConfermaSMS, isFraud, isItalianSender, isItalianReceiver]
+Index: []
+Empty DataFrame
+Columns: [Importo, NumConfermaSMS, isFraud, isItalianSender, isItalianReceiver]
+Index: []
+                            Importo NumConfermaSMS isFraud isItalianSender  \
+20141220164514490000328898   0.0305              1       0               1   
+
+                           isItalianReceiver            Timestamp  \
+20141220164514490000328898                 1  2014-12-20 16:04:36   
+
+                                                      UserID  
+20141220164514490000328898  cd028892a4b9b49f84d787cc587022b4  
+Empty DataFrame
+Columns: [Importo, NumConfermaSMS, isFraud, isItalianSender, isItalianReceiver]
+Index: []

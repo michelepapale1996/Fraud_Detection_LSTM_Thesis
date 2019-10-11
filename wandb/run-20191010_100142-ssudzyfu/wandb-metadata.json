@@ -1,0 +1,22 @@
+{
+    "root": "/Users/michele/Fraud_Detection_LSTM_Thesis",
+    "program": "/Users/michele/Fraud_Detection_LSTM_Thesis/LSTM_classifier.py",
+    "git": {
+        "remote": "https://github.com/michelepapale1996/Fraud_Detection_LSTM_Thesis.git",
+        "commit": "7bd8215e2c88d7a111b69b4b2420f601052d7413"
+    },
+    "email": "michele.papale@mail.polimi.it",
+    "startedAt": "2019-10-10T10:01:42.405654",
+    "host": "MBP-di-Michele.lan",
+    "username": "michele",
+    "executable": "/Users/michele/PycharmProjects/varie/venv/bin/python",
+    "os": "Darwin-18.7.0-x86_64-i386-64bit",
+    "python": "3.6.3",
+    "cpu_count": 4,
+    "args": [],
+    "state": "running",
+    "jobType": null,
+    "mode": "run",
+    "project": "fraud-detection-thesis",
+    "heartbeatAt": "2019-10-10T10:03:51.514809"
+}

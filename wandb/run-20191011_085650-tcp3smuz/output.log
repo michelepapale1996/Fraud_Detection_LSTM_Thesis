@@ -1,0 +1,57 @@
+Preparing training and test sets...
+Creating samples using as look_back = 5
+Traceback (most recent call last):
+  File "/Applications/PyCharm.app/Contents/helpers/pydev/pydev_run_in_console.py", line 52, in run_file
+    pydev_imports.execfile(file, globals, locals)  # execute the script
+  File "/Applications/PyCharm.app/Contents/helpers/pydev/_pydev_imps/_pydev_execfile.py", line 18, in execfile
+    exec(compile(contents+"\n", file, 'exec'), glob, loc)
+  File "/Users/michele/Fraud_Detection_LSTM_Thesis/LSTM_classifier.py", line 146, in <module>
+    create_dataset_for_single_user(bonifici, 5)
+  File "/Users/michele/Fraud_Detection_LSTM_Thesis/LSTM_classifier.py", line 94, in create_dataset_for_single_user
+    sequence_x, sequence_y = get_sequences(transactions, look_back)
+  File "/Users/michele/Fraud_Detection_LSTM_Thesis/LSTM_classifier.py", line 50, in get_sequences
+    if transactions.iloc[pointer: pointer + 1]["isFraud"] == 0:
+  File "/Users/michele/PycharmProjects/varie/venv/lib/python3.6/site-packages/pandas/core/generic.py", line 1555, in __nonzero__
+    self.__class__.__name__
+ValueError: The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().
+PyDev console: starting.
+
+Python 3.6.3 (v3.6.3:2c5fed86e0, Oct  3 2017, 00:32:08) 
+[GCC 4.2.1 (Apple Inc. build 5666) (dot 3)] on darwin
+indice
+20141220164514490000328898    0
+20141231154514807000411159    0
+20141128154605390000701214    0
+20141128154605405000605392    0
+20141128154605499000996878    0
+20150103214513527000981477    0
+20150204204223494000156898    0
+20141212144536756000543697    0
+20141118074613424000170799    0
+20150219102741808000455013    0
+Name: isFraud, dtype: int64
+indice
+20141220164514490000328898    True
+20141231154514807000411159    True
+20141128154605390000701214    True
+20141128154605405000605392    True
+20141128154605499000996878    True
+20150103214513527000981477    True
+20150204204223494000156898    True
+20141212144536756000543697    True
+20141118074613424000170799    True
+20150219102741808000455013    True
+Name: isFraud, dtype: bool
+indice
+20141220164514490000328898    True
+Name: isFraud, dtype: bool
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/code.py", line 91, in runcode
+    exec(code, self.locals)
+  File "<input>", line 1, in <module>
+  File "/Users/michele/PycharmProjects/varie/venv/lib/python3.6/site-packages/pandas/core/generic.py", line 1580, in bool
+    "{0}".format(self.__class__.__name__)
+ValueError: bool cannot act on a non-boolean single element Series
+<bound method NDFrame.bool of indice
+20141220164514490000328898    0
+Name: isFraud, dtype: int64>

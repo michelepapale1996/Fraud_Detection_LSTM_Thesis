@@ -1,0 +1,198 @@
+Preparing training and test sets...
+Creating samples using as look_back = 10
+There are 204765 sequences with  58561 users.
+Current iteration: 0
+Current number of epochs: 10
+Current number of look_backs: 10
+WARNING:tensorflow:From /Users/michele/PycharmProjects/varie/venv/lib/python3.6/site-packages/tensorflow/python/ops/nn_impl.py:180: add_dispatch_support.<locals>.wrapper (from tensorflow.python.ops.array_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use tf.where in 2.0, which has the same broadcast rule as np.where
+Model: "sequential_1"
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+lstm_1 (LSTM)                (None, 11, 50)            11000     
+_________________________________________________________________
+lstm_2 (LSTM)                (None, 50)                20200     
+_________________________________________________________________
+dense_1 (Dense)              (None, 1)                 51        
+=================================================================
+Total params: 31,251
+Trainable params: 31,251
+Non-trainable params: 0
+_________________________________________________________________
+Training...
+2019-10-10 16:07:47.765988: I tensorflow/core/platform/cpu_feature_guard.cc:142] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA
+WARNING:tensorflow:From /Users/michele/PycharmProjects/varie/venv/lib/python3.6/site-packages/keras/backend/tensorflow_backend.py:422: The name tf.global_variables is deprecated. Please use tf.compat.v1.global_variables instead.
+
+Epoch 1/10
+ - 10s - loss: 0.7084 - acc: 0.0308 - f1_m: 0.0026 - precision_m: 0.0013 - recall_m: 0.0403
+Epoch 2/10
+ - 11s - loss: 0.7084 - acc: 0.0308 - f1_m: 0.0026 - precision_m: 0.0013 - recall_m: 0.0408
+Epoch 3/10
+ - 11s - loss: 0.7084 - acc: 0.0308 - f1_m: 0.0026 - precision_m: 0.0013 - recall_m: 0.0398
+Epoch 4/10
+ - 11s - loss: 0.7084 - acc: 0.0308 - f1_m: 0.0026 - precision_m: 0.0013 - recall_m: 0.0412
+Epoch 5/10
+ - 11s - loss: 0.7084 - acc: 0.0308 - f1_m: 0.0026 - precision_m: 0.0013 - recall_m: 0.0403
+Epoch 6/10
+ - 10s - loss: 0.7084 - acc: 0.0308 - f1_m: 0.0026 - precision_m: 0.0013 - recall_m: 0.0403
+Epoch 7/10
+ - 10s - loss: 0.7084 - acc: 0.0308 - f1_m: 0.0026 - precision_m: 0.0013 - recall_m: 0.0408
+Epoch 8/10
+ - 10s - loss: 0.7084 - acc: 0.0308 - f1_m: 0.0026 - precision_m: 0.0013 - recall_m: 0.0403
+Epoch 9/10
+ - 11s - loss: 0.7084 - acc: 0.0308 - f1_m: 0.0026 - precision_m: 0.0013 - recall_m: 0.0398
+Epoch 10/10
+ - 10s - loss: 0.7084 - acc: 0.0308 - f1_m: 0.0025 - precision_m: 0.0013 - recall_m: 0.0394
+Training done. Duration: 105.30129408836365
+Training Loss per epoch: [0.7083745216610772, 0.7083745202360144, 0.7083745204944817, 0.7083745214829443, 0.7083745212698835, 0.7083745213711747, 0.7083745208193122, 0.7083745211650995, 0.7083745202744353, 0.708374520997445]
+Current iteration: 1
+Current number of epochs: 10
+Current number of look_backs: 10
+Model: "sequential_2"
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+lstm_3 (LSTM)                (None, 11, 50)            11000     
+_________________________________________________________________
+lstm_4 (LSTM)                (None, 50)                20200     
+_________________________________________________________________
+dense_2 (Dense)              (None, 1)                 51        
+=================================================================
+Total params: 31,251
+Trainable params: 31,251
+Non-trainable params: 0
+_________________________________________________________________
+Training...
+Epoch 1/10
+ - 11s - loss: 0.6087 - acc: 0.9985 - f1_m: 0.0066 - precision_m: 0.0066 - recall_m: 0.0066
+Epoch 2/10
+ - 11s - loss: 0.6087 - acc: 0.9985 - f1_m: 0.0066 - precision_m: 0.0066 - recall_m: 0.0066
+Epoch 3/10
+ - 10s - loss: 0.6087 - acc: 0.9985 - f1_m: 0.0066 - precision_m: 0.0066 - recall_m: 0.0066
+Epoch 4/10
+ - 10s - loss: 0.6087 - acc: 0.9985 - f1_m: 0.0056 - precision_m: 0.0056 - recall_m: 0.0056
+Epoch 5/10
+ - 10s - loss: 0.6087 - acc: 0.9985 - f1_m: 0.0066 - precision_m: 0.0066 - recall_m: 0.0066
+Epoch 6/10
+ - 11s - loss: 0.6087 - acc: 0.9985 - f1_m: 0.0062 - precision_m: 0.0066 - recall_m: 0.0061
+Epoch 7/10
+ - 10s - loss: 0.6087 - acc: 0.9985 - f1_m: 0.0059 - precision_m: 0.0061 - recall_m: 0.0061
+Epoch 8/10
+ - 11s - loss: 0.6087 - acc: 0.9985 - f1_m: 0.0066 - precision_m: 0.0066 - recall_m: 0.0066
+Epoch 9/10
+ - 11s - loss: 0.6087 - acc: 0.9985 - f1_m: 0.0066 - precision_m: 0.0066 - recall_m: 0.0066
+Epoch 10/10
+ - 11s - loss: 0.6087 - acc: 0.9985 - f1_m: 0.0066 - precision_m: 0.0066 - recall_m: 0.0066
+Training done. Duration: 108.67629504203796
+Training Loss per epoch: [0.6087397316806379, 0.6087397318517851, 0.6087397300040935, 0.6087397312859514, 0.6087397331650781, 0.6087397320613531, 0.6087397310100201, 0.6087397313907353, 0.6087397320962812, 0.6087397325433597]
+Current iteration: 2
+Current number of epochs: 10
+Current number of look_backs: 10
+Model: "sequential_3"
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+lstm_5 (LSTM)                (None, 11, 50)            11000     
+_________________________________________________________________
+lstm_6 (LSTM)                (None, 50)                20200     
+_________________________________________________________________
+dense_3 (Dense)              (None, 1)                 51        
+=================================================================
+Total params: 31,251
+Trainable params: 31,251
+Non-trainable params: 0
+_________________________________________________________________
+Training...
+Epoch 1/10
+ - 11s - loss: 0.7340 - acc: 0.0015 - f1_m: 0.0029 - precision_m: 0.0015 - recall_m: 0.0478
+Epoch 2/10
+ - 10s - loss: 0.7340 - acc: 0.0015 - f1_m: 0.0029 - precision_m: 0.0015 - recall_m: 0.0478
+Epoch 3/10
+ - 10s - loss: 0.7340 - acc: 0.0015 - f1_m: 0.0029 - precision_m: 0.0015 - recall_m: 0.0459
+Epoch 4/10
+ - 10s - loss: 0.7340 - acc: 0.0015 - f1_m: 0.0029 - precision_m: 0.0015 - recall_m: 0.0478
+Epoch 5/10
+ - 11s - loss: 0.7340 - acc: 0.0015 - f1_m: 0.0029 - precision_m: 0.0015 - recall_m: 0.0478
+Epoch 6/10
+ - 11s - loss: 0.7340 - acc: 0.0015 - f1_m: 0.0029 - precision_m: 0.0015 - recall_m: 0.0469
+Epoch 7/10
+ - 11s - loss: 0.7340 - acc: 0.0015 - f1_m: 0.0029 - precision_m: 0.0015 - recall_m: 0.0459
+Epoch 8/10
+ - 11s - loss: 0.7340 - acc: 0.0015 - f1_m: 0.0029 - precision_m: 0.0015 - recall_m: 0.0478
+Epoch 9/10
+ - 11s - loss: 0.7340 - acc: 0.0015 - f1_m: 0.0029 - precision_m: 0.0015 - recall_m: 0.0459
+Epoch 10/10
+ - 11s - loss: 0.7340 - acc: 0.0015 - f1_m: 0.0029 - precision_m: 0.0015 - recall_m: 0.0469
+Training done. Duration: 108.53911304473877
+Training Loss per epoch: [0.7340485707881547, 0.7340485705157161, 0.7340485699848105, 0.7340485693945271, 0.7340485700930873, 0.7340485706100218, 0.7340485692967287, 0.7340485680847268, 0.734048570763705, 0.7340485692792648]
+Current iteration: 3
+Current number of epochs: 10
+Current number of look_backs: 10
+Model: "sequential_4"
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+lstm_7 (LSTM)                (None, 11, 50)            11000     
+_________________________________________________________________
+lstm_8 (LSTM)                (None, 50)                20200     
+_________________________________________________________________
+dense_4 (Dense)              (None, 1)                 51        
+=================================================================
+Total params: 31,251
+Trainable params: 31,251
+Non-trainable params: 0
+_________________________________________________________________
+Training...
+Epoch 1/10
+ - 11s - loss: 0.6901 - acc: 0.8038 - f1_m: 0.0012 - precision_m: 6.7430e-04 - recall_m: 0.0047
+Epoch 2/10
+ - 10s - loss: 0.6901 - acc: 0.8038 - f1_m: 0.0012 - precision_m: 7.1183e-04 - recall_m: 0.0047
+Epoch 3/10
+ - 10s - loss: 0.6901 - acc: 0.8038 - f1_m: 0.0015 - precision_m: 8.9035e-04 - recall_m: 0.0042
+Epoch 4/10
+ - 10s - loss: 0.6901 - acc: 0.8038 - f1_m: 0.0012 - precision_m: 7.3935e-04 - recall_m: 0.0042
+Epoch 5/10
+ - 10s - loss: 0.6901 - acc: 0.8038 - f1_m: 0.0016 - precision_m: 9.6324e-04 - recall_m: 0.0047
+Epoch 6/10
+ - 11s - loss: 0.6901 - acc: 0.8038 - f1_m: 0.0013 - precision_m: 7.5237e-04 - recall_m: 0.0047
+Epoch 7/10
+ - 11s - loss: 0.6901 - acc: 0.8038 - f1_m: 0.0012 - precision_m: 6.9619e-04 - recall_m: 0.0047
+Epoch 8/10
+ - 10s - loss: 0.6901 - acc: 0.8038 - f1_m: 0.0012 - precision_m: 7.1332e-04 - recall_m: 0.0042
+Epoch 9/10
+ - 10s - loss: 0.6901 - acc: 0.8038 - f1_m: 0.0012 - precision_m: 7.0662e-04 - recall_m: 0.0042
+Epoch 10/10
+ - 11s - loss: 0.6901 - acc: 0.8038 - f1_m: 0.0015 - precision_m: 9.2940e-04 - recall_m: 0.0047
+Training done. Duration: 108.93344211578369
+Training Loss per epoch: [0.6901460518978084, 0.6901460494668191, 0.6901460522505813, 0.6901460513110179, 0.6901460509687234, 0.6901460500431312, 0.6901460513913523, 0.6901460518454164, 0.6901460512062338, 0.6901460506683426]
+Current iteration: 4
+Current number of epochs: 10
+Current number of look_backs: 10
+Model: "sequential_5"
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+lstm_9 (LSTM)                (None, 11, 50)            11000     
+_________________________________________________________________
+lstm_10 (LSTM)               (None, 50)                20200     
+_________________________________________________________________
+dense_5 (Dense)              (None, 1)                 51        
+=================================================================
+Total params: 31,251
+Trainable params: 31,251
+Non-trainable params: 0
+_________________________________________________________________
+Training...
+Epoch 1/10
+ - 11s - loss: 0.6625 - acc: 0.9985 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Epoch 2/10
+ - 11s - loss: 0.6625 - acc: 0.9985 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Epoch 3/10
+ - 11s - loss: 0.6625 - acc: 0.9985 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Epoch 4/10
+ - 11s - loss: 0.6625 - acc: 0.9985 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Epoch 5/10
+ - 11s - loss: 0.6625 - acc: 0.9985 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Epoch 6/10

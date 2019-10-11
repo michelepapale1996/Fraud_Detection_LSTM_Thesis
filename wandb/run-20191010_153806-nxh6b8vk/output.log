@@ -1,0 +1,207 @@
+Preparing training and test sets...
+Creating samples using as look_back = 500
+--------------------------------------------------
+Current iteration: 0
+Current number of epochs: 5
+Current number of look_backs: 500
+Current train size: (97, 501, 4)
+Current test size: (94, 501, 4)
+WARNING:tensorflow:From /Users/michele/PycharmProjects/varie/venv/lib/python3.6/site-packages/tensorflow/python/ops/nn_impl.py:180: add_dispatch_support.<locals>.wrapper (from tensorflow.python.ops.array_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use tf.where in 2.0, which has the same broadcast rule as np.where
+Training...
+2019-10-10 17:38:11.741216: I tensorflow/core/platform/cpu_feature_guard.cc:142] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA
+WARNING:tensorflow:From /Users/michele/PycharmProjects/varie/venv/lib/python3.6/site-packages/keras/backend/tensorflow_backend.py:422: The name tf.global_variables is deprecated. Please use tf.compat.v1.global_variables instead.
+
+Epoch 1/5
+ - 2s - loss: 0.6555 - acc: 1.0000 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Epoch 2/5
+ - 1s - loss: 0.6555 - acc: 1.0000 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Epoch 3/5
+ - 1s - loss: 0.6555 - acc: 1.0000 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Epoch 4/5
+ - 1s - loss: 0.6555 - acc: 1.0000 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Epoch 5/5
+ - 1s - loss: 0.6555 - acc: 1.0000 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Training done. Duration: 8.134510278701782
+Training Loss per epoch: [0.6554964326091648, 0.6554964086444107, 0.6554964068009681, 0.6554964037285638, 0.6554964147892195]
+--------------------------------------------------
+Current iteration: 1
+Current number of epochs: 5
+Current number of look_backs: 500
+Current train size: (97, 501, 4)
+Current test size: (94, 501, 4)
+Training...
+Epoch 1/5
+ - 2s - loss: 0.6523 - acc: 1.0000 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Epoch 2/5
+ - 1s - loss: 0.6523 - acc: 1.0000 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Epoch 3/5
+ - 1s - loss: 0.6523 - acc: 1.0000 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Epoch 4/5
+ - 1s - loss: 0.6523 - acc: 1.0000 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Epoch 5/5
+ - 1s - loss: 0.6523 - acc: 1.0000 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Training done. Duration: 8.442138910293579
+Training Loss per epoch: [0.6523408981942639, 0.6523409289183076, 0.652340907411477, 0.6523408902060125, 0.6523408951218596]
+--------------------------------------------------
+Current iteration: 0
+Current number of epochs: 5
+Current number of look_backs: 500
+Current train size: (191, 501, 4)
+Current test size: (94, 501, 4)
+Training...
+Epoch 1/5
+ - 2s - loss: 0.8025 - acc: 0.0000e+00 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Epoch 2/5
+ - 2s - loss: 0.8025 - acc: 0.0000e+00 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Epoch 3/5
+ - 2s - loss: 0.8025 - acc: 0.0000e+00 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Epoch 4/5
+ - 2s - loss: 0.8025 - acc: 0.0000e+00 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Epoch 5/5
+ - 2s - loss: 0.8025 - acc: 0.0000e+00 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Training done. Duration: 12.13946795463562
+Training Loss per epoch: [0.8025022461152201, 0.802502247363485, 0.8025022529806766, 0.8025021989932235, 0.802502250484147]
+--------------------------------------------------
+Current iteration: 1
+Current number of epochs: 5
+Current number of look_backs: 500
+Current train size: (191, 501, 4)
+Current test size: (94, 501, 4)
+Training...
+Epoch 1/5
+ - 2s - loss: 0.6588 - acc: 1.0000 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Epoch 2/5
+ - 2s - loss: 0.6588 - acc: 1.0000 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Epoch 3/5
+ - 2s - loss: 0.6588 - acc: 1.0000 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Epoch 4/5
+ - 2s - loss: 0.6588 - acc: 1.0000 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Epoch 5/5
+ - 2s - loss: 0.6588 - acc: 1.0000 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Training done. Duration: 12.39128303527832
+Training Loss per epoch: [0.6588132381439209, 0.6588132331508616, 0.6588132312784645, 0.6588132178596177, 0.6588132216044121]
+--------------------------------------------------
+Current iteration: 0
+Current number of epochs: 5
+Current number of look_backs: 500
+Current train size: (285, 501, 4)
+Current test size: (94, 501, 4)
+Training...
+Epoch 1/5
+ - 3s - loss: 0.8029 - acc: 0.0000e+00 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Epoch 2/5
+ - 3s - loss: 0.8029 - acc: 0.0000e+00 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Epoch 3/5
+ - 3s - loss: 0.8029 - acc: 0.0000e+00 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Epoch 4/5
+ - 3s - loss: 0.8029 - acc: 0.0000e+00 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Epoch 5/5
+ - 3s - loss: 0.8029 - acc: 0.0000e+00 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Training done. Duration: 17.89597797393799
+Training Loss per epoch: [0.8028655284329465, 0.8028655411904319, 0.8028655328248676, 0.8028655332431459, 0.8028655547844736]
+--------------------------------------------------
+Current iteration: 1
+Current number of epochs: 5
+Current number of look_backs: 500
+Current train size: (285, 501, 4)
+Current test size: (94, 501, 4)
+Training...
+Epoch 1/5
+ - 3s - loss: 0.7620 - acc: 0.0000e+00 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Epoch 2/5
+ - 3s - loss: 0.7620 - acc: 0.0000e+00 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Epoch 3/5
+ - 3s - loss: 0.7620 - acc: 0.0000e+00 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Epoch 4/5
+ - 3s - loss: 0.7620 - acc: 0.0000e+00 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Epoch 5/5
+ - 3s - loss: 0.7620 - acc: 0.0000e+00 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Training done. Duration: 18.0535249710083
+Training Loss per epoch: [0.76202731676269, 0.7620273115342123, 0.7620273159261335, 0.762027312789047, 0.7620273211546111]
+--------------------------------------------------
+Current iteration: 0
+Current number of epochs: 5
+Current number of look_backs: 500
+Current train size: (379, 501, 4)
+Current test size: (94, 501, 4)
+Training...
+Epoch 1/5
+ - 5s - loss: 0.7193 - acc: 0.0000e+00 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Epoch 2/5
+ - 4s - loss: 0.7193 - acc: 0.0000e+00 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Epoch 3/5
+ - 4s - loss: 0.7193 - acc: 0.0000e+00 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Epoch 4/5
+ - 4s - loss: 0.7193 - acc: 0.0000e+00 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Epoch 5/5
+ - 4s - loss: 0.7193 - acc: 0.0000e+00 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Training done. Duration: 24.49781560897827
+Training Loss per epoch: [0.7193288185036592, 0.7193287909817255, 0.7193288089102994, 0.71932880277684, 0.7193288174027818]
+--------------------------------------------------
+Current iteration: 1
+Current number of epochs: 5
+Current number of look_backs: 500
+Current train size: (379, 501, 4)
+Current test size: (94, 501, 4)
+Training...
+Epoch 1/5
+ - 4s - loss: 0.8566 - acc: 0.0000e+00 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Epoch 2/5
+ - 4s - loss: 0.8566 - acc: 0.0000e+00 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Epoch 3/5
+ - 4s - loss: 0.8566 - acc: 0.0000e+00 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Epoch 4/5
+ - 4s - loss: 0.8566 - acc: 0.0000e+00 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Epoch 5/5
+ - 4s - loss: 0.8566 - acc: 0.0000e+00 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Training done. Duration: 24.032771110534668
+Training Loss per epoch: [0.8565578660423964, 0.8565578770511698, 0.85655788051107, 0.8565578822410201, 0.8565578773657061]
+--------------------------------------------------
+Current iteration: 0
+Current number of epochs: 5
+Current number of look_backs: 500
+Current train size: (473, 501, 4)
+Current test size: (94, 501, 4)
+Training...
+Epoch 1/5
+ - 5s - loss: 0.5887 - acc: 1.0000 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Epoch 2/5
+ - 4s - loss: 0.5887 - acc: 1.0000 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Epoch 3/5
+ - 4s - loss: 0.5887 - acc: 1.0000 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Epoch 4/5
+ - 5s - loss: 0.5887 - acc: 1.0000 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Epoch 5/5
+ - 5s - loss: 0.5887 - acc: 1.0000 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Training done. Duration: 28.479267120361328
+Training Loss per epoch: [0.5886538578138291, 0.5886538512610986, 0.5886538406759185, 0.5886538337451459, 0.5886538591999836]
+--------------------------------------------------
+Current iteration: 1
+Current number of epochs: 5
+Current number of look_backs: 500
+Current train size: (473, 501, 4)
+Current test size: (94, 501, 4)
+Training...
+Epoch 1/5
+ - 5s - loss: 0.5801 - acc: 1.0000 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Epoch 2/5
+ - 5s - loss: 0.5801 - acc: 1.0000 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Epoch 3/5
+ - 5s - loss: 0.5801 - acc: 1.0000 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Epoch 4/5
+ - 5s - loss: 0.5801 - acc: 1.0000 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Epoch 5/5
+ - 5s - loss: 0.5801 - acc: 1.0000 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
+Training done. Duration: 30.77042818069458
+Training Loss per epoch: [0.5801114124929174, 0.5801114282446734, 0.5801114150131984, 0.5801114196757181, 0.5801114175334793]
+       Loss Accuracy F1_score Precision Recall
+count     0        0        0         0      0
+unique    0        0        0         0      0
+top     NaN      NaN      NaN       NaN    NaN
+freq    NaN      NaN      NaN       NaN    NaN
+PyDev console: starting.
+
+Python 3.6.3 (v3.6.3:2c5fed86e0, Oct  3 2017, 00:32:08) 
+[GCC 4.2.1 (Apple Inc. build 5666) (dot 3)] on darwin

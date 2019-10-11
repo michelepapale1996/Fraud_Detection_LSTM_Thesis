@@ -1,0 +1,73 @@
+{
+    "graph": {
+        "_type": "graph",
+        "format": "keras",
+        "nodes": [
+            {
+                "name": "lstm_19_input",
+                "id": "lstm_19_input",
+                "class_name": "InputLayer",
+                "output_shape": [
+                    null,
+                    501,
+                    4
+                ],
+                "num_parameters": 0
+            },
+            {
+                "name": "lstm_19",
+                "id": "lstm_19",
+                "class_name": "LSTM",
+                "output_shape": [
+                    null,
+                    501,
+                    10
+                ],
+                "num_parameters": 600
+            },
+            {
+                "name": "lstm_20",
+                "id": "lstm_20",
+                "class_name": "LSTM",
+                "output_shape": [
+                    null,
+                    10
+                ],
+                "num_parameters": 840
+            },
+            {
+                "name": "dense_10",
+                "id": "dense_10",
+                "class_name": "Dense",
+                "output_shape": [
+                    null,
+                    1
+                ],
+                "num_parameters": 11
+            }
+        ],
+        "edges": [
+            [
+                "lstm_19_input",
+                "lstm_19"
+            ],
+            [
+                "lstm_19",
+                "lstm_20"
+            ],
+            [
+                "lstm_20",
+                "dense_10"
+            ]
+        ]
+    },
+    "precision_m": 0.0,
+    "acc": 1.0,
+    "_timestamp": 1570722082.2900841,
+    "_step": 49,
+    "loss": 0.5801114175334793,
+    "recall_m": 0.0,
+    "_runtime": 195.8447229862213,
+    "epoch": 4,
+    "f1_m": 0.0
+}

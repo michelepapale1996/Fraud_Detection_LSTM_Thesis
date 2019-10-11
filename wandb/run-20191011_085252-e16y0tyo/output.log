@@ -1,0 +1,40 @@
+Preparing training and test sets...
+Creating samples using as look_back = 5
+Traceback (most recent call last):
+  File "/Applications/PyCharm.app/Contents/helpers/pydev/pydev_run_in_console.py", line 52, in run_file
+    pydev_imports.execfile(file, globals, locals)  # execute the script
+  File "/Applications/PyCharm.app/Contents/helpers/pydev/_pydev_imps/_pydev_execfile.py", line 18, in execfile
+    exec(compile(contents+"\n", file, 'exec'), glob, loc)
+  File "/Users/michele/Fraud_Detection_LSTM_Thesis/LSTM_classifier.py", line 146, in <module>
+    create_dataset_for_single_user(bonifici, 5)
+  File "/Users/michele/Fraud_Detection_LSTM_Thesis/LSTM_classifier.py", line 94, in create_dataset_for_single_user
+    sequence_x, sequence_y = get_sequences(transactions, look_back)
+  File "/Users/michele/Fraud_Detection_LSTM_Thesis/LSTM_classifier.py", line 50, in get_sequences
+    if transactions.loc[pointer: pointer + 1, "isFraud"] == 0:
+  File "/Users/michele/PycharmProjects/varie/venv/lib/python3.6/site-packages/pandas/core/indexing.py", line 1418, in __getitem__
+    return self._getitem_tuple(key)
+  File "/Users/michele/PycharmProjects/varie/venv/lib/python3.6/site-packages/pandas/core/indexing.py", line 805, in _getitem_tuple
+    return self._getitem_lowerdim(tup)
+  File "/Users/michele/PycharmProjects/varie/venv/lib/python3.6/site-packages/pandas/core/indexing.py", line 961, in _getitem_lowerdim
+    return getattr(section, self.name)[new_key]
+  File "/Users/michele/PycharmProjects/varie/venv/lib/python3.6/site-packages/pandas/core/indexing.py", line 1424, in __getitem__
+    return self._getitem_axis(maybe_callable, axis=axis)
+  File "/Users/michele/PycharmProjects/varie/venv/lib/python3.6/site-packages/pandas/core/indexing.py", line 1797, in _getitem_axis
+    return self._get_slice_axis(key, axis=axis)
+  File "/Users/michele/PycharmProjects/varie/venv/lib/python3.6/site-packages/pandas/core/indexing.py", line 1454, in _get_slice_axis
+    slice_obj.start, slice_obj.stop, slice_obj.step, kind=self.name
+  File "/Users/michele/PycharmProjects/varie/venv/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 5034, in slice_indexer
+    start_slice, end_slice = self.slice_locs(start, end, step=step, kind=kind)
+  File "/Users/michele/PycharmProjects/varie/venv/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 5248, in slice_locs
+    start_slice = self.get_slice_bound(start, "left", kind)
+  File "/Users/michele/PycharmProjects/varie/venv/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 5160, in get_slice_bound
+    label = self._maybe_cast_slice_bound(label, side, kind)
+  File "/Users/michele/PycharmProjects/varie/venv/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 5112, in _maybe_cast_slice_bound
+    self._invalid_indexer("slice", label)
+  File "/Users/michele/PycharmProjects/varie/venv/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 3340, in _invalid_indexer
+    form=form, klass=type(self), key=key, kind=type(key)
+TypeError: cannot do slice indexing on <class 'pandas.core.indexes.base.Index'> with these indexers [0] of <class 'int'>
+PyDev console: starting.
+
+Python 3.6.3 (v3.6.3:2c5fed86e0, Oct  3 2017, 00:32:08) 
+[GCC 4.2.1 (Apple Inc. build 5666) (dot 3)] on darwin

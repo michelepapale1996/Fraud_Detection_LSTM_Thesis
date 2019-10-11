@@ -1,0 +1,57 @@
+Preparing training and test sets...
+Creating samples using as look_back = 4
+Traceback (most recent call last):
+  File "/Applications/PyCharm.app/Contents/helpers/pydev/pydev_run_in_console.py", line 52, in run_file
+    pydev_imports.execfile(file, globals, locals)  # execute the script
+  File "/Applications/PyCharm.app/Contents/helpers/pydev/_pydev_imps/_pydev_execfile.py", line 18, in execfile
+    exec(compile(contents+"\n", file, 'exec'), glob, loc)
+  File "/Users/michele/Fraud_Detection_LSTM_Thesis/LSTM_classifier.py", line 185, in <module>
+    x, y = create_dataset_for_single_user(bonifici, 4)
+  File "/Users/michele/Fraud_Detection_LSTM_Thesis/LSTM_classifier.py", line 133, in create_dataset_for_single_user
+    sequence_x, sequence_y = get_sequences(transactions, look_back)
+  File "/Users/michele/Fraud_Detection_LSTM_Thesis/LSTM_classifier.py", line 97, in get_sequences
+    sequence.append(transactions.iloc[i+1:i + 2].values[0])
+IndexError: index 0 is out of bounds for axis 0 with size 0
+PyDev console: starting.
+
+Python 3.6.3 (v3.6.3:2c5fed86e0, Oct  3 2017, 00:32:08) 
+[GCC 4.2.1 (Apple Inc. build 5666) (dot 3)] on darwin
+'20141203174604336000242888'
+3
+                                     Timestamp  Importo  \
+indice                                                    
+2014122619451240200058660  2014-12-26 18:56:09     0.01   
+
+                                                     UserID  NumConfermaSMS  \
+indice                                                                        
+2014122619451240200058660  e0e56529cd38cb40f414bbecfde594d5               1   
+
+                           isFraud  isItalianSender  isItalianReceiver  
+indice                                                                  
+2014122619451240200058660        0                1                  1  
+                                      Timestamp   Importo  \
+indice                                                      
+20141027204532613000686773  2014-10-27 20:36:22  0.020000   
+20141027204532626000263314  2014-10-27 20:36:54  0.020000   
+20141203174603166000955170  2014-12-03 16:37:35  0.006000   
+20141203174604336000242888  2014-12-03 16:51:38  0.007087   
+2014122619451240200058660   2014-12-26 18:56:09  0.010000   
+20141230164519806000110071  2014-12-30 16:34:58  0.015800   
+
+                                                      UserID  NumConfermaSMS  \
+indice                                                                         
+20141027204532613000686773  e0e56529cd38cb40f414bbecfde594d5               1   
+20141027204532626000263314  e0e56529cd38cb40f414bbecfde594d5               1   
+20141203174603166000955170  e0e56529cd38cb40f414bbecfde594d5               1   
+20141203174604336000242888  e0e56529cd38cb40f414bbecfde594d5               1   
+2014122619451240200058660   e0e56529cd38cb40f414bbecfde594d5               1   
+20141230164519806000110071  e0e56529cd38cb40f414bbecfde594d5               1   
+
+                            isFraud  isItalianSender  isItalianReceiver  
+indice                                                                   
+20141027204532613000686773        0                1                  1  
+20141027204532626000263314        0                1                  1  
+20141203174603166000955170        0                1                  1  
+20141203174604336000242888        0                1                  1  
+2014122619451240200058660         0                1                  1  
+20141230164519806000110071        0                1                  1  

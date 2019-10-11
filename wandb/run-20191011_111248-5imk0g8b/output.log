@@ -1,0 +1,109 @@
+Preparing training and test sets...
+Creating samples using as look_back = 4
+Traceback (most recent call last):
+  File "/Applications/PyCharm.app/Contents/helpers/pydev/pydev_run_in_console.py", line 52, in run_file
+    pydev_imports.execfile(file, globals, locals)  # execute the script
+  File "/Applications/PyCharm.app/Contents/helpers/pydev/_pydev_imps/_pydev_execfile.py", line 18, in execfile
+    exec(compile(contents+"\n", file, 'exec'), glob, loc)
+  File "/Users/michele/Fraud_Detection_LSTM_Thesis/LSTM_classifier.py", line 185, in <module>
+    x, y = create_dataset_for_single_user(bonifici, 4)
+  File "/Users/michele/Fraud_Detection_LSTM_Thesis/LSTM_classifier.py", line 133, in create_dataset_for_single_user
+    sequence_x, sequence_y = get_sequences(transactions, look_back)
+  File "/Users/michele/Fraud_Detection_LSTM_Thesis/LSTM_classifier.py", line 96, in get_sequences
+    sequence = np.concatenate(sequence, transactions.iloc[i + 1].values)
+  File "<__array_function__ internals>", line 6, in concatenate
+TypeError: only integer scalar arrays can be converted to a scalar index
+PyDev console: starting.
+
+Python 3.6.3 (v3.6.3:2c5fed86e0, Oct  3 2017, 00:32:08) 
+[GCC 4.2.1 (Apple Inc. build 5666) (dot 3)] on darwin
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/code.py", line 91, in runcode
+    exec(code, self.locals)
+  File "<input>", line 1, in <module>
+NameError: name 'x' is not defined
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/code.py", line 91, in runcode
+    exec(code, self.locals)
+  File "<input>", line 1, in <module>
+  File "/Users/michele/PycharmProjects/varie/venv/lib/python3.6/site-packages/pandas/core/indexing.py", line 1424, in __getitem__
+    return self._getitem_axis(maybe_callable, axis=axis)
+  File "/Users/michele/PycharmProjects/varie/venv/lib/python3.6/site-packages/pandas/core/indexing.py", line 1797, in _getitem_axis
+    return self._get_slice_axis(key, axis=axis)
+  File "/Users/michele/PycharmProjects/varie/venv/lib/python3.6/site-packages/pandas/core/indexing.py", line 1454, in _get_slice_axis
+    slice_obj.start, slice_obj.stop, slice_obj.step, kind=self.name
+  File "/Users/michele/PycharmProjects/varie/venv/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 5034, in slice_indexer
+    start_slice, end_slice = self.slice_locs(start, end, step=step, kind=kind)
+  File "/Users/michele/PycharmProjects/varie/venv/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 5248, in slice_locs
+    start_slice = self.get_slice_bound(start, "left", kind)
+  File "/Users/michele/PycharmProjects/varie/venv/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 5160, in get_slice_bound
+    label = self._maybe_cast_slice_bound(label, side, kind)
+  File "/Users/michele/PycharmProjects/varie/venv/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 5112, in _maybe_cast_slice_bound
+    self._invalid_indexer("slice", label)
+  File "/Users/michele/PycharmProjects/varie/venv/lib/python3.6/site-packages/pandas/core/indexes/base.py", line 3340, in _invalid_indexer
+    form=form, klass=type(self), key=key, kind=type(key)
+TypeError: cannot do slice indexing on <class 'pandas.core.indexes.base.Index'> with these indexers [0] of <class 'int'>
+                                      Timestamp   Importo  \
+indice                                                      
+20141027204532613000686773  2014-10-27 20:36:22  0.020000   
+20141027204532626000263314  2014-10-27 20:36:54  0.020000   
+20141203174603166000955170  2014-12-03 16:37:35  0.006000   
+20141203174604336000242888  2014-12-03 16:51:38  0.007087   
+
+                                                      UserID  NumConfermaSMS  \
+indice                                                                         
+20141027204532613000686773  e0e56529cd38cb40f414bbecfde594d5               1   
+20141027204532626000263314  e0e56529cd38cb40f414bbecfde594d5               1   
+20141203174603166000955170  e0e56529cd38cb40f414bbecfde594d5               1   
+20141203174604336000242888  e0e56529cd38cb40f414bbecfde594d5               1   
+
+                            isFraud  isItalianSender  isItalianReceiver  
+indice                                                                   
+20141027204532613000686773        0                1                  1  
+20141027204532626000263314        0                1                  1  
+20141203174603166000955170        0                1                  1  
+20141203174604336000242888        0                1                  1  
+                                      Timestamp   Importo  \
+indice                                                      
+20141027204532613000686773  2014-10-27 20:36:22  0.020000   
+20141027204532626000263314  2014-10-27 20:36:54  0.020000   
+20141203174603166000955170  2014-12-03 16:37:35  0.006000   
+20141203174604336000242888  2014-12-03 16:51:38  0.007087   
+2014122619451240200058660   2014-12-26 18:56:09  0.010000   
+20141230164519806000110071  2014-12-30 16:34:58  0.015800   
+
+                                                      UserID  NumConfermaSMS  \
+indice                                                                         
+20141027204532613000686773  e0e56529cd38cb40f414bbecfde594d5               1   
+20141027204532626000263314  e0e56529cd38cb40f414bbecfde594d5               1   
+20141203174603166000955170  e0e56529cd38cb40f414bbecfde594d5               1   
+20141203174604336000242888  e0e56529cd38cb40f414bbecfde594d5               1   
+2014122619451240200058660   e0e56529cd38cb40f414bbecfde594d5               1   
+20141230164519806000110071  e0e56529cd38cb40f414bbecfde594d5               1   
+
+                            isFraud  isItalianSender  isItalianReceiver  
+indice                                                                   
+20141027204532613000686773        0                1                  1  
+20141027204532626000263314        0                1                  1  
+20141203174603166000955170        0                1                  1  
+20141203174604336000242888        0                1                  1  
+2014122619451240200058660         0                1                  1  
+20141230164519806000110071        0                1                  1  
+Timestamp                         2014-12-30 16:34:58
+Importo                                     0.0157998
+UserID               e0e56529cd38cb40f414bbecfde594d5
+NumConfermaSMS                                      1
+isFraud                                             0
+isItalianSender                                     1
+isItalianReceiver                                   1
+Name: 20141230164519806000110071, dtype: object
+Timestamp                         2014-12-26 18:56:09
+Importo                                     0.0099998
+UserID               e0e56529cd38cb40f414bbecfde594d5
+NumConfermaSMS                                      1
+isFraud                                             0
+isItalianSender                                     1
+isItalianReceiver                                   1
+Name: 2014122619451240200058660, dtype: object
+array(['2014-12-26 18:56:09', 0.009999801999960402,
+       'e0e56529cd38cb40f414bbecfde594d5', 1, 0, 1, 1], dtype=object)

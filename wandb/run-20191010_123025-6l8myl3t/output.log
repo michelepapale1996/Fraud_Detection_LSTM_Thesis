@@ -1,0 +1,15 @@
+Preparing training and test sets...
+Creating samples using as look_back = 15
+000079f6137b4f41fea3e9995bf00495
+00026c0202921fe6a2a1a0cd877b8bbe
+0004d96514b9eb83456e6cebb97f954b
+00051f4b1b3918622f750ee1497a9152
+00057cb679d09e6f3d52f821c5718794
+00070af6ae96d0d3b315e1fa4f3756d2
+000d0ae30a70960048bd1d6008e53122
+000f100757dfa47f447623b01a242de1
+00106878b833e485b49cc427d98d04f1
+PyDev console: starting.
+
+Python 3.6.3 (v3.6.3:2c5fed86e0, Oct  3 2017, 00:32:08) 
+[GCC 4.2.1 (Apple Inc. build 5666) (dot 3)] on darwin

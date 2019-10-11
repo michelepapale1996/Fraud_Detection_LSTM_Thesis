@@ -1,0 +1,43 @@
+Preparing training and test sets...
+Creating samples using as look_back = 4
+PyDev console: starting.
+
+Python 3.6.3 (v3.6.3:2c5fed86e0, Oct  3 2017, 00:32:08) 
+[GCC 4.2.1 (Apple Inc. build 5666) (dot 3)] on darwin
+[                             Importo  NumConfermaSMS  isItalianSender  \
+indice                                                                  
+20141027204532613000686773  0.020000               1                1   
+20141027204532626000263314  0.020000               1                1   
+20141203174603166000955170  0.006000               1                1   
+20141203174604336000242888  0.007087               1                1   
+2014122619451240200058660   0.010000               1                1   
+
+                            isItalianReceiver  
+indice                                         
+20141027204532613000686773                  1  
+20141027204532626000263314                  1  
+20141203174603166000955170                  1  
+20141203174604336000242888                  1  
+2014122619451240200058660                   1  ,                             Importo  NumConfermaSMS  isFraud  isItalianSender  \
+indice                                                                          
+20141230164519806000110071   0.0158               1        0                1   
+
+                            isItalianReceiver  
+indice                                         
+20141230164519806000110071                  1  ,                              Importo  NumConfermaSMS  isItalianSender  \
+indice                                                                  
+20141027204532626000263314  0.020000               1                1   
+20141203174603166000955170  0.006000               1                1   
+20141203174604336000242888  0.007087               1                1   
+2014122619451240200058660   0.010000               1                1   
+20141230164519806000110071  0.015800               1                1   
+
+                            isItalianReceiver  
+indice                                         
+20141027204532626000263314                  1  
+20141203174603166000955170                  1  
+20141203174604336000242888                  1  
+2014122619451240200058660                   1  
+20141230164519806000110071                  1  , Empty DataFrame
+Columns: [Importo, NumConfermaSMS, isFraud, isItalianSender, isItalianReceiver]
+Index: []]
