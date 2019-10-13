@@ -8,10 +8,6 @@ from keras.callbacks import EarlyStopping, Callback, TensorBoard, ModelCheckpoin
 import keras.backend as K
 import shutil
 import os
-import wandb
-from wandb.keras import WandbCallback
-wandb.init(project="fraud-detection-thesis")
-
 
 class VanillaLSTM(object):
     # layers = {input: 1, 2: 64, 3: 256, 4: 100, output: 1}
@@ -86,8 +82,7 @@ def train_model(model, x_train, y_train, batch_size, epochs, shuffle=False, vali
         early_stopping = EarlyStopping(monitor='val_loss', patience=patience)
         history_callback = model.fit(x_train, y_train, batch_size=batch_size, epochs=epochs, shuffle=shuffle, verbose=2, callbacks=[early_stopping])
     else:
-        history_callback = model.fit(x_train, y_train, epochs=epochs, verbose=2, callbacks=[WandbCallback()], shuffle=shuffle)
-        model.save(os.path.join(wandb.run.dir, "model.h5"))
+        history_callback = model.fit(x_train, y_train, epochs=epochs, verbose=2, callbacks=[], shuffle=shuffle)
 
     print('Training done. Duration: ' + str(time.time() - training_start_time))
     print("Training Loss per epoch: " + str(history_callback.history["loss"]))

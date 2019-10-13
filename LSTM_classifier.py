@@ -17,10 +17,6 @@ from sklearn.metrics import f1_score
 from sklearn.metrics import roc_curve
 from sklearn.metrics import roc_auc_score
 from sklearn.metrics import precision_recall_curve
-import wandb
-from wandb.keras import WandbCallback
-
-wandb.init(project="fraud-detection-thesis")
 
 # in order to print all the columns
 pd.set_option('display.max_columns', 100)
