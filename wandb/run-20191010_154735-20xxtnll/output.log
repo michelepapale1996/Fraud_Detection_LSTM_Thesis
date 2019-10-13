@@ -1,79 +1,0 @@
-Preparing training and test sets...
-Creating samples using as look_back = 500
---------------------------------------------------
-Current iteration: 0
-Current number of epochs: 5
-Current number of look_backs: 500
-Current train size: (144, 501, 4)
-Current test size: (141, 501, 4)
-WARNING:tensorflow:From /Users/michele/PycharmProjects/varie/venv/lib/python3.6/site-packages/tensorflow/python/ops/nn_impl.py:180: add_dispatch_support.<locals>.wrapper (from tensorflow.python.ops.array_ops) is deprecated and will be removed in a future version.
-Instructions for updating:
-Use tf.where in 2.0, which has the same broadcast rule as np.where
-Training...
-2019-10-10 17:47:39.956281: I tensorflow/core/platform/cpu_feature_guard.cc:142] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA
-WARNING:tensorflow:From /Users/michele/PycharmProjects/varie/venv/lib/python3.6/site-packages/keras/backend/tensorflow_backend.py:422: The name tf.global_variables is deprecated. Please use tf.compat.v1.global_variables instead.
-
-Epoch 1/5
- - 2s - loss: 0.3725 - acc: 1.0000 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
-Epoch 2/5
- - 2s - loss: 0.1258 - acc: 1.0000 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
-Epoch 3/5
- - 2s - loss: 0.0452 - acc: 1.0000 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
-Epoch 4/5
- - 2s - loss: 0.0215 - acc: 1.0000 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
-Epoch 5/5
- - 2s - loss: 0.0124 - acc: 1.0000 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
-Training done. Duration: 9.643725156784058
-Training Loss per epoch: [0.3724753061930339, 0.12584781563944286, 0.04518293837706248, 0.02152517769071791, 0.012397966761555936]
- 32/141 [=====>........................] - ETA: 0s 64/141 [============>.................] - ETA: 0s 96/141 [===================>..........] - ETA: 0s128/141 [==========================>...] - ETA: 0s141/141 [==============================] - 0s 3ms/step
-0.00928928245334549 1.0 0.0 0.0 0.0
---------------------------------------------------
-Current iteration: 1
-Current number of epochs: 5
-Current number of look_backs: 500
-Current train size: (144, 501, 4)
-Current test size: (141, 501, 4)
-Training...
-Epoch 1/5
- - 2s - loss: 0.5026 - acc: 0.7778 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
-Epoch 2/5
- - 2s - loss: 0.1523 - acc: 1.0000 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
-Epoch 3/5
- - 2s - loss: 0.0625 - acc: 1.0000 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
-Epoch 4/5
- - 2s - loss: 0.0291 - acc: 1.0000 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
-Epoch 5/5
- - 2s - loss: 0.0162 - acc: 1.0000 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
-Training done. Duration: 10.583295106887817
-Training Loss per epoch: [0.5025647381941477, 0.15232820312182108, 0.06252815243270662, 0.029086511996057298, 0.016154474578797817]
- 32/141 [=====>........................] - ETA: 0s 64/141 [============>.................] - ETA: 0s 96/141 [===================>..........] - ETA: 0s128/141 [==========================>...] - ETA: 0s141/141 [==============================] - 0s 3ms/step
-0.012043273010363816 1.0 0.0 0.0 0.0
---------------------------------------------------
-Current iteration: 0
-Current number of epochs: 5
-Current number of look_backs: 500
-Current train size: (285, 501, 4)
-Current test size: (141, 501, 4)
-Training...
-Epoch 1/5
- - 4s - loss: 0.3076 - acc: 1.0000 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
-Epoch 2/5
- - 3s - loss: 0.0313 - acc: 1.0000 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
-Epoch 3/5
- - 3s - loss: 0.0090 - acc: 1.0000 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
-Epoch 4/5
- - 3s - loss: 0.0044 - acc: 1.0000 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
-Epoch 5/5
- - 3s - loss: 0.0031 - acc: 1.0000 - f1_m: 0.0000e+00 - precision_m: 0.0000e+00 - recall_m: 0.0000e+00
-Training done. Duration: 17.21251606941223
-Training Loss per epoch: [0.30760181896519245, 0.03131990986631105, 0.009040710947623378, 0.004440875554849443, 0.003051845641120484]
- 32/141 [=====>........................] - ETA: 0s 64/141 [============>.................] - ETA: 0s 96/141 [===================>..........] - ETA: 0s128/141 [==========================>...] - ETA: 0s141/141 [==============================] - 0s 3ms/step
-0.0026494910798517735 1.0 0.0 0.0 0.0
---------------------------------------------------
-Current iteration: 1
-Current number of epochs: 5
-Current number of look_backs: 500
-Current train size: (285, 501, 4)
-Current test size: (141, 501, 4)
-Training...
-Epoch 1/5
