@@ -2,3 +2,8 @@
 datasets/.DS_Store
 *.csv
 venv/*
+*.iml
+.idea/*
+*.xml
+*.xml
+*.pyc
