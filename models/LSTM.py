@@ -9,7 +9,7 @@ import shutil
 import os
 import matplotlib.pyplot as plt
 from sklearn.metrics import classification_report
-from sklearn.metrics import f1_score, roc_curve, roc_auc_score, precision_recall_curve, auc
+from sklearn.metrics import f1_score, roc_curve, roc_auc_score, precision_recall_curve, auc, confusion_matrix, accuracy_score
 
 
 class LstmClassifier(object):
@@ -96,57 +96,29 @@ def train_model(model, x_train, y_train, batch_size, epochs, shuffle=False, vali
 
 def evaluate_performance(y_true, y_pred):
     print("---- Performance ----")
-    # outputs of a no skill classifier
-    ns_labels = [0 for _ in range(len(y_true))]
-
     roc_auc = roc_auc_score(y_true, y_pred)
-    print("Roc-auc score: %.3f" % roc_auc)
-    # plot the roc curve for the model
-    fpr, tpr, _ = roc_curve(y_true, y_pred)
-    ns_fpr, ns_tpr, _ = roc_curve(y_true, ns_labels)
-    '''
-    plt.plot(ns_fpr, ns_tpr, linestyle='--', label='No Skill')
-    plt.plot(fpr, tpr, marker='.', label='LSTM classifier')
-    # axis labels
-    plt.xlabel('False Positive Rate')
-    plt.ylabel('True Positive Rate')
-    # show the legend
-    plt.legend()
-    # show the plot
-    plt.show()
-    '''
+    print("Roc_auc score: %.3f" % roc_auc)
 
     precision, recall, thresholds = precision_recall_curve(y_true, y_pred)
-    ns_recall, ns_precision, ns_thresh = precision_recall_curve(y_true, ns_labels)
     precision_recall_auc = auc(recall, precision)
     print("Precision_recall_auc score: %.3f" % precision_recall_auc)
-    '''
-    plt.plot(ns_recall, ns_precision, linestyle='--', label='No Skill')
-    plt.plot(recall, precision, marker='.', label='LSTM classifier')
-    # axis labels
-    plt.xlabel('Recall')
-    plt.ylabel('Precision')
-    # show the legend
-    plt.legend()
-    # show the plot
-    plt.show()
-    '''
 
     def get_position(recall):
         for i in range(0, len(recall)):
             if recall[i] < 0.2:
-                return i
+                return i - 1
 
+    # This function adjusts class predictions based on the prediction threshold (t).
     def adjusted_classes(y_scores, t):
-        """
-        This function adjusts class predictions based on the prediction threshold (t).
-        Will only work for binary classification problems.
-        """
         return [1 if y >= t else 0 for y in y_scores]
 
-    threshold = thresholds[get_position(recall)]
+    position = get_position(recall)
+    print("Precision: " + str(precision[position]))
+    threshold = thresholds[position]
     y_pred = adjusted_classes(y_pred, threshold)
     f1 = f1_score(y_true, y_pred)
     print("f1 score: %.3f" % f1)
+    print("accuracy: " + str(accuracy_score(y_true, y_pred)))
+    print(confusion_matrix(y_true, y_pred))
 
-    return precision_recall_auc, f1
+    return f1
