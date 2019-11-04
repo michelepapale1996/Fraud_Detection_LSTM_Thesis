@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 # seaborn can generate several warnings, we ignore them
 import warnings
 from sklearn.model_selection import train_test_split
+from scipy import stats
 from models import LSTM
 from sklearn.metrics import f1_score, \
                             average_precision_score, \
@@ -16,9 +17,10 @@ from sklearn.metrics import f1_score, \
                             confusion_matrix, \
                             accuracy_score, \
                             balanced_accuracy_score, \
-                            mean_squared_error
+                            fbeta_score, precision_score, recall_score
 from sklearn.model_selection import RandomizedSearchCV
 from keras.layers.recurrent import LSTM
+from keras.callbacks import EarlyStopping
 from keras.layers.core import Dense, Activation, Dropout, RepeatVector
 from keras.optimizers import Adam, RMSprop
 from keras.models import Sequential
@@ -39,11 +41,14 @@ np.random.seed(seed)
 # -------The LSTM network is trained using sequences belonging to same user for all users--------
 # -----------------------------------------------------------------------------------------------
 
-look_back = 49
+look_back = 24
 num_features = 9
 
 x = np.load("/home/mpapale/thesis/anomaly_detection/dataset_" + str(look_back) + "_lookback/x.npy")
 y = np.load("/home/mpapale/thesis/anomaly_detection/dataset_" + str(look_back) + "_lookback/y.npy")
+
+x = x[:, 8:24, :]
+look_back = 15
 
 print("Lookback: ", look_back)
 print("x shape: ", x.shape, "y shape: ", y.shape, " before dataset engineering.")
@@ -87,14 +92,20 @@ y_test = np.concatenate([y_test_frauds, y_test_no_frauds])
 x_train_no_frauds = np.concatenate([x_train_no_frauds, x_val_not_used, x_test_not_used])
 y_train_no_frauds = np.concatenate([y_train_no_frauds, y_val_not_used, y_test_not_used])
 
+# splitting train_no_frauds set in train and val (validation used to find the mean and cov of the multivariate normal distr)
+x_train_no_frauds, x_val_no_frauds, y_train_no_frauds, y_val_no_frauds = train_test_split(x_train_no_frauds, y_train_no_frauds, test_size=0.5, random_state=seed)
+
 np.random.shuffle(x_train_no_frauds)
 np.random.shuffle(y_train_no_frauds)
+#np.random.shuffle(x_val_no_frauds)
+#np.random.shuffle(y_val_no_frauds)
 np.random.shuffle(x_val)
 np.random.shuffle(y_val)
 np.random.shuffle(x_test)
 np.random.shuffle(y_test)
 
 print("In training there are ", len(y_train_no_frauds), " sequences.")
+print("In validation (to find the mean and cov) there are ", len(y_val_no_frauds), " sequences.")
 print("In validation there are ", len(y_val_frauds), " frauds and ", len(y_val_no_frauds), " no frauds.")
 print("In testing there are ", len(y_test_frauds), " frauds and ", len(y_test_no_frauds), " no frauds.")
 
@@ -116,7 +127,7 @@ layers = [{'input': 10, 'output': num_features}]#,
 learning_rate = [0.1, 0.01, 0.001]
 dropout_rate = [0.0, 0.3, 0.8]
 
-def create_model(layers={'input': 128, 'output': 9}, learning_rate=0.01, dropout_rate=0.3, look_back=49):
+def create_model(layers={'input': 32, 'output': 9}, learning_rate=0.0001, dropout_rate=0.3, look_back=15):
     model = Sequential()
     n_hidden = len(layers) - 2
     if n_hidden > 2:
@@ -142,60 +153,74 @@ def create_model(layers={'input': 128, 'output': 9}, learning_rate=0.01, dropout
 def adjusted_classes(y_scores, t):
     return [1 if y >= t else 0 for y in y_scores]
 
-def evaluate(y_true, y_pred):
+def get_errors(y_true, y_pred):
+    len_y = len(y_pred)
+    errors = []
+    for i in range(len_y):
+        error = mean_absolute_error(y_true[i, 0:9], y_pred[i])
+        errors.append(error)
+    return errors
+
+def get_probabilities(y, y_pred, distribution):
+    return distribution.pdf(np.absolute(y[:, 0:9] - y_pred))
+
+def mean_and_covariance(y, y_pred):
+    errors = np.absolute(y[:, 0:9] - y_pred)
+    return np.mean(errors, axis=0), np.std(errors, axis=0)
+
+def find_best_threshold(y_true, y_pred, distribution):
+    # probabilities = get_probabilities(y_true, y_pred, distribution)
+    probabilities = get_errors(y_true, y_pred)
+    # thresholds = np.linspace(probabilities.min(), probabilities.max(), num=200, endpoint=True)
+    thresholds = np.linspace(min(probabilities), max(probabilities), num=200, endpoint=True)
+    scores = {}
+    for t in thresholds:
+        labels = adjusted_classes(probabilities, t)
+        f = fbeta_score(y_true[:,9], labels, beta=0.1)
+        scores[t] = f
+    return max(scores, key=scores.get)
+
+def evaluate(y_true, y_pred, threshold):
     print("---- Performance ----")
-    roc_auc = roc_auc_score(y_true, y_pred)
-    print("Roc_auc score: %.3f" % roc_auc)
+    print("Roc_auc score: ", roc_auc_score(y_true, y_pred))
     precision, recall, thresholds = precision_recall_curve(y_true, y_pred)
     precision_recall_auc = auc(recall, precision)
     print("Precision_recall_auc score: %.3f" % precision_recall_auc)
     print("Average precision: ", average_precision_score(y_true, y_pred))
-
-    def get_position(recall):
-        for i in range(0, len(recall)):
-            if recall[i] < 0.2:
-                return i - 1
-
-    position = get_position(recall)
-    print("Precision: ", precision[position])
-    threshold = thresholds[position]
     y_pred = adjusted_classes(y_pred, threshold)
+    print("Precision: ", precision_score(y_true, y_pred))
+    print("Recall: ", recall_score(y_true, y_pred))
     print("f1 score: ", f1_score(y_true, y_pred))
+    print("f0.1 score: ", fbeta_score(y_true, y_pred, beta=0.1))
     print("Average accuracy: ", balanced_accuracy_score(y_true, y_pred))
     print("accuracy: ", accuracy_score(y_true, y_pred))
     print(confusion_matrix(y_true, y_pred))
 
+
 model = create_model()
 # fit model
-model.fit(x_train_no_frauds, y_train_no_frauds, epochs=5, verbose=1)
+es = EarlyStopping(monitor='val_loss', mode='min', verbose=1, patience=2)
+model.fit(x_train_no_frauds, y_train_no_frauds, epochs=3, validation_split=0.1, verbose=1, callbacks=[es])
 
-# calculating errors between the prediction and the real transaction
+'''
+# getting the mean and cov of the multivariate normal distribution
+y_val_pred_no_frauds = model.predict(x_val_no_frauds)
+mean, cov = mean_and_covariance(y_val_no_frauds, y_val_pred_no_frauds)
+distribution = stats.multivariate_normal(mean=mean, cov=cov)
+'''
+
+# using validation set to find the best threshold to divide frauds and genuine
 y_val_pred = model.predict(x_val)
-
-len_y = len(y_val_pred)
-errors = []
-for i in range(len_y):
-    error = mean_absolute_error(y_val[i, 0:9], y_val_pred[i])
-    errors.append(error)
-
-thresholds = np.linspace(0.1, 0.5, num=70, endpoint=True)
-scores = {}
-for t in thresholds:
-    labels = adjusted_classes(errors, t)
-    f1 = f1_score(y_val[:,9], labels)
-    scores[t] = f1
-    
-best_threshold = max(scores, key=scores.get)
+#                best_threshold = find_best_threshold(y_val, y_val_pred, distribution)
+best_threshold = find_best_threshold(y_val, y_val_pred, False)
 
 # calculating the model performance
 y_test_pred = model.predict(x_test)
-len_y = len(y_test_pred)
-errors = []
-for i in range(len_y):
-    error = mean_absolute_error(y_test[i, 0:9], y_test_pred[i])
-    errors.append(error)
-labels = adjusted_classes(errors, best_threshold)
-evaluate(y_test[:,9], labels)
+# errors = get_errors(y_test, y_test_pred)
+#                probabilities = get_probabilities(y_test, y_test_pred, distribution)
+probabilities = get_errors(y_test, y_test_pred)
+labels = adjusted_classes(probabilities, best_threshold)
+evaluate(y_test[:,9], labels, best_threshold)
 
 '''
 model = KerasRegressor(build_fn=create_model, verbose=0)
