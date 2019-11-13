@@ -3,8 +3,7 @@ import numpy as np
 from sklearn import preprocessing
 import seaborn as sns
 import matplotlib.pyplot as plt
-#seaborn can generate several warnings, we ignore them
-from datetime import timedelta
+# seaborn can generate several warnings, we ignore them
 import warnings
 warnings.filterwarnings("ignore")
 from sklearn.model_selection import train_test_split
@@ -15,35 +14,21 @@ sns.set(style="white", color_codes=True)
 sns.set_context(rc={"font.family":'sans',"font.size":24,"axes.titlesize":24,"axes.labelsize":24})
 
 # -----------------------------------------------------------------------------------------------
-# -------------------------- Feature engineering module -----------------------------------------
+# --------- Feature engineering module for the unlabeled dataset --------------------------------
 # -----------------------------------------------------------------------------------------------
 
 # reading the datasets
-bonifici = pd.read_csv("/home/mpapale/thesis/datasets/quiubi_bonifici.csv")
-segnalaz = pd.read_csv("/home/mpapale/thesis/datasets/bonifici_segnalaz.csv")
-bonifici.set_index('indice',inplace=True)
-segnalaz.set_index('indice',inplace=True)
+bonifici = pd.read_csv("/home/mpapale/thesis/datasets/old_bonifici.csv", parse_dates=True, sep=";")
+bonifici.set_index('index',inplace=True)
 
 # dropping columns with useless data
-useless_features = ["CAP", "Servizio", "Status", "Paese", "Provincia", "Nazione", "IDTransazione", "CRO", "Causale", "Valuta", "ProfSicurezza", "NumConto", "ABI", "CAB", "Intestatario", "Indirizzo"]
+useless_features = ["CAP", "Status", "Paese", "Provincia", "Nazione", "IDTransazione", "CRO", "Causale", "Valuta", "ProfSicurezza", "NumConto", "ABI", "CAB", "Intestatario", "Indirizzo"]
 bonifici = bonifici.drop(useless_features, axis=1)
-segnalaz = segnalaz.drop(useless_features, axis=1)
 # in future, try to use these features
 bonifici = bonifici.drop(["DataValuta", "DataEsecuzione", "Nominativo", "TipoOperazione"], axis=1)
-segnalaz = segnalaz.drop(["DataValuta", "DataEsecuzione", "Nominativo", "TipoOperazione"], axis=1)
 
-# datasets merge into bonifici
-bonifici["isFraud"] = np.zeros(len(bonifici.index))
-for index, row in segnalaz.iterrows():
-    if index in bonifici.index:
-        bonifici.loc[index, "isFraud"] = 1
-    else:
-        bonifici.append(row)
-bonifici["isFraud"] = pd.to_numeric(bonifici["isFraud"], downcast='integer')
-
-bonifici.Timestamp = pd.to_datetime(bonifici.Timestamp)
+# bonifici.Timestamp = pd.to_datetime(bonifici.Timestamp)
 bonifici.NumConfermaSMS = bonifici.NumConfermaSMS.eq('Si').astype(int)
-
 
 print("Rescaling importo...")
 # rescaling "Importo"
@@ -52,12 +37,10 @@ min_max_scaler = preprocessing.MinMaxScaler()
 x_scaled = min_max_scaler.fit_transform(x)
 bonifici[["Importo"]] = x_scaled
 
-
 print("Changing MsgErrore to boolean...")
 # MsgErrore changed to boolean
 bonifici.MsgErrore.fillna(0, inplace=True)
 bonifici["MsgErrore"] = bonifici["MsgErrore"].apply(lambda x : 1 if x != 0 else 0)
-
 
 print("Creating isItalianSender and isItalianReceiver...")
 # creating "isItalianSender", "isItalianReceiver"
@@ -74,7 +57,9 @@ for index, row in bonifici[["CC_ASN", "IBAN_CC"]].iterrows():
 bonifici["isItalianSender"] = pd.to_numeric(bonifici["isItalianSender"], downcast='integer')
 bonifici["isItalianReceiver"] = pd.to_numeric(bonifici["isItalianReceiver"], downcast='integer')
 
-print("Creating count_trx_iban, is_new_asn_cc, is_new_iban, is_new_iban_cc, is_new_ip, time_delta...")
+# todo: creare timestamp delta di quanto tempo è passato dall'ultima tranasazione
+print("Creating count_trx_iban, is_new_asn_cc, is_new_iban, is_new_iban_cc, is_new_ip...")
+# creating count_trx_iban, is_new_asn_cc, is_new_iban, is_new_iban_cc
 bonifici_by_user = bonifici.groupby("UserID")
 
 bonifici["count_trx_iban"] = np.zeros(len(bonifici.index))
@@ -82,12 +67,6 @@ bonifici["is_new_asn_cc"] = np.zeros(len(bonifici.index))
 bonifici["is_new_iban"] = np.zeros(len(bonifici.index))
 bonifici["is_new_iban_cc"] = np.zeros(len(bonifici.index))
 bonifici["is_new_ip"] = np.zeros(len(bonifici.index))
-bonifici["time_delta"] = np.zeros(len(bonifici.index))
-bonifici["trx_in_one_month"] = np.zeros(len(bonifici.index))
-bonifici["trx_in_one_day"] = np.zeros(len(bonifici.index))
-bonifici["trx_in_two_weeks"] = np.zeros(len(bonifici.index))
-bonifici["trx_in_one_week"] = np.zeros(len(bonifici.index))
-bonifici["trx_in_one_hour"] = np.zeros(len(bonifici.index))
 # for each transaction of the user:
     #   - count the number of preceding transactions to the same iban
     #   - check if the asn_cc is new
@@ -95,11 +74,6 @@ bonifici["trx_in_one_hour"] = np.zeros(len(bonifici.index))
     #   - check if the iban_cc is new
     #   - check if the ip of the user is new
 counter = 0
-thirty_days = timedelta(30)
-one_day = timedelta(1)
-seven_days = timedelta(7)
-two_weeks = timedelta(14)
-one_hour = timedelta(0, 60*60)
 for user in bonifici_by_user.groups.keys():
     print(counter)
     counter += 1
@@ -112,33 +86,7 @@ for user in bonifici_by_user.groups.keys():
         is_new_iban = 1
         is_new_iban_cc = 1
         is_new_ip = 1
-        time_delta = 0
-        trx_in_one_month = 1
-        trx_in_one_day = 1
-        trx_in_two_weeks = 1
-        trx_in_one_week = 1
-        trx_in_one_hour = 1
-
         for j in range(0, i):
-            delta = (group.iloc[i]["Timestamp"] - group.iloc[j]["Timestamp"]).total_seconds()
-            if delta < thirty_days.total_seconds():
-                trx_in_one_month += 1
-
-            if delta < two_weeks.total_seconds():
-                trx_in_two_weeks += 1
-
-            if delta < one_day.total_seconds():
-                trx_in_one_day += 1
-
-            if delta < seven_days.total_seconds():
-                trx_in_one_week += 1
-
-            if delta < one_hour.total_seconds():
-                trx_in_one_hour += 1
-
-            if i == j + 1:
-                time_delta = group.iloc[i]["Timestamp"] - group.iloc[j]["Timestamp"]
-                time_delta = time_delta.total_seconds()
             if group.iloc[i]["IBAN"] == group.iloc[j]["IBAN"]:
                 count_trx_iban += 1
             if group.iloc[i]["CC_ASN"] == group.iloc[j]["CC_ASN"]:
@@ -146,7 +94,7 @@ for user in bonifici_by_user.groups.keys():
             if group.iloc[i]["IBAN"] == group.iloc[j]["IBAN"]:
                 is_new_iban = 0
             if group.iloc[i]["IBAN_CC"] == group.iloc[j]["IBAN_CC"]:
-                is_new_iban_cc = 0
+                is_new_iban = 0
             if group.iloc[i]["IP"] == group.iloc[j]["IP"]:
                 is_new_ip = 0
         bonifici.at[group.iloc[i:i + 1].index[0], "count_trx_iban"] = count_trx_iban
@@ -154,12 +102,6 @@ for user in bonifici_by_user.groups.keys():
         bonifici.at[group.iloc[i:i + 1].index[0], "is_new_iban"] = is_new_iban
         bonifici.at[group.iloc[i:i + 1].index[0], "is_new_iban_cc"] = is_new_iban_cc
         bonifici.at[group.iloc[i:i + 1].index[0], "is_new_ip"] = is_new_ip
-        bonifici.at[group.iloc[i:i + 1].index[0], "time_delta"] = time_delta
-        bonifici.at[group.iloc[i:i + 1].index[0], "trx_in_one_month"] = trx_in_one_month
-        bonifici.at[group.iloc[i:i + 1].index[0], "trx_in_one_day"] = trx_in_one_day
-        bonifici.at[group.iloc[i:i + 1].index[0], "trx_in_two_weeks"] = trx_in_two_weeks
-        bonifici.at[group.iloc[i:i + 1].index[0], "trx_in_one_week"] = trx_in_one_week
-        bonifici.at[group.iloc[i:i + 1].index[0], "trx_in_one_hour"] = trx_in_one_hour
 
 bonifici["count_trx_iban"] = pd.to_numeric(bonifici["count_trx_iban"], downcast='integer')
 bonifici["is_new_asn_cc"] = pd.to_numeric(bonifici["is_new_asn_cc"], downcast='integer')
@@ -168,4 +110,4 @@ bonifici["is_new_iban_cc"] = pd.to_numeric(bonifici["is_new_iban_cc"], downcast=
 bonifici["is_new_ip"] = pd.to_numeric(bonifici["is_new_ip"], downcast='integer')
 
 # saving the dataset
-bonifici.to_csv("/home/mpapale/thesis/datasets/bonifici_engineered.csv")
+bonifici.to_csv("/home/mpapale/thesis/datasets/old_bonifici_engineered.csv")
