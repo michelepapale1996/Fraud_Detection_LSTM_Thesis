@@ -1,61 +1,29 @@
 import pandas as pd
-import numpy as np
-from sklearn import preprocessing
 import seaborn as sns
+import numpy as np
+from sklearn.ensemble import RandomForestClassifier
+from dataset_creation import sequences_crafting_for_classification, constants
+from models import LSTM_classifier, evaluation
+from sklearn.model_selection import RandomizedSearchCV
+import warnings
 sns.set(style="white", color_codes=True)
 sns.set_context(rc={"font.family":'sans',"font.size":24,"axes.titlesize":24,"axes.labelsize":24})
 # seaborn can generate several warnings, we ignore them
-import warnings
 warnings.filterwarnings("ignore")
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import f1_score
-from sklearn.metrics import roc_curve
-from sklearn.metrics import roc_auc_score
-from sklearn.metrics import precision_recall_curve
-from sklearn.model_selection import RandomizedSearchCV
+
+
 # in order to print all the columns
 pd.set_option('display.max_columns', 100)
 
-IS_MODEL_SELECTION_ON = False
 
-print("Preparing training and test sets...")
-bonifici = pd.read_csv("../datasets/bonifici_engineered.csv", parse_dates=True)
-bonifici.set_index('indice', inplace=True)
-bonifici = bonifici.drop(["IDSessione", "IP", "IBAN", "IBAN_CC", "CC_ASN"], axis=1)
+def create_model(x_train, y_train):
+    rf = RandomForestClassifier()
+    rf.fit(x_train, y_train)
+    return rf
 
-# --------------------------creating train and test sets-----------------------------------------
-# Labels are the values we want to predict
-labels = np.array(bonifici['isFraud'])
-# Remove the labels from the features
-
-# Saving feature names for later use
-feature_list = ['Importo',
-        'NumConfermaSMS',
-        'isItalianSender',
-        'isItalianReceiver',
-        'count_trx_iban',
-        'is_new_asn_cc',
-        'is_new_iban',
-        'is_new_iban_cc',
-        'is_new_ip']
-
-bonifici = bonifici[feature_list]
-
-# Convert to numpy array
-features = np.array(bonifici)
-train_features, test_features, train_labels, test_labels = train_test_split(features, labels, test_size = 0.25, random_state = 42)
-print('Training Features Shape:', train_features.shape)
-print('Training Labels Shape:', train_labels.shape)
-print('Testing Features Shape:', test_features.shape)
-print('Testing Labels Shape:', test_labels.shape)
-print("train_labels")
-print(np.unique(train_labels, return_counts = True))
-print("test_labels")
-print(np.unique(test_labels, return_counts = True))
-if IS_MODEL_SELECTION_ON:
+def model_selection(x_train, y_train):
     # Number of trees in random forest
-    n_estimators = [int(x) for x in np.linspace(start=2, stop=20, num=10)]
+    n_estimators = [int(x) for x in np.linspace(start=100, stop=2000, num=10)]
     # Number of features to consider at every split
     max_features = ['auto', 'sqrt']
     # Maximum number of levels in tree
@@ -74,36 +42,54 @@ if IS_MODEL_SELECTION_ON:
                    'min_samples_split': min_samples_split,
                    'min_samples_leaf': min_samples_leaf,
                    'bootstrap': bootstrap}
-    # Use the random grid to search for best hyperparameters
-    # First create the base model to tune
+
     rf = RandomForestClassifier()
-    # Random search of parameters, using 3 fold cross validation,
-    # search across 100 different combinations, and use all available cores
-    print("Starting CV...")
-    rf_random = RandomizedSearchCV(estimator=rf, param_distributions=random_grid, n_iter=100, cv=3, verbose=2,
-                                   random_state=42, n_jobs=-1)
+    rf_random = RandomizedSearchCV(estimator=rf,
+                                   param_distributions=random_grid,
+                                   n_iter=100,
+                                   cv=3,
+                                   verbose=2,
+                                   random_state=42,
+                                   n_jobs=-1)
+
     # Fit the random search model
-    rf_random.fit(train_features, train_labels)
-    print("Best params found: ")
-    print(rf_random.best_params_)
-    bestParams = rf_random.best_params_
-else:
-    bestParams = {'n_estimators': 16, 'min_samples_split': 2, 'min_samples_leaf': 4, 'max_features': 'sqrt', 'max_depth': 10, 'bootstrap': True}
-rf = RandomForestClassifier(
-    n_estimators = bestParams["n_estimators"],
-    max_features = bestParams["max_features"],
-    max_depth = bestParams["max_depth"],
-    min_samples_split = bestParams["min_samples_split"],
-    min_samples_leaf = bestParams["min_samples_leaf"],
-    bootstrap = bestParams["bootstrap"],
-    random_state = 42)
-# Train the model on training data
-rf.fit(train_features, train_labels)
-predicted_labels = rf.predict(test_features)
-# ---------------performance indicators------------------ 
-f1 = f1_score(test_labels, predicted_labels)
-auc = roc_auc_score(test_labels, predicted_labels)
-precision, recall, thresholds = precision_recall_curve(test_labels, predicted_labels)
-fpr, tpr, thresholds = roc_curve(test_labels, predicted_labels)
-print('f1_score: %.3f' % f1)
-print('AUC: %.3f' % auc)
+    rf_random.fit(x_train, y_train)
+
+    print("Best params: ", rf_random.best_params_)
+    best_random = rf_random.best_estimator_
+    return best_random
+
+
+look_back = constants.LOOK_BACK
+
+'''
+#dataset_train = pd.read_csv("../datasets/real_dataset_train_58561_users.csv", parse_dates=True)
+dataset_train = pd.read_csv("../datasets/train_529_users_ALL_scenario.csv", parse_dates=True)
+dataset_train = dataset_train.drop(["IP", "IBAN", "IBAN_CC", "CC_ASN"], axis=1)
+dataset_train = dataset_train.drop(["Timestamp", "UserID"], axis=1)
+y_train = dataset_train.isFraud
+x_train_sup = dataset_train.drop(["isFraud", "mean_amount_30_window", "mean_amount_7_window", "stdev_amount_7_window", "stdev_amount_30_window", "mean_amount_1000_window", "stdev_amount_1000_window"], axis=1)
+
+# dataset_test = pd.read_csv("../datasets/real_dataset_test_58561_users.csv", parse_dates=True)
+dataset_test = pd.read_csv("../datasets/test_529_users_ALL_scenario.csv", parse_dates=True)
+dataset_test = dataset_test.drop(["IP", "IBAN", "IBAN_CC", "CC_ASN"], axis=1)
+y_test = dataset_test.isFraud
+dataset_test = dataset_test.drop(["Timestamp", "UserID"], axis=1)
+x_test_sup = dataset_test.drop(["isFraud", "mean_amount_30_window", "mean_amount_7_window", "stdev_amount_7_window", "stdev_amount_30_window", "mean_amount_1000_window", "stdev_amount_1000_window"], axis=1)
+
+
+'''
+x_train, y_train = sequences_crafting_for_classification.create_train_set(look_back)
+x_test, y_test = sequences_crafting_for_classification.create_test_set(look_back)
+# adapt train and test set to supervised learning without time windows
+x_train_sup = x_train[:, look_back, :]
+x_test_sup = x_test[:, look_back, :]
+
+
+print("Fitting model...")
+model = create_model(x_train_sup, y_train)
+# model = model_selection(x_train, y_train)
+
+print("Evaluating model...")
+y_pred = model.predict_proba(x_test_sup)
+evaluation.evaluate(y_test, y_pred[:, 1])

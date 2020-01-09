@@ -1,20 +1,20 @@
 import pandas as pd
 import numpy as np
 import random
-from sklearn import preprocessing
 import seaborn as sns
 # seaborn can generate several warnings, we ignore them
 import warnings
-from keras.wrappers.scikit_learn import KerasClassifier
+from keras.wrappers.scikit_learn import KerasClassifier, KerasRegressor
 from sklearn.model_selection import GridSearchCV
-from sklearn.metrics import f1_score, roc_curve, roc_auc_score, precision_recall_curve, auc, make_scorer, confusion_matrix, accuracy_score
-from sklearn.model_selection import RandomizedSearchCV
-from keras.layers.recurrent import LSTM
+
+from keras.layers.recurrent import LSTM, GRU
+from keras.callbacks import EarlyStopping
 from keras.layers.core import Dense, Activation, Dropout, RepeatVector
 from keras.optimizers import Adam, RMSprop
 from keras.models import Sequential
-from imblearn.under_sampling import RandomUnderSampler
 from sklearn.datasets import make_classification
+from dataset_creation import feature_engineering, sequences_crafting_for_classification, constants
+from models import evaluation
 
 from sklearn.model_selection import train_test_split
 # in order to print all the columns
@@ -31,58 +31,69 @@ np.random.seed(seed)
 # --------------------------Main idea: creating an LSTM classifier ------------------------------
 # -----------------------------------------------------------------------------------------------
 
-look_back = 9
-num_features = 9
+def create_fit_model(x_train, y_train, look_back):
+    print("Fitting the model...")
+    # create and fit the LSTM network
+    model = Sequential()
+    model.add(LSTM(512, input_shape=(look_back + 1, len(x_train[0, 0])), return_sequences=True))
+    model.add(Dropout(0.3))
+    model.add(LSTM(256, input_shape=(look_back + 1, len(x_train[0, 0])), return_sequences=False))
+    model.add(Dropout(0.3))
+    model.add(Dense(1))
+    model.compile(loss='mse', optimizer='adam')
+    es = EarlyStopping(monitor='val_loss', mode='min', verbose=1, patience=3)
+    # model.fit(x_train, y_train, epochs=20, verbose=0, validation_split=0.2, shuffle=False, callbacks=[es])
+    model.fit(x_train, y_train, epochs=5, verbose=1, batch_size=30)
+    return model
 
-def undersample(x, y):
-    num_frauds = np.unique(y, return_counts=True)[1][1]
-    x_no_frauds = x[np.where(y == 0)]
-    x_resampled = np.zeros((0, look_back + 1, num_features))
-    y_resampled = np.zeros(0)
-    for _ in range(num_frauds * 10):
-        reshaped = np.reshape(x_no_frauds[random.randint(0, len(x_no_frauds) - 1)], (1, look_back + 1, num_features))
-        x_resampled = np.concatenate((x_resampled, reshaped))
-        y_resampled = np.append(y_resampled, 0)
-    x_resampled = np.concatenate((x_resampled, x[np.where(y == 1)]))
-    y_resampled = np.append(y_resampled, [1 for _ in range(num_frauds)])
-    np.random.shuffle(x_resampled)
-    np.random.shuffle(y_resampled)
-    return x_resampled, y_resampled
+def get_key(val, my_dict):
+    for key, value in my_dict.items():
+         if val == value:
+             return key
+
+def runtime_testing_fraud_buster(model):
+    scenario_types = ["first", "second", "third", "fourth", "fifth", "sixth", "seventh", "eighth", "ninth"]
+    for scenario in scenario_types:
+        print("------------ ", scenario, "scenario ----------")
+        dataset_train = pd.read_csv("/home/mpapale/thesis/datasets/fraud_buster_bonifici_engineered_train_250_users_" + scenario + "_scenario.csv", parse_dates=True)
+        dataset_test = pd.read_csv("/home/mpapale/thesis/datasets/fraud_buster_bonifici_engineered_test_250_users_" + scenario + "_scenario.csv", parse_dates=True)
+        dataset_train = dataset_train.drop(["IP", "IBAN", "IBAN_CC", "CC_ASN", "ASN"], axis=1)
+        dataset_test = dataset_test.drop(["IP", "IBAN", "IBAN_CC", "CC_ASN", "ASN"], axis=1)
+        dataset_by_user = dataset_test.groupby("UserID")
+
+        is_defrauded = {}
+        max_fraud_score = {}
+
+        users = list(dataset_by_user.groups.keys())
+        for user in users:
+            user_transactions = dataset_train[dataset_train.UserID == user]
+            user_transactions = user_transactions.append(dataset_test[dataset_test.UserID == user])
+            user_transactions = user_transactions.sort_values(by="Timestamp")
+            user_transactions.tail(len(dataset_test[dataset_test.UserID == user]) + look_back)
+
+            x_test, y_test = sequences_crafting_for_classification.create_sequences(user_transactions, look_back)
+            testPredict = model.predict(x_test)
+            max_fraud_score[user] = max(np.reshape(testPredict, len(testPredict)))
+            is_defrauded[user] = max(y_test)
+
+        scores = list(max_fraud_score.values())
+        scores.sort(reverse=True)
+        num_users_to_infect = int(len(users) / 100 * 5)
+        scores = scores[:5 * num_users_to_infect]
+        my_tp = 0
+        for score in scores:
+            user = get_key(score, max_fraud_score)
+            if is_defrauded[user] == 1:
+                my_tp += 1
+
+        print("TP: ", my_tp)
 
 
-x = np.load("/home/mpapale/thesis/classification/dataset_" + str(look_back) + "_lookback/x.npy")
-y = np.load("/home/mpapale/thesis/classification/dataset_" + str(look_back) + "_lookback/y.npy")
-print("Il ratio frodi vs genuine è: ")
-unique, counts = np.unique(y, return_counts=True)
-print(counts)
-x, y = undersample(x, y)
-print("Dopo l'undersampling il ratio frodi vs genuine è: ")
-unique, counts = np.unique(y, return_counts=True)
-print(counts)
-
-x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.33, random_state=42)
-print("train_labels")
-print(np.unique(y_train, return_counts=True))
-print("test_labels")
-print(np.unique(y_test, return_counts=True))
-
-# define the grid search parameters
-batch_size = [1, 5]
-epochs = [10]
-layers = [{'input': 10, 'output': 1}]#,
-          #{'input': 128, 'output': 1},
-          #{'input': 128, 'hidden1': 64, 'output': 1},
-          #{'input': 256, 'hidden1': 128, 'output': 1},
-          #{'input': 512, 'hidden1': 256, 'hidden2': 128, 'output': 1}]
-learning_rate = [0.1, 0.01, 0.001]
-dropout_rate = [0.0, 0.3, 0.8]
-
-
-def create_model(layers={'input': 5, 'output': 1}, learning_rate=0.01, dropout_rate=0, look_back=25):
+def create_model(layers, learning_rate, dropout_rate, look_back, num_features):
     model = Sequential()
     n_hidden = len(layers) - 2
     if n_hidden > 2:
-        model.add(LSTM(layers['input'], input_shape=(look_back + 1, num_features), return_sequences=True))
+        model.add(LSTM(layers['input'], input_shape=(look_back+1, num_features), return_sequences=True))
 
         # add hidden layers return sequence true
         for i in range(2, n_hidden):
@@ -92,68 +103,76 @@ def create_model(layers={'input': 5, 'output': 1}, learning_rate=0.01, dropout_r
         model.add(LSTM(layers['hidden' + str(n_hidden)], return_sequences=False))
         model.add(Dropout(dropout_rate))
     else:
-        model.add(LSTM(layers['input'], input_shape=(look_back + 1, num_features), return_sequences=False))
+        model.add(LSTM(layers['input'], input_shape=(look_back+1, num_features), return_sequences=False))
 
-    # add output
     model.add(Dense(layers['output'], activation='sigmoid'))
 
-    # compile model and print summary
-    model.compile(loss="binary_crossentropy", optimizer=Adam(lr=learning_rate))
+    # model.compile(loss="mse", optimizer=Adam(lr=learning_rate))
+    model.compile(loss="mse", optimizer="adam")
     # model.summary()
     return model
 
 
-def evaluate_performance(y_true, y_pred):
-    print("---- Performance ----")
-    roc_auc = roc_auc_score(y_true, y_pred)
-    print("Roc_auc score: %.3f" % roc_auc)
+def model_selection(x_train, y_train, x_test, y_test, look_back):
+    # define the grid search parameters
+    batch_size = [10, 30, 50]
+    epochs = [10, 25, 50]
+    layers = [{'input': 256, 'hidden1': 64, 'output': 1},
+              {'input': 512, 'hidden1': 256, 'output': 1},
+              {'input': 512, 'hidden1': 256, 'hidden2': 64, 'output': 1}]
+    learning_rate = [0.1, 0.01, 0.001]
+    dropout_rate = [0.0, 0.3, 0.8]
 
-    precision, recall, thresholds = precision_recall_curve(y_true, y_pred)
-    def get_position(recall):
-        for i in range(0, len(recall)):
-            if recall[i] < 0.2:
-                return i - 1
+    batch_size = np.random.choice(batch_size, int(len(batch_size) / 2))
+    # epochs = np.random.choice(epochs, int(len(epochs) / 2))
+    # layers = np.random.choice(layers, int(len(layers) / 2))
+    learning_rate = np.random.choice(learning_rate, int(len(learning_rate) / 2))
+    dropout_rate = np.random.choice(dropout_rate, int(len(dropout_rate) / 2))
 
-    # This function adjusts class predictions based on the prediction threshold (t).
-    def adjusted_classes(y_scores, t):
-        return [1 if y >= t else 0 for y in y_scores]
+    max_roc = 0
+    best_model = False
+    best_params = False
 
-    precision_recall_auc = auc(recall, precision)
-    print("Precision_recall_auc score: %.3f" % precision_recall_auc)
-    position = get_position(recall)
-    print("Precision: " + str(precision[position]))
-    threshold = thresholds[position]
-    y_pred = adjusted_classes(y_pred, threshold)
-    f1 = f1_score(y_true, y_pred)
-    print("f1 score: %.3f" % f1)
-    print("accuracy: " + str(accuracy_score(y_true, y_pred)))
-    print(confusion_matrix(y_true, y_pred))
-    return f1
+    for b in batch_size:
+        for e in epochs:
+            for l in layers:
+                for lr in learning_rate:
+                    for d in dropout_rate:
+
+                        print("Current batch_size", b, "of", batch_size)
+                        print("Current epochs", e, "of", epochs)
+                        print("Current layers", l, "of", layers)
+                        print("Current learning_rate", lr, "of", learning_rate)
+                        print("Current dropout_rate", d, "of", dropout_rate)
+
+                        model = create_model(l, lr, d, look_back, len(x_train[0, 0]))
+                        es = EarlyStopping(monitor='val_loss', mode='min', verbose=1, patience=int(e / 3))
+                        # model.fit(x_train, y_train, epochs=e, verbose=1, validation_split=0.2, batch_size=b, shuffle=False, callbacks=[es])
+                        model.fit(x_train, y_train, epochs=e, batch_size=b, verbose=1)
+                        testPredict = model.predict(x_test)
+                        f1, roc = evaluation.evaluate(y_test, testPredict)
+                        if roc > max_roc:
+                            best_model = model
+                            best_params = {
+                                "batch_size": b,
+                                "epochs": e,
+                                "layers": l,
+                                "learning_rate": lr,
+                                "dropout_rate": d
+                            }
+                            max_roc = roc
+    return best_model, best_params
 
 
-model = KerasClassifier(build_fn=create_model, verbose=0)
-param_grid = dict(batch_size=batch_size,
-                  epochs=epochs,
-                  layers=layers,
-                  learning_rate=learning_rate,
-                  dropout_rate=dropout_rate)
-scoring = make_scorer(evaluate_performance, needs_threshold=True)
-# grid = GridSearchCV(estimator=model, param_grid=param_grid, n_jobs=-1, cv=3)
-grid = RandomizedSearchCV(estimator=model,
-                          param_distributions=param_grid,
-                          n_jobs=-1,
-                          cv=3,
-                          n_iter=2,
-                          verbose=2,
-                          scoring=scoring)
-grid_result = grid.fit(x_train, y_train)
-# summarize results
-print("Best f1: %f using %s" % (grid_result.best_score_, grid_result.best_params_))
-means = grid_result.cv_results_['mean_test_score']
-stds = grid_result.cv_results_['std_test_score']
-params = grid_result.cv_results_['params']
-for mean, stdev, param in zip(means, stds, params):
-    print("%f (%f) with: %r" % (mean, stdev, param))
+if __name__ == "__main__":
+    look_back = constants.LOOK_BACK
+    print("Lookback using: ", look_back)
+    x_train, y_train = sequences_crafting_for_classification.create_train_set(look_back)
+    x_test, y_test = sequences_crafting_for_classification.create_test_set(look_back)
 
-print("Best model score on test set")
-grid_result.score(x_test, y_test)
+    model = create_fit_model(x_train, y_train, look_back)
+    # model, params = model_selection(x_train, y_train, x_test, y_test, look_back)
+    # print("Best params found: ", params)
+    testPredict = model.predict(x_test)
+    evaluation.evaluate(y_test, testPredict)
+    # runtime_testing_fraud_buster(model)

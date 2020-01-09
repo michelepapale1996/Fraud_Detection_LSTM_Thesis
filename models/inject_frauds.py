@@ -12,7 +12,7 @@ one_day = timedelta(1)
 seven_days = timedelta(7)
 two_weeks = timedelta(14)
 one_hour = timedelta(0, 60 * 60)
-num_frauds = 10
+num_frauds = 5
 
 def random_date(previous, next):
     return datetime.fromtimestamp((next.timestamp() - previous.timestamp()) * random.random() + previous.timestamp())
@@ -217,26 +217,21 @@ def third_scenario(dataset_val_test):
         dataset_val_test = insert_row(index, dataset_val_test, pd.DataFrame([new_row], columns=cols))
     return dataset_val_test
 
-def first_scenario(dataset_val_test, real_dataset):
-    for i in range(num_frauds):
-        index = random.choice(dataset_val_test.index[1:])
-
+def first_scenario(user_dataset, real_dataset, last_index_train, last_index_val):
+    def craft_fraud(user_dataset):
         ip = real_dataset.loc[random.choice(real_dataset.index), "IP"]
         idSessione = real_dataset.loc[random.choice(real_dataset.index), "IDSessione"]
-
-        timestamp_previous_trx = pd.Timestamp(dataset_val_test.loc[index - 1, "Timestamp"])
-        timestamp_next_trx = pd.Timestamp(dataset_val_test.loc[index, "Timestamp"])
+        timestamp_previous_trx = pd.Timestamp(user_dataset.loc[index - 1, "Timestamp"])
+        timestamp_next_trx = pd.Timestamp(user_dataset.loc[index, "Timestamp"])
         timestamp_fraud = random_date(timestamp_previous_trx, timestamp_next_trx)
-
         importo = random.randint(100, 500)
         msgErrore = real_dataset.loc[random.choice(real_dataset.index), "MsgErrore"]
-        userID = dataset_val_test.loc[index, "UserID"]
+        userID = user_dataset.loc[index, "UserID"]
         iban = real_dataset.loc[random.choice(real_dataset.index), "IBAN"]
         numConfermaSMS = real_dataset.loc[random.choice(real_dataset.index), "NumConfermaSMS"]
         iban_cc = "IT"
-        cc_asn = dataset_val_test.loc[index, "CC_ASN"]
+        cc_asn = user_dataset.loc[index, "CC_ASN"]
         isFraud = 1
-
         new_row = [ip,
                    idSessione,
                    timestamp_fraud,
@@ -248,6 +243,16 @@ def first_scenario(dataset_val_test, real_dataset):
                    iban_cc,
                    cc_asn,
                    isFraud]
-        cols = list(dataset_val_test.columns)
-        dataset_val_test = insert_row(index, dataset_val_test, pd.DataFrame([new_row], columns=cols))
-    return dataset_val_test
+        cols = list(user_dataset.columns)
+        return pd.DataFrame([new_row], columns=cols)
+
+    for i in range(num_frauds):
+        index = random.choice(user_dataset.index[last_index_train:last_index_val])
+        new_fraud = craft_fraud(user_dataset)
+        user_dataset = insert_row(index, user_dataset, new_fraud)
+
+        index = random.choice(user_dataset.index[last_index_val:])
+        new_fraud = craft_fraud(user_dataset)
+        user_dataset = insert_row(index, user_dataset, new_fraud)
+
+    return user_dataset

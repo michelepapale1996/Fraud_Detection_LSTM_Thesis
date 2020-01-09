@@ -4,6 +4,8 @@ from sklearn import preprocessing
 import seaborn as sns
 # seaborn can generate several warnings, we ignore them
 import warnings
+from datetime import timedelta
+from dataset_creation import constants
 
 # in order to print all the columns
 pd.set_option('display.max_columns', 100)
@@ -17,84 +19,148 @@ warnings.filterwarnings("ignore")
 
 # creates samples starting by the sequence of transactions of a given user
 # NB: only the last transaction of a sequence can be a fraud
-# returns numpy array
-def get_sequences(transactions, look_back):
-    cols = ['Importo',
-            'NumConfermaSMS',
-            'isItalianSender',
-            'isItalianReceiver',
-            'count_trx_iban',
-            'is_new_asn_cc',
-            'is_new_iban',
-            'is_new_iban_cc',
-            'is_new_ip']
-    genuine_transactions = transactions.loc[transactions.isFraud == 0, cols]
+def get_sequences_from_user(transactions, look_back):
     sequences = []
     labels = []
 
-    pointer = 0
-    # NB: in look_back transactions there must not be present frauds
-    while pointer < len(genuine_transactions.index) - look_back:
-        sequence = genuine_transactions[pointer: pointer + look_back]
-        index_last_genuine_transaction = genuine_transactions.index[pointer + look_back - 1]
+    pointer = look_back + 1
+    # for each transaction, check if there are lookback genuine transactions
+    while pointer < len(transactions.index):
+        past_transactions = transactions.iloc[: pointer]
+        # lookback transactions must be genuine
+        look_back_window = past_transactions[past_transactions.isFraud == 0]
 
-        # get the next transaction
-        i = transactions.index.get_loc(index_last_genuine_transaction)
-        try:
-            sequence = sequence.append(transactions.iloc[i + 1][cols])
-            labels.append(transactions.iloc[i + 1]["isFraud"])
-            sequences.append(sequence.values)
-        except Exception as e:
-            print(e)
+        if len(look_back_window) >= look_back:
+            look_back_window = look_back_window.tail(look_back)
+            look_back_window = look_back_window.drop(["Timestamp", "UserID", "isFraud"], axis=1)
+            current_trx = transactions.iloc[pointer:pointer + 1]
+            labels.append(current_trx["isFraud"].values[0])
+            current_trx = current_trx.drop(["Timestamp", "UserID", "isFraud"], axis=1)
+
+            if len(look_back_window) >= 1:
+                to_append = look_back_window.append(current_trx, ignore_index=True)
+                sequences.append(to_append.values)
+            else:
+                sequences.append(current_trx.values[0])
+
         pointer += 1
     return sequences, labels
 
 
-# converting low level dataset (transactions of all users)
-# to high level (sequences of transactions with at least length = look_back + 1)
-def create_dataset(dataset, look_back=1):
-    print("Creating samples using as look_back = " + str(look_back))
+# converting low level dataset (transactions of users)
+# to high level
+# x will be: sequences of transactions with at least length = look_back + 1
+# y will be the "isFraud" flag
+def create_sequences(dataset, look_back=1):
     bonifici_by_user = dataset.groupby("UserID")
+    # print("Creating samples using as look_back = " + str(look_back))
+    # print("Total number of users: ", len(bonifici_by_user.groups.keys()))
     x = []
     y = []
 
-    # un utente è valido se ha più di lookback transazioni
-    number_of_sequences = 0
     number_of_users = 0
+    counter = 0
     for user in bonifici_by_user.groups.keys():
-        transactions = bonifici_by_user.get_group(user).sort_values("Timestamp")
-        transactions = transactions.drop(["UserID", "Timestamp"], axis=1)
-        sequence_x, sequence_y = get_sequences(transactions, look_back)
-        x.extend(sequence_x)
-        y.extend(sequence_y)
+        transactions = bonifici_by_user.get_group(user).sort_values("Timestamp").reset_index(drop=True)
+        sequence_x_train, sequence_y_train = get_sequences_from_user(transactions, look_back)
+
+        x.extend(sequence_x_train)
+        y.extend(sequence_y_train)
 
         number_of_users += 1
-        print(number_of_users)
-        number_of_sequences += len(sequence_y)
-
-    print("There are " + str(number_of_sequences) + " sequences with " + str(number_of_users) + " users.")
+        counter += 1
+        # print("user:", counter, user)
+    # print("Created", number_of_users, "users' sequences")
     return np.asarray(x), np.asarray(y)
 
+def insert_lookback_transactions_from_training_set(d_train, d_test, lookback):
+    print("Inserting in test set lookback transactions from training...")
+    dataset_by_user = d_test.groupby("UserID")
+    for user in dataset_by_user.groups.keys():
+        training_transactions = d_train[d_train.UserID == user].sort_values(by='Timestamp', ascending=True).reset_index(drop=True)
+        # take only genuine transactions
+        training_genuine_transactions = training_transactions[training_transactions.isFraud == 0].reset_index(drop=True)
+        last_training_transactions = training_genuine_transactions.tail(lookback)
+        group = dataset_by_user.get_group(user).sort_values(by='Timestamp', ascending=True).reset_index(drop=True)
 
-def create_dataset_for_single_user(dataset, look_back=1):
-    print("Creating samples using as look_back = " + str(look_back))
-    # take the transactions of the user with most transactions
-    transactions = dataset.loc[dataset["UserID"] == "e0e56529cd38cb40f414bbecfde594d5"].sort_values("Timestamp")
+        try:
+            extended_dataset = extended_dataset.append(group, ignore_index=True)
+        # if it is the first iteration, extended_dataset is not defined
+        except NameError:
+            extended_dataset = group
 
-    transactions = transactions.drop(["UserID", "Timestamp"], axis=1)
-    sequence_x, sequence_y = get_sequences(transactions, look_back)
+        extended_dataset = extended_dataset.append(last_training_transactions, ignore_index=True)
 
-    # return np.asarray(sequence_x), np.asarray(sequence_y)
-    return sequence_x, sequence_y
+    return extended_dataset
+
+def create_train_set(look_back, scenario_type=constants.ALL_SCENARIOS):
+    print("Preparing training set...")
+    if constants.INJECTED_DATASET:
+        path = "../datasets/train_63_users_" + scenario_type + "_scenario.csv"
+        # path = "../datasets/train_167_users_" + scenario_type + "_scenario.csv"
+        # path = "../datasets/train_529_users_" + scenario_type + "_scenario.csv"
+        # path = "../datasets/train_696_users_" + scenario_type + "_scenario.csv"
+    if constants.FRAUD_BUSTER_DATASET:
+        path = "../datasets/fraud_buster_train_250_users_" + scenario_type + "_scenario.csv"
+    if constants.REAL_DATASET:
+        path = "../datasets/real_dataset_train_696_users.csv"
+
+    print("Using as train: ", path)
+    dataset_train = pd.read_csv(path, parse_dates=True)
+    dataset_train = dataset_train.drop(["IP", "IBAN", "IBAN_CC", "CC_ASN"], axis=1)
+
+    if constants.REAL_DATASET:
+        users = constants.users_with_more_than_50_trx_train_5_trx_test
+        dataset_train = dataset_train[dataset_train.UserID.isin(users)]
+
+    x_train, y_train = create_sequences(dataset_train, look_back)
+    return x_train, y_train
+
+def create_test_set(look_back, scenario_type=constants.ALL_SCENARIOS):
+    print("Preparing test set...")
+    if constants.INJECTED_DATASET:
+        path = "../datasets/test_63_users_" + scenario_type + "_scenario.csv"
+        train_path = "../datasets/train_63_users_" + scenario_type + "_scenario.csv"
+        # path = "../datasets/test_167_users_" + scenario_type + "_scenario.csv"
+        # train_path = "../datasets/train_167_users_" + scenario_type + "_scenario.csv"
+        # path = "../datasets/test_529_users_" + scenario_type + "_scenario.csv"
+        # train_path = "../datasets/train_529_users_" + scenario_type + "_scenario.csv"
+        # path = "../datasets/test_696_users_" + scenario_type + "_scenario.csv"
+        # train_path = "../datasets/train_696_users_" + scenario_type + "_scenario.csv"
+    if constants.FRAUD_BUSTER_DATASET:
+        path = "../datasets/fraud_buster_test_250_users_" + scenario_type + "_scenario.csv"
+    if constants.REAL_DATASET:
+        path = "../datasets/real_dataset_test_696_users.csv"
+        train_path = "../datasets/real_dataset_train_696_users.csv"
+
+    print("Using as test: ", path)
+    dataset_train = pd.read_csv(train_path, parse_dates=True)
+    dataset_train = dataset_train.drop(["IP", "IBAN", "IBAN_CC", "CC_ASN"], axis=1)
+
+    dataset_test = pd.read_csv(path, parse_dates=True)
+    dataset_test = dataset_test.drop(["IP", "IBAN", "IBAN_CC", "CC_ASN"], axis=1)
+
+    if constants.REAL_DATASET:
+        users = constants.users_with_more_than_50_trx_train_5_trx_test
+        dataset_train = dataset_train[dataset_train.UserID.isin(users)]
+        dataset_test = dataset_test[dataset_test.UserID.isin(users)]
+
+    print("len test set before injecting training transactions", len(dataset_test))
+    # in test set, insert lookback transactions for each user taking them from training set.
+    # in this way, all the transactions in test set will be used.
+    dataset_test = insert_lookback_transactions_from_training_set(dataset_train, dataset_test, look_back)
+    print("len test set after injecting training transactions", len(dataset_test))
+    x_test, y_test = create_sequences(dataset_test, look_back)
+    return x_test, y_test
 
 
-print("Preparing training and test sets...")
-bonifici = pd.read_csv("../datasets/bonifici_engineered.csv", parse_dates=True)
-bonifici.set_index('indice', inplace=True)
-bonifici = bonifici.drop(["IDSessione", "IP", "IBAN", "IBAN_CC", "CC_ASN"], axis=1)
-print("Creating datasets...")
-look_back = 9
-x, y = create_dataset(bonifici, look_back)
+if __name__ == "__main__":
+    look_back = constants.LOOK_BACK
+    x_train, y_train = create_train_set(look_back)
+    x_test, y_test = create_test_set(look_back)
 
-np.save("/home/mpapale/thesis/classification/dataset_" + str(look_back) + "_lookback/x.npy", x)
-np.save("/home/mpapale/thesis/classification/dataset_" + str(look_back) + "_lookback/y.npy", y)
+    np.save("../classification/dataset_" + str(look_back) + "_lookback/x_train.npy", x_train)
+    np.save("../classification/dataset_" + str(look_back) + "_lookback/y_train.npy", y_train)
+    np.save("../classification/dataset_" + str(look_back) + "_lookback/x_test.npy", x_test)
+    np.save("../classification/dataset_" + str(look_back) + "_lookback/y_test.npy", y_test)
+    print("Dataset saved.")
