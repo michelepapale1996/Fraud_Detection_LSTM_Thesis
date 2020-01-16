@@ -51,7 +51,7 @@ for user in bonifici_by_user.groups.keys():
     group_train = group[group.Timestamp < last_date_train_set]
     group_test = group[group.Timestamp >= last_date_train_set]
 
-    if len(group_test) > 5 and len(group_train) > 500:
+    if len(group_test) > 5 and len(group_train) > 10:
         print("user: ", user, ", len: ", len(group), "len test: ", len(group_test))
         users.append(user)
 print(users)

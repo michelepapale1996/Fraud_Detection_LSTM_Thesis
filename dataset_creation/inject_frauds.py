@@ -119,9 +119,9 @@ def craft_frauds(dataset, real_dataset, scenario_type, last_date_train_set, all_
 
     users = dataset_by_user.groups.keys()
     num_users_to_infect = int(len(users) / 100 * 5)
-    print(num_users_to_infect, "will be infected.")
+    print(num_users_to_infect, "users will be infected.")
     for type in scenario_types:
-        print("Injecting frauds of another scenario...")
+        print("Injecting frauds for this scenario...")
         users_to_infect = random.sample(users, num_users_to_infect)
 
         if type == FIRST_SCENARIO or type == SECOND_SCENARIO or type == THIRD_SCENARIO or type == FOURTH_SCENARIO or type == FIFTH_SCENARIO:
@@ -146,6 +146,7 @@ def craft_frauds(dataset, real_dataset, scenario_type, last_date_train_set, all_
                 user_dataset = insert_row(index, user_dataset, new_fraud)
                 dataset = dataset.append(new_fraud)
                 index += 1
+    print("Num of frauds in dataset", len(dataset[dataset.isFraud == 1]))
     return dataset
 
 # craft a single fraud.
@@ -184,7 +185,7 @@ def craft_single_fraud(user_dataset, real_dataset, index, fraud_type, all_users,
 
     importo, iban_cc, cc_asn, isFraud = dispatcher[fraud_type]()
 
-    if not FRAUD_BUSTER_DATASET:
+    if DATASET_TYPE != FRAUD_BUSTER_DATASET:
         new_row = [ip, timestamp_fraud, importo, msgErrore, userID, iban, numConfermaSMS, iban_cc, cc_asn, isFraud]
     else:
         new_row = [timestamp_fraud, importo, userID, iban, iban_cc, cc_asn, asn, ip, isFraud]

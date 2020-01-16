@@ -62,23 +62,6 @@ def model_selection(x_train, y_train):
 
 look_back = constants.LOOK_BACK
 
-'''
-#dataset_train = pd.read_csv("../datasets/real_dataset_train_58561_users.csv", parse_dates=True)
-dataset_train = pd.read_csv("../datasets/train_529_users_ALL_scenario.csv", parse_dates=True)
-dataset_train = dataset_train.drop(["IP", "IBAN", "IBAN_CC", "CC_ASN"], axis=1)
-dataset_train = dataset_train.drop(["Timestamp", "UserID"], axis=1)
-y_train = dataset_train.isFraud
-x_train_sup = dataset_train.drop(["isFraud", "mean_amount_30_window", "mean_amount_7_window", "stdev_amount_7_window", "stdev_amount_30_window", "mean_amount_1000_window", "stdev_amount_1000_window"], axis=1)
-
-# dataset_test = pd.read_csv("../datasets/real_dataset_test_58561_users.csv", parse_dates=True)
-dataset_test = pd.read_csv("../datasets/test_529_users_ALL_scenario.csv", parse_dates=True)
-dataset_test = dataset_test.drop(["IP", "IBAN", "IBAN_CC", "CC_ASN"], axis=1)
-y_test = dataset_test.isFraud
-dataset_test = dataset_test.drop(["Timestamp", "UserID"], axis=1)
-x_test_sup = dataset_test.drop(["isFraud", "mean_amount_30_window", "mean_amount_7_window", "stdev_amount_7_window", "stdev_amount_30_window", "mean_amount_1000_window", "stdev_amount_1000_window"], axis=1)
-
-
-'''
 x_train, y_train = sequences_crafting_for_classification.create_train_set(look_back)
 x_test, y_test = sequences_crafting_for_classification.create_test_set(look_back)
 # adapt train and test set to supervised learning without time windows
@@ -88,8 +71,8 @@ x_test_sup = x_test[:, look_back, :]
 
 print("Fitting model...")
 model = create_model(x_train_sup, y_train)
-# model = model_selection(x_train, y_train)
+# model = model_selection(x_train_sup, y_train)
 
 print("Evaluating model...")
 y_pred = model.predict_proba(x_test_sup)
-evaluation.evaluate(y_test, y_pred[:, 1])
+evaluation.evaluate_n_times(y_test, y_pred[:, 1])
