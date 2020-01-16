@@ -6,7 +6,7 @@ import seaborn as sns
 import warnings
 from datetime import timedelta
 from dataset_creation import constants
-
+import os
 # in order to print all the columns
 pd.set_option('display.max_columns', 100)
 sns.set(style="white", color_codes=True)
@@ -37,7 +37,7 @@ def get_sequences_from_user(transactions, look_back):
             labels.append(current_trx["isFraud"].values[0])
             current_trx = current_trx.drop(["Timestamp", "UserID", "isFraud"], axis=1)
 
-            if len(look_back_window) >= 1:
+            if look_back > 0:
                 to_append = look_back_window.append(current_trx, ignore_index=True)
                 sequences.append(to_append.values)
             else:
@@ -58,8 +58,6 @@ def create_sequences(dataset, look_back=1):
     x = []
     y = []
 
-    number_of_users = 0
-    counter = 0
     for user in bonifici_by_user.groups.keys():
         transactions = bonifici_by_user.get_group(user).sort_values("Timestamp").reset_index(drop=True)
         sequence_x_train, sequence_y_train = get_sequences_from_user(transactions, look_back)
@@ -67,10 +65,6 @@ def create_sequences(dataset, look_back=1):
         x.extend(sequence_x_train)
         y.extend(sequence_y_train)
 
-        number_of_users += 1
-        counter += 1
-        # print("user:", counter, user)
-    # print("Created", number_of_users, "users' sequences")
     return np.asarray(x), np.asarray(y)
 
 def insert_lookback_transactions_from_training_set(d_train, d_test, lookback):
@@ -93,57 +87,18 @@ def insert_lookback_transactions_from_training_set(d_train, d_test, lookback):
 
     return extended_dataset
 
-def create_train_set(look_back, scenario_type=constants.ALL_SCENARIOS):
-    print("Preparing training set...")
-    if constants.INJECTED_DATASET:
-        path = "../datasets/train_63_users_" + scenario_type + "_scenario.csv"
-        # path = "../datasets/train_167_users_" + scenario_type + "_scenario.csv"
-        # path = "../datasets/train_529_users_" + scenario_type + "_scenario.csv"
-        # path = "../datasets/train_696_users_" + scenario_type + "_scenario.csv"
-    if constants.FRAUD_BUSTER_DATASET:
-        path = "../datasets/fraud_buster_train_250_users_" + scenario_type + "_scenario.csv"
-    if constants.REAL_DATASET:
-        path = "../datasets/real_dataset_train_696_users.csv"
-
-    print("Using as train: ", path)
+def create_train_set(look_back, path):
     dataset_train = pd.read_csv(path, parse_dates=True)
     dataset_train = dataset_train.drop(["IP", "IBAN", "IBAN_CC", "CC_ASN"], axis=1)
-
-    if constants.REAL_DATASET:
-        users = constants.users_with_more_than_50_trx_train_5_trx_test
-        dataset_train = dataset_train[dataset_train.UserID.isin(users)]
 
     x_train, y_train = create_sequences(dataset_train, look_back)
     return x_train, y_train
 
-def create_test_set(look_back, scenario_type=constants.ALL_SCENARIOS):
-    print("Preparing test set...")
-    if constants.INJECTED_DATASET:
-        path = "../datasets/test_63_users_" + scenario_type + "_scenario.csv"
-        train_path = "../datasets/train_63_users_" + scenario_type + "_scenario.csv"
-        # path = "../datasets/test_167_users_" + scenario_type + "_scenario.csv"
-        # train_path = "../datasets/train_167_users_" + scenario_type + "_scenario.csv"
-        # path = "../datasets/test_529_users_" + scenario_type + "_scenario.csv"
-        # train_path = "../datasets/train_529_users_" + scenario_type + "_scenario.csv"
-        # path = "../datasets/test_696_users_" + scenario_type + "_scenario.csv"
-        # train_path = "../datasets/train_696_users_" + scenario_type + "_scenario.csv"
-    if constants.FRAUD_BUSTER_DATASET:
-        path = "../datasets/fraud_buster_test_250_users_" + scenario_type + "_scenario.csv"
-    if constants.REAL_DATASET:
-        path = "../datasets/real_dataset_test_696_users.csv"
-        train_path = "../datasets/real_dataset_train_696_users.csv"
-
-    print("Using as test: ", path)
+def create_test_set(look_back, train_path, test_path):
     dataset_train = pd.read_csv(train_path, parse_dates=True)
     dataset_train = dataset_train.drop(["IP", "IBAN", "IBAN_CC", "CC_ASN"], axis=1)
-
-    dataset_test = pd.read_csv(path, parse_dates=True)
+    dataset_test = pd.read_csv(test_path, parse_dates=True)
     dataset_test = dataset_test.drop(["IP", "IBAN", "IBAN_CC", "CC_ASN"], axis=1)
-
-    if constants.REAL_DATASET:
-        users = constants.users_with_more_than_50_trx_train_5_trx_test
-        dataset_train = dataset_train[dataset_train.UserID.isin(users)]
-        dataset_test = dataset_test[dataset_test.UserID.isin(users)]
 
     print("len test set before injecting training transactions", len(dataset_test))
     # in test set, insert lookback transactions for each user taking them from training set.
@@ -153,14 +108,67 @@ def create_test_set(look_back, scenario_type=constants.ALL_SCENARIOS):
     x_test, y_test = create_sequences(dataset_test, look_back)
     return x_test, y_test
 
+def get_file_name(dataset_type=constants.DATASET_TYPE, scenario_type=constants.ALL_SCENARIOS):
+    if dataset_type == constants.INJECTED_DATASET:
+        path = "test_696_users_" + scenario_type + "_scenario"
+        train_path = "train_696_users_" + scenario_type + "_scenario"
+        # path = "test_4072_users_" + scenario_type + "_scenario"
+        # train_path = "train_4072_users_" + scenario_type + "_scenario"
+    if dataset_type == constants.FRAUD_BUSTER_DATASET:
+        path = "fraud_buster_test_250_users_" + scenario_type + "_scenario"
+    if dataset_type == constants.REAL_DATASET:
+        path = "real_dataset_test_696_users"
+        train_path = "real_dataset_train_696_users"
+        # path = "real_dataset_test_4072_users"
+        # train_path = "real_dataset_train_4072_users"
+    return train_path, path
+
+# used from other models to get the train set (without recreate the sequences if they already exists)
+def get_train_set(dataset_type=constants.DATASET_TYPE, scenario=constants.ALL_SCENARIOS):
+    train_file_name, _ = get_file_name(dataset_type, scenario)
+    x_train_path = "../classification/dataset_" + str(constants.LOOK_BACK) + "_lookback/x_" + train_file_name + ".npy"
+    y_train_path = "../classification/dataset_" + str(constants.LOOK_BACK) + "_lookback/y_" + train_file_name + ".npy"
+    print("Using as train set:", x_train_path)
+    # check if train set already exist, otherwise create and save it
+    if not os.path.exists(x_train_path):
+        print("File does not exist, creating it...")
+        main(dataset_type, scenario)
+
+    x_train = np.load(x_train_path)
+    y_train = np.load(y_train_path)
+    return x_train, y_train
+
+# used from other models to get the test set (without recreate the sequences if they already exists)
+def get_test_set(dataset_type=constants.DATASET_TYPE, scenario=constants.ALL_SCENARIOS):
+    _, test_file_name = get_file_name(dataset_type, scenario)
+    x_test_path = "../classification/dataset_" + str(constants.LOOK_BACK) + "_lookback/x_" + test_file_name + ".npy"
+    y_test_path = "../classification/dataset_" + str(constants.LOOK_BACK) + "_lookback/y_" + test_file_name + ".npy"
+    print("Using as test set:", x_test_path)
+    # check if train set already exist, otherwise create and save it
+    if not os.path.exists(x_test_path):
+        print("File does not exist, creating it...")
+        main(dataset_type, scenario)
+
+    x_test = np.load(x_test_path)
+    y_test = np.load(y_test_path)
+    return x_test, y_test
+
+def main(dataset_type=constants.DATASET_TYPE, scenario=constants.ALL_SCENARIOS):
+    look_back = constants.LOOK_BACK
+    train_file_name, test_file_name = get_file_name(dataset_type, scenario)
+
+    train_path = "../datasets/" + train_file_name + ".csv"
+    test_path = "../datasets/" + test_file_name + ".csv"
+    print("Creating train set: ", train_path)
+    x_train, y_train = create_train_set(look_back, train_path)
+    print("Creating test set: ", test_path)
+    x_test, y_test = create_test_set(look_back, train_path, test_path)
+
+    np.save("../classification/dataset_" + str(look_back) + "_lookback/x_" + train_file_name + ".npy", x_train)
+    np.save("../classification/dataset_" + str(look_back) + "_lookback/y_" + train_file_name + ".npy", y_train)
+    np.save("../classification/dataset_" + str(look_back) + "_lookback/x_" + test_file_name + ".npy", x_test)
+    np.save("../classification/dataset_" + str(look_back) + "_lookback/y_" + test_file_name + ".npy", y_test)
+
 
 if __name__ == "__main__":
-    look_back = constants.LOOK_BACK
-    x_train, y_train = create_train_set(look_back)
-    x_test, y_test = create_test_set(look_back)
-
-    np.save("../classification/dataset_" + str(look_back) + "_lookback/x_train.npy", x_train)
-    np.save("../classification/dataset_" + str(look_back) + "_lookback/y_train.npy", y_train)
-    np.save("../classification/dataset_" + str(look_back) + "_lookback/x_test.npy", x_test)
-    np.save("../classification/dataset_" + str(look_back) + "_lookback/y_test.npy", y_test)
-    print("Dataset saved.")
+    main()

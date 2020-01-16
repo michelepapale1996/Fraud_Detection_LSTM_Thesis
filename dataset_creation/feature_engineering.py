@@ -11,6 +11,7 @@ warnings.filterwarnings("ignore")
 import sys
 sys.path.append("/home/mpapale/thesis")
 from dataset_creation import inject_frauds, constants
+from sklearn.preprocessing import MinMaxScaler
 from dataset_creation.constants import *
 import random
 import math
@@ -100,16 +101,19 @@ def create_user_aggregated_features(user_transactions):
         time_delta = time_delta.total_seconds()
         user_transactions.at[i, "time_delta"] = time_delta
 
+    '''
     # time window: one week, one month and global
     # 1000 is used because in the dataset there are less than 1000 days in dataset -> get all past transactions
     for time_window in [7, 30, 1000]:
         already_seen_ibans = {}
-        # when creating aggregated features, do not consider frauds
         for i in range(len(user_transactions)):
             window = user_transactions.iloc[:i]
+            # when creating aggregated features, do not consider frauds
             window = window[window.isFraud == 0]
             window = window[window.Timestamp > user_transactions.iloc[i].Timestamp - timedelta(time_window)]
             count_trx = len(window.Importo)
+
+            # if the current iteration involves the first transaction of the user
             if i == 0:
                 w1 = user_transactions.iloc[:i + 1]
                 w1 = w1[w1.isFraud == 0]
@@ -128,6 +132,7 @@ def create_user_aggregated_features(user_transactions):
 
             if math.isnan(mean_amount) or math.isnan(stdev_amount):
                 print("ERRORE: ", i)
+                raise RuntimeError("nan in mean or stdev when creating aggregated features. Error generated due to " + str(i) + "transaction for user " + str(user_transactions.iloc[0].UserID))
             count_different_iban_ccs = len(np.unique(window.IBAN_CC.values))
             count_different_asn_ccs = len(np.unique(window.CC_ASN.values))
 
@@ -166,6 +171,7 @@ def create_user_aggregated_features(user_transactions):
             user_transactions.at[i, "is_new_iban_" + str(time_window) + "_window"] = is_new_iban
             user_transactions.at[i, "is_new_iban_cc_" + str(time_window) + "_window"] = is_new_iban_cc
             user_transactions.at[i, "is_new_ip_" + str(time_window) + "_window"] = is_new_ip
+    '''
     return user_transactions
 
 def create_aggregated_features(dataset):
@@ -173,7 +179,7 @@ def create_aggregated_features(dataset):
     dataset_by_user = dataset.groupby("UserID")
     counter = 0
     for user in dataset_by_user.groups.keys():
-        print(counter, ") user: ", user)
+        # print(counter, ") user: ", user)
         counter += 1
         group = dataset_by_user.get_group(user).sort_values(by='Timestamp', ascending=True).reset_index(drop=True)
         group_with_aggregated_features = create_user_aggregated_features(group)
@@ -185,38 +191,63 @@ def create_aggregated_features(dataset):
 
     return dataset_with_aggregated_features
 
+def scale_features(train, test):
+    scaler = MinMaxScaler()
+
+    df_dtypes = train.dtypes.values.tolist()
+    selected_dtypes = [np.dtype('int64'), np.dtype('int8'), np.dtype('float64')]
+    selected_cols = [True if x in selected_dtypes else False for x in df_dtypes]
+    col_names = train.loc[:, selected_cols].columns
+
+    train_features_to_scale = train.loc[:, selected_cols]
+    test_features_to_scale = test.loc[:, selected_cols]
+
+    train_rescaled = scaler.fit_transform(train_features_to_scale.values)
+    test_rescaled = scaler.transform(test_features_to_scale.values)
+    # converting in pandas dataframe
+    train_rescaled = pd.DataFrame(train_rescaled, columns=col_names).reset_index(drop=True)
+    test_rescaled = pd.DataFrame(test_rescaled, columns=col_names).reset_index(drop=True)
+
+    train = train.drop(col_names, axis=1).reset_index(drop=True)
+    test = test.drop(col_names, axis=1).reset_index(drop=True)
+
+    train = train.join(train_rescaled)
+    test = test.join(test_rescaled)
+    return train, test
+
 
 if __name__ == "__main__":
-    if constants.INJECTED_DATASET:
+    if constants.DATASET_TYPE == constants.INJECTED_DATASET:
         complete_dataset = read_dataset()
         # N.B. CONSIDER ONLY GENUINE TRANSACTIONS
         dataset = complete_dataset[complete_dataset.isFraud == 0]
         dataset = dataset.reset_index(drop=True)
-        users = constants.users_trx_between_50_100_trx_train_5_trx_test
+        users = constants.users_with_more_than_50_trx_train_5_trx_test
         print("In total, there are ", len(users), "users")
         # considering only users with more transactions
         dataset = dataset[dataset.UserID.isin(users)]
 
-    if constants.FRAUD_BUSTER_DATASET:
+    if constants.DATASET_TYPE == constants.FRAUD_BUSTER_DATASET:
         dataset = read_dataset_fraud_buster()
         # this dataset does not contain any fraud known
         dataset["isFraud"] = np.zeros(len(dataset.UserID.values))
         dataset = dataset.drop(["prova", "TipoOperazione"], axis=1)
         print("There are", len(dataset.UserID.value_counts()), "users.")
 
-    if constants.REAL_DATASET:
+    if constants.DATASET_TYPE == constants.REAL_DATASET:
         complete_dataset = read_dataset()
         dataset = complete_dataset.reset_index(drop=True)
-        users = constants.users_with_more_than_50_trx_train_5_trx_test
+        users = constants.users_with_more_than_10_trx_train_5_trx_test
         dataset = dataset[dataset.UserID.isin(users)]
 
     thirty_days = timedelta(30)
     first_date = min(dataset.Timestamp)
     last_date = max(dataset.Timestamp)
     last_date_train_set = last_date - thirty_days
-
+    scaler = MinMaxScaler()
     dataset_by_user = dataset.groupby("UserID")
-    if constants.INJECTED_DATASET or constants.FRAUD_BUSTER_DATASET:
+
+    if constants.DATASET_TYPE == constants.INJECTED_DATASET or constants.DATASET_TYPE == constants.FRAUD_BUSTER_DATASET:
         # divide train/test because must inject frauds both in train and in test
         d_train = dataset[dataset.Timestamp < last_date_train_set]
         d_test = dataset[dataset.Timestamp >= last_date_train_set]
@@ -239,15 +270,17 @@ if __name__ == "__main__":
             dataset_train_with_aggregated_features = dataset_with_aggregated_features[dataset_with_aggregated_features.Timestamp < last_date_train_set]
             dataset_test_with_aggregated_features = dataset_with_aggregated_features[dataset_with_aggregated_features.Timestamp >= last_date_train_set]
 
+            dataset_train_with_aggregated_features, dataset_test_with_aggregated_features = scale_features(dataset_train_with_aggregated_features, dataset_test_with_aggregated_features)
+
             # saving the dataset
-            if not constants.FRAUD_BUSTER_DATASET:
+            if constants.DATASET_TYPE == constants.INJECTED_DATASET:
                 dataset_train_with_aggregated_features.to_csv("../datasets/train_" + str(len(dataset.UserID.value_counts())) + "_users_" + scenario_type + "_scenario.csv", index=False)
                 dataset_test_with_aggregated_features.to_csv("../datasets/test_" + str(len(dataset.UserID.value_counts())) + "_users_" + scenario_type + "_scenario.csv", index=False)
             else:
                 dataset_train_with_aggregated_features.to_csv("../datasets/fraud_buster_train_" + str(len(dataset.UserID.value_counts())) + "_users_" + scenario_type + "_scenario.csv", index=False)
                 dataset_test_with_aggregated_features.to_csv("../datasets/fraud_buster_test_" + str(len(dataset.UserID.value_counts())) + "_users_" + scenario_type + "_scenario.csv", index=False)
 
-    elif constants.REAL_DATASET:
+    elif constants.DATASET_TYPE == constants.REAL_DATASET:
         # in real dataset there is not the injection of the frauds
         dataset = to_boolean(dataset)
         dataset = create_engineered_features(dataset)
@@ -255,5 +288,8 @@ if __name__ == "__main__":
 
         dataset_train_with_aggregated_features = dataset_with_aggregated_features[dataset_with_aggregated_features.Timestamp < last_date_train_set]
         dataset_test_with_aggregated_features = dataset_with_aggregated_features[dataset_with_aggregated_features.Timestamp >= last_date_train_set]
+
+        dataset_train_with_aggregated_features, dataset_test_with_aggregated_features = scale_features(dataset_train_with_aggregated_features, dataset_test_with_aggregated_features)
+
         dataset_train_with_aggregated_features.to_csv("../datasets/real_dataset_train_" + str(len(dataset.UserID.value_counts())) + "_users.csv", index=False)
         dataset_test_with_aggregated_features.to_csv("../datasets/real_dataset_test_" + str(len(dataset.UserID.value_counts())) + "_users.csv",index=False)
