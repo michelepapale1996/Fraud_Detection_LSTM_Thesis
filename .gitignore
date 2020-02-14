@@ -7,3 +7,4 @@ venv/*
 *.xml
 *.xml
 *.pyc
+*.npy
