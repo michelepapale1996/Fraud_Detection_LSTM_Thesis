@@ -2,34 +2,50 @@ from models import LSTM_classifier, evaluation
 import numpy as np
 import xgboost as xgb
 from sklearn.ensemble import RandomForestClassifier
-import pandas as pd
 from dataset_creation import sequences_crafting_for_classification
 from dataset_creation.constants import *
-import random
+from adversarial_attacks import fgsm
+from models import MultiLayerPerceptron, xgboost_classifier, RF
+from scipy import stats
 
 def get_predictions_for_each_model(lstm, rf, xg_reg, x, x_supervised):
     y_lstm = lstm.predict(x)
     y_rf = rf.predict_proba(x_supervised)
     y_xgb = xg_reg.predict_proba(x_supervised)
-    return y_lstm, y_rf, y_xgb
+    return y_lstm.ravel(), y_rf[:, 1], y_xgb[:,1]
 
+def mean_and_covariance(y, y_pred):
+    errors = np.absolute(y - y_pred)
+    return np.mean(errors, axis=0), np.cov(errors, axis=0)
+
+# --------------------------- start of the types of ensembles ----------------------------
 # sum of the models outputs on validation set
 # find the best threshold
 # sum of the models outputs on test set
 # adjust output based on threshold
 def predict_test_based_on_sum(lstm, rf, xg_reg, x_val, x_val_supervised, y_val, x_test, x_test_supervised):
     y_val_pred_lstm, y_val_pred_rf, y_val_pred_xgb = get_predictions_for_each_model(lstm, rf, xg_reg, x_val, x_val_supervised)
-    y_val_pred = y_val_pred_lstm.ravel() * ([0.333] * len(y_val_pred_lstm)) + \
-                 y_val_pred_rf[:, 1].ravel() * ([0.333] * len(y_val_pred_rf)) + \
-                 y_val_pred_xgb[:, 1].ravel() * ([0.333] * len(y_val_pred_xgb))
+    len_ = len(y_val_pred_lstm)
+
+    def min_max_rescaling(values):
+        min_ = min(values)
+        max_ = max(values)
+        return [(ith_element - min_) / (max_ - min_) for ith_element in values]
+
+    y_val_pred_lstm = min_max_rescaling(y_val_pred_lstm)
+    y_val_pred_rf = min_max_rescaling(y_val_pred_rf)
+    y_val_pred_xgb = min_max_rescaling(y_val_pred_xgb)
+
+    y_val_pred = y_val_pred_lstm * np.array([0.333] * len_) + y_val_pred_rf * np.array([0.333] * len_) + y_val_pred_xgb * np.array([0.333] * len_)
 
     threshold = evaluation.find_best_threshold_fixed_fpr(y_val, y_val_pred)
 
     y_pred_lstm, y_pred_rf, y_pred_xgb = get_predictions_for_each_model(lstm, rf, xg_reg, x_test, x_test_supervised)
-
-    y_pred = y_pred_lstm.ravel() * ([0.333] * len(y_pred_lstm)) + \
-             y_pred_rf[:, 1].ravel() * ([0.333] * len(y_pred_rf)) + \
-             y_pred_xgb[:, 1].ravel() * ([0.333] * len(y_pred_xgb))
+    len_ = len(y_pred_lstm)
+    y_pred_lstm = min_max_rescaling(y_pred_lstm)
+    y_pred_rf = min_max_rescaling(y_pred_rf)
+    y_pred_xgb = min_max_rescaling(y_pred_xgb)
+    y_pred = y_pred_lstm * np.array([0.333] * len_) + y_pred_rf * np.array([0.333] * len_) + y_pred_xgb * np.array([0.333] * len_)
 
     y_test_pred = evaluation.adjusted_classes(y_pred, threshold)
     return y_test_pred
@@ -39,15 +55,12 @@ def predict_test_based_on_voting(lstm, rf, xg_reg, x_val, x_val_supervised, y_va
     y_val_pred_lstm, y_val_pred_rf, y_val_pred_xgb = get_predictions_for_each_model(lstm, rf, xg_reg, x_val, x_val_supervised)
 
     # get threshold for each model
-    threshold_lstm = evaluation.find_best_threshold_fixed_fpr(y_val, y_val_pred_lstm.ravel())
-    threshold_rf = evaluation.find_best_threshold_fixed_fpr(y_val, y_val_pred_rf[:, 1])
-    threshold_xgb = evaluation.find_best_threshold_fixed_fpr(y_val, y_val_pred_xgb[:, 1])
+    threshold_lstm = evaluation.find_best_threshold_fixed_fpr(y_val, y_val_pred_lstm)
+    threshold_rf = evaluation.find_best_threshold_fixed_fpr(y_val, y_val_pred_rf)
+    threshold_xgb = evaluation.find_best_threshold_fixed_fpr(y_val, y_val_pred_xgb)
 
     # predicting test set
     y_pred_lstm, y_pred_rf, y_pred_xgb = get_predictions_for_each_model(lstm, rf, xg_reg, x_test, x_test_supervised)
-    y_pred_lstm = y_pred_lstm.ravel()
-    y_pred_rf = y_pred_rf[:, 1].ravel()
-    y_pred_xgb = y_pred_xgb[:, 1].ravel()
 
     y_pred_lstm = np.array(evaluation.adjusted_classes(y_pred_lstm, threshold_lstm))
     y_pred_rf = np.array(evaluation.adjusted_classes(y_pred_rf, threshold_rf))
@@ -75,21 +88,39 @@ def predict_test_based_on_voting(lstm, rf, xg_reg, x_val, x_val_supervised, y_va
 def predict_test_based_on_more_confident(lstm, rf, xg_reg, x_val, x_val_supervised, y_val, x_test, x_test_supervised, y_test):
     y_val_pred_lstm, y_val_pred_rf, y_val_pred_xgb = get_predictions_for_each_model(lstm, rf, xg_reg, x_val, x_val_supervised)
 
+    def min_max_rescaling(values, min_, max_):
+        return [(ith_element - min_) / (max_ - min_) for ith_element in values]
+
+    lstm_min = min(y_val_pred_lstm)
+    lstm_max = max(y_val_pred_lstm)
+    rf_min = min(y_val_pred_rf)
+    rf_max = max(y_val_pred_rf)
+    xgb_min = min(y_val_pred_xgb)
+    xgb_max = max(y_val_pred_xgb)
+    y_val_pred_lstm = min_max_rescaling(y_val_pred_lstm, lstm_min, lstm_max)
+    y_val_pred_rf = min_max_rescaling(y_val_pred_rf, rf_min, rf_max)
+    y_val_pred_xgb = min_max_rescaling(y_val_pred_xgb, xgb_min, xgb_max)
+
     # get threshold for each model
-    threshold_lstm = evaluation.find_best_threshold_fixed_fpr(y_val, y_val_pred_lstm.ravel())
-    threshold_rf = evaluation.find_best_threshold_fixed_fpr(y_val, y_val_pred_rf[:, 1])
-    threshold_xgb = evaluation.find_best_threshold_fixed_fpr(y_val, y_val_pred_xgb[:, 1])
+    threshold_lstm = evaluation.find_best_threshold_fixed_fpr(y_val, y_val_pred_lstm)
+    threshold_rf = evaluation.find_best_threshold_fixed_fpr(y_val, y_val_pred_rf)
+    threshold_xgb = evaluation.find_best_threshold_fixed_fpr(y_val, y_val_pred_xgb)
 
     # get mean for each model
-    lstm_mean = np.array(y_val_pred_lstm.ravel()).mean()
-    rf_mean = np.array(y_val_pred_rf[:, 1]).mean()
-    xgb_mean = np.array(y_val_pred_xgb[:, 1]).mean()
+    lstm_mean = np.array(y_val_pred_lstm).mean()
+    rf_mean = np.array(y_val_pred_rf).mean()
+    xgb_mean = np.array(y_val_pred_xgb).mean()
+
+    # get std for each model
+    lstm_std = np.array(y_val_pred_lstm).std()
+    rf_std = np.array(y_val_pred_rf).std()
+    xgb_std = np.array(y_val_pred_xgb).std()
 
     # predicting test set
     y_pred_lstm, y_pred_rf, y_pred_xgb = get_predictions_for_each_model(lstm, rf, xg_reg, x_test, x_test_supervised)
-    y_pred_lstm = y_pred_lstm.ravel()
-    y_pred_rf = y_pred_rf[:, 1].ravel()
-    y_pred_xgb = y_pred_xgb[:, 1].ravel()
+    y_pred_lstm = min_max_rescaling(y_pred_lstm, lstm_min, lstm_max)
+    y_pred_rf = min_max_rescaling(y_pred_rf, rf_min, rf_max)
+    y_pred_xgb = min_max_rescaling(y_pred_xgb, xgb_min, xgb_max)
 
     y_test_pred = []
     num_decisions_taken_by_lstm = 0
@@ -114,16 +145,12 @@ def predict_test_based_on_more_confident(lstm, rf, xg_reg, x_val, x_val_supervis
         elif abs(y_pred_rf[i] - rf_mean) == max_value:
             y_test_pred.append(1 if y_pred_rf[i] > threshold_rf else 0)
             num_decisions_taken_by_rf += 1
+
         else:
             num_decisions_taken_by_xgb += 1
             y_test_pred.append(1 if y_pred_xgb[i] > threshold_xgb else 0)
 
-    print("Num decisions taken from lstm: ", num_decisions_taken_by_lstm)
-    print("Num decisions taken by rf: ", num_decisions_taken_by_rf)
-    print("Num decisions taken by xgb: ", num_decisions_taken_by_xgb)
-    print("Num decisions taken by lstm correctly taken: ", num_decisions_correctly_taken_from_lstm)
-    print("Num decisions taken by lstm correctly taken and not by others: ", num_decisions_correctly_taken_from_lstm_and_not_from_xgb_or_rf)
-    return y_test_pred
+    return y_test_pred, num_decisions_taken_by_lstm, num_decisions_taken_by_rf, num_decisions_taken_by_xgb, num_decisions_correctly_taken_from_lstm, num_decisions_correctly_taken_from_lstm_and_not_from_xgb_or_rf
 
 # for each model, get threshold and get mean of the output on validation set .
 # on test set, calculate the distance from the calculated mean.
@@ -133,20 +160,21 @@ def predict_test_based_on_more_confident_and_majority_voting(lstm, rf, xg_reg, x
     y_val_pred_lstm, y_val_pred_rf, y_val_pred_xgb = get_predictions_for_each_model(lstm, rf, xg_reg, x_val, x_val_supervised)
 
     # get threshold for each model
-    threshold_lstm = evaluation.find_best_threshold_fixed_fpr(y_val, y_val_pred_lstm.ravel())
-    threshold_rf = evaluation.find_best_threshold_fixed_fpr(y_val, y_val_pred_rf[:, 1])
-    threshold_xgb = evaluation.find_best_threshold_fixed_fpr(y_val, y_val_pred_xgb[:, 1])
+    threshold_lstm = evaluation.find_best_threshold_fixed_fpr(y_val, y_val_pred_lstm)
+    threshold_rf = evaluation.find_best_threshold_fixed_fpr(y_val, y_val_pred_rf)
+    threshold_xgb = evaluation.find_best_threshold_fixed_fpr(y_val, y_val_pred_xgb)
 
     # get mean for each model
-    lstm_mean = np.array(y_val_pred_lstm.ravel()).mean()
-    rf_mean = np.array(y_val_pred_rf[:, 1]).mean()
-    xgb_mean = np.array(y_val_pred_xgb[:, 1]).mean()
+    lstm_mean = np.array(y_val_pred_lstm).mean()
+    rf_mean = np.array(y_val_pred_rf).mean()
+    xgb_mean = np.array(y_val_pred_xgb).mean()
+    # get std for each model
+    lstm_std = np.array(y_val_pred_lstm).std()
+    rf_std = np.array(y_val_pred_rf).std()
+    xgb_std = np.array(y_val_pred_xgb).std()
 
     # predicting test set
     y_pred_lstm, y_pred_rf, y_pred_xgb = get_predictions_for_each_model(lstm, rf, xg_reg, x_test, x_test_supervised)
-    y_pred_lstm = y_pred_lstm.ravel()
-    y_pred_rf = y_pred_rf[:, 1].ravel()
-    y_pred_xgb = y_pred_xgb[:, 1].ravel()
 
     y_test_pred = []
     num_decisions_taken_by_lstm = 0
@@ -155,52 +183,145 @@ def predict_test_based_on_more_confident_and_majority_voting(lstm, rf, xg_reg, x
     num_decisions_taken_by_rf = 0
     num_decisions_taken_by_xgb = 0
     for i in range(len(y_pred_lstm)):
-        max_value = max(abs(y_pred_lstm[i] - lstm_mean), abs(y_pred_rf[i] - rf_mean), abs(y_pred_xgb[i] - xgb_mean))
-        if abs(y_pred_lstm[i] - lstm_mean) == max_value:
-            if max_value > abs(y_pred_rf[i] - rf_mean) + abs(y_pred_xgb[i] - xgb_mean):
+        max_value = max(abs(y_pred_lstm[i] - lstm_mean)/lstm_std, abs(y_pred_rf[i] - rf_mean)/rf_std, abs(y_pred_xgb[i] - xgb_mean)/xgb_std)
+        lstm_output = 1 if y_pred_lstm[i] > threshold_lstm else 0
+        rf_output = 1 if y_pred_rf[i] > threshold_rf else 0
+        xgb_output = 1 if y_pred_xgb[i] > threshold_xgb else 0
+        if abs(y_pred_lstm[i] - lstm_mean)/lstm_std == max_value:
+            if max_value > abs(y_pred_rf[i] - rf_mean)/rf_std + abs(y_pred_xgb[i] - xgb_mean)/xgb_std:
                 num_decisions_taken_by_lstm += 1
-                lstm_output = 1 if y_pred_lstm[i] > threshold_lstm else 0
-                rf_output = 1 if y_pred_rf[i] > threshold_rf else 0
-                xgb_output = 1 if y_pred_xgb[i] > threshold_xgb else 0
-
                 y_test_pred.append(lstm_output)
                 if lstm_output == 1 and y_test[i] == 1 and (rf_output == 0 or xgb_output == 0):
                     num_decisions_correctly_taken_from_lstm_and_not_from_xgb_or_rf += 1
                 if lstm_output == 1 and y_test[i]:
                     num_decisions_correctly_taken_from_lstm += 1
             else:
-                if y_pred_lstm[i] + y_pred_rf[i] + y_pred_xgb[i] >= 2:
+                if lstm_output + rf_output + xgb_output >= 2:
                     y_test_pred.append(1)
                 else:
                     y_test_pred.append(0)
 
-        elif abs(y_pred_rf[i] - rf_mean) == max_value:
-            if max_value > abs(y_pred_lstm[i] - lstm_mean) + abs(y_pred_xgb[i] - xgb_mean):
+        elif abs(y_pred_rf[i] - rf_mean)/rf_std == max_value:
+            if max_value > abs(y_pred_lstm[i] - lstm_mean)/lstm_std + abs(y_pred_xgb[i] - xgb_mean)/xgb_std:
                 y_test_pred.append(1 if y_pred_rf[i] > threshold_rf else 0)
                 num_decisions_taken_by_rf += 1
             else:
-                if y_pred_lstm[i] + y_pred_rf[i] + y_pred_xgb[i] >= 2:
+                if lstm_output + rf_output + xgb_output >= 2:
                     y_test_pred.append(1)
                 else:
                     y_test_pred.append(0)
         else:
-            if max_value > abs(y_pred_rf[i] - rf_mean) + abs(y_pred_lstm[i] - lstm_mean):
+            if max_value > abs(y_pred_rf[i] - rf_mean)/rf_std + abs(y_pred_lstm[i] - lstm_mean)/lstm_std:
                 num_decisions_taken_by_xgb += 1
                 y_test_pred.append(1 if y_pred_xgb[i] > threshold_xgb else 0)
             else:
-                if y_pred_lstm[i] + y_pred_rf[i] + y_pred_xgb[i] >= 2:
+                if lstm_output + rf_output + xgb_output >= 2:
                     y_test_pred.append(1)
                 else:
                     y_test_pred.append(0)
-
-    print("Num decisions taken from lstm: ", num_decisions_taken_by_lstm)
-    print("Num decisions taken by rf: ", num_decisions_taken_by_rf)
-    print("Num decisions taken by xgb: ", num_decisions_taken_by_xgb)
-    print("Num decisions taken by lstm correctly taken: ", num_decisions_correctly_taken_from_lstm)
-    print("Num decisions taken by lstm correctly taken and not by others: ", num_decisions_correctly_taken_from_lstm_and_not_from_xgb_or_rf)
     return y_test_pred
 
-def repeat_experiment_n_times(lstm, rf, xg_reg, scenario, times_to_repeat=100):
+# map each model output in a exp (the ouput shape of each model seems to follow this type of distribution) distribution
+def predict_test_based_on_expon(lstm, rf, xg_reg, x_val, x_val_supervised, y_val, x_test, x_test_supervised, y_test):
+    y_val_pred_lstm, y_val_pred_rf, y_val_pred_xgb = get_predictions_for_each_model(lstm, rf, xg_reg, x_val, x_val_supervised)
+
+    '''
+    to get the shape of the distribution
+    prova = y_val_pred_lstm.tolist()
+    buckets = {}
+    for i in range(0, 101):
+        buckets[i / 100] = 0
+    for i in prova:
+        buckets[round(i, 2)] += 1
+    plt.plot(list(buckets.keys()), ",", list(buckets.values())
+    plt.show()
+    '''
+
+    # for each model, fit the exponential distribution
+    loc_lstm, scale_lstm = stats.expon.fit(y_val_pred_lstm)
+    loc_rf, scale_rf = stats.expon.fit(y_val_pred_rf)
+    loc_xgb, scale_xgb = stats.expon.fit(y_val_pred_xgb)
+    samples_lstm = stats.expon.cdf(y_val_pred_lstm, scale=scale_lstm, loc=loc_lstm)
+    samples_rf = stats.expon.cdf(y_val_pred_rf, scale=scale_rf, loc=loc_rf)
+    samples_xgb = stats.expon.cdf(y_val_pred_xgb, scale=scale_xgb, loc=loc_xgb)
+
+    # get mean for each model
+    lstm_mean = samples_lstm.mean()
+    rf_mean = samples_rf.mean()
+    xgb_mean = samples_xgb.mean()
+
+    # get std for each model
+    lstm_std = samples_lstm.std()
+    rf_std = samples_rf.std()
+    xgb_std = samples_xgb.std()
+
+    threshold_lstm = evaluation.find_best_threshold_fixed_fpr(y_val, samples_lstm)
+    threshold_rf = evaluation.find_best_threshold_fixed_fpr(y_val, samples_rf)
+    threshold_xgb = evaluation.find_best_threshold_fixed_fpr(y_val, samples_xgb)
+
+    y_pred_lstm, y_pred_rf, y_pred_xgb = get_predictions_for_each_model(lstm, rf, xg_reg, x_test, x_test_supervised)
+
+    samples_lstm = stats.expon.cdf(y_pred_lstm, scale=scale_lstm, loc=loc_lstm)
+    samples_rf = stats.expon.cdf(y_pred_rf, scale=scale_rf, loc=loc_rf)
+    samples_xgb = stats.expon.cdf(y_pred_xgb, scale=scale_xgb, loc=loc_xgb)
+
+    num_decisions_taken_by_lstm = 0
+    num_decisions_correctly_taken_from_lstm = 0
+    num_decisions_correctly_taken_from_lstm_and_not_from_xgb_or_rf = 0
+    num_decisions_taken_by_rf = 0
+    num_decisions_taken_by_xgb = 0
+    y_test_pred = []
+    for i in range(len(y_pred_lstm)):
+        max_value = max(abs(samples_lstm[i] - lstm_mean) / lstm_std, abs(samples_rf[i] - rf_mean) / rf_std, abs(samples_xgb[i] - xgb_mean) / xgb_std)
+
+        if abs(samples_lstm[i] - lstm_mean) / lstm_std == max_value:
+            lstm_output = 1 if samples_lstm[i] > threshold_lstm else 0
+            rf_output = 1 if samples_rf[i] > threshold_rf else 0
+            xgb_output = 1 if samples_xgb[i] > threshold_xgb else 0
+
+            if lstm_output == 1 and y_test[i] == 1 and (rf_output == 0 or xgb_output == 0) or lstm_output == 0 and y_test[i] == 0 and (rf_output == 1 or xgb_output == 1):
+                num_decisions_correctly_taken_from_lstm_and_not_from_xgb_or_rf += 1
+
+            if (lstm_output == 1 and y_test[i] == 1) or (lstm_output == 0 and y_test[i] == 0):
+                num_decisions_correctly_taken_from_lstm += 1
+
+            num_decisions_taken_by_lstm += 1
+            y_test_pred.append(1 if samples_lstm[i] > threshold_lstm else 0)
+
+        elif abs(samples_rf[i] - rf_mean) / rf_std == max_value:
+            num_decisions_taken_by_rf += 1
+            y_test_pred.append(1 if samples_rf[i] > threshold_rf else 0)
+
+        elif abs(samples_xgb[i] - xgb_mean) / xgb_std == max_value:
+            num_decisions_taken_by_xgb += 1
+            y_test_pred.append(1 if samples_xgb[i] > threshold_xgb else 0)
+
+        else:
+            print("errore")
+
+    '''
+    loc_lstm, scale_lstm = stats.expon.fit(y_val_pred_lstm)
+    loc_rf, scale_rf = stats.expon.fit(y_val_pred_rf)
+    loc_xgb, scale_xgb = stats.expon.fit(y_val_pred_xgb)
+    samples = stats.expon.cdf(y_val_pred_lstm, scale=scale_lstm, loc=loc_lstm) * np.array(len(y_val_pred_lstm) * [0.333])
+    samples += stats.expon.cdf(y_val_pred_rf, scale=scale_rf, loc=loc_rf) * np.array(len(y_val_pred_lstm) * [0.333])
+    samples += stats.expon.cdf(y_val_pred_xgb, scale=scale_xgb, loc=loc_xgb) * np.array(len(y_val_pred_lstm) * [0.333])
+    threshold = evaluation.find_best_threshold_fixed_fpr(y_val, samples)
+
+    y_pred_lstm, y_pred_rf, y_pred_xgb = get_predictions_for_each_model(lstm, rf, xg_reg, x_test, x_test_supervised)
+
+    samples = stats.expon.cdf(y_pred_lstm, scale=scale_lstm, loc=loc_lstm) * np.array(len(y_pred_lstm) * [0.333])
+    samples += stats.expon.cdf(y_pred_rf, scale=scale_rf, loc=loc_rf) * np.array(len(y_pred_lstm) * [0.333])
+    samples += stats.expon.cdf(y_pred_xgb, scale=scale_xgb, loc=loc_xgb) * np.array(len(y_pred_lstm) * [0.333])
+    y_test_pred = evaluation.adjusted_classes(samples, threshold)
+    '''
+    return y_test_pred, num_decisions_taken_by_lstm, num_decisions_taken_by_rf, num_decisions_taken_by_xgb, num_decisions_correctly_taken_from_lstm, num_decisions_correctly_taken_from_lstm_and_not_from_xgb_or_rf
+# --------------------------- end of the types of ensembles ----------------------------
+
+# if adversarial attack is set to true, craft adversarial frauds and get the performances
+# NB: is_white_box_attack must be used to create an experiment that use as dataset: "REAL_DATASET"
+# if is_white_box_attack == False, the dataset used will be "OLD_DATASET"
+def repeat_experiment_n_times(lstm, rf, xg_reg, scenario, times_to_repeat=100, adversarial_attack=False, evasion_attack=False, is_white_box_attack=True, use_lstm_for_adversarial=False):
     tn_s = []
     tp_s = []
     fp_s = []
@@ -211,7 +332,12 @@ def repeat_experiment_n_times(lstm, rf, xg_reg, scenario, times_to_repeat=100):
     recalls = []
     aucpr_s = []
     roc_aucs = []
-    not_found_by_xgboost, not_found_by_rf, not_found_by_others = 0, 0, 0
+
+    num_decisions_taken_by_lstm,\
+    num_decisions_taken_by_rf, \
+    num_decisions_taken_by_xgb, \
+    num_decisions_correctly_taken_from_lstm, \
+    num_decisions_correctly_taken_from_lstm_and_not_from_xgb_or_rf = 0, 0, 0, 0, 0
 
     for i in range(times_to_repeat):
         print("Iteration", i)
@@ -221,9 +347,73 @@ def repeat_experiment_n_times(lstm, rf, xg_reg, scenario, times_to_repeat=100):
         x_val_supervised = x_val[:, len(x_val[0]) - 1, :]
         x_test_supervised = x_test[:, len(x_val[0]) - 1, :]
 
+        if adversarial_attack or evasion_attack:
+            # getting train set for training
+            if is_white_box_attack:
+                print("Using as training set, the real one - whitebox attack")
+                dataset_type = REAL_DATASET
+            else:
+                print("Using as training set, the old one - blackbox attack")
+                dataset_type = OLD_DATASET
+
+            x_train, y_train = sequences_crafting_for_classification.get_train_set(dataset_type=dataset_type)
+            x_train_supervised = x_train[:, look_back, :]
+            if adversarial_attack:
+                print("Crafting an adversarial attack")
+                if not use_lstm_for_adversarial:
+                    print("The attacker will use a Multilayer perceptron")
+                    # training multilayer perceptron
+                    # todo: hyper param tuning multilayer perceptron
+                    adversarial_model = MultiLayerPerceptron.create_fit_model(x_train_supervised, y_train)
+                    # crafting adversarial samples
+                    x_test_supervised = x_test[:, len(x_test[0]) - 1, :]
+                    frauds = x_test_supervised[np.where(y_test == 1)]
+
+                    adversarial_samples = fgsm.craft_sample(frauds, adversarial_model, epsilon=0.01)
+
+                    x_test[np.where(y_test == 1), len(x_test[0]) - 1] = adversarial_samples
+                    x_test_supervised = x_test[:, len(x_test[0]) - 1, :]
+                else:
+                    print("The attacker will use a LSTM network")
+                    # train the network using the right params
+                    if is_white_box_attack:
+                        params = BEST_PARAMS_LSTM_REAL_DATASET
+                    else:
+                        params = BEST_PARAMS_LSTM_OLD_DATASET
+                    adversarial_model = LSTM_classifier.create_fit_model(x_train, y_train, look_back, params=params)
+                    frauds = x_test[np.where(y_test == 1)]
+                    adversarial_samples = fgsm.craft_sample(frauds, adversarial_model, epsilon=0.01)
+                    x_test[np.where(y_test == 1)] = adversarial_samples
+                    x_test_supervised = x_test[:, len(x_test[0]) - 1, :]
+
+            if evasion_attack:
+                print("Crafting an evasion attack")
+                # train the network using the right params
+                if is_white_box_attack:
+                    params = BEST_PARAMS_RF
+                else:
+                    params = BEST_PARAMS_RF_OLD_DATASET
+                # training the oracle
+                oracle = RF.create_model(x_train_supervised, y_train, params=params)
+
+                # get the oracle threshold
+                y_val_pred_oracle = oracle.predict_proba(x_val_supervised)
+                oracle_threshold = evaluation.find_best_threshold_fixed_fpr(y_val, y_val_pred_oracle[:, 1])
+
+                # if the oracle predicts the fraud as fraud -> discard it, otherwise inject in real bank system
+                y_pred_oracle = rf.predict_proba(x_test_supervised)
+                y_pred_oracle = y_pred_oracle[:, 1].ravel()
+                y_pred_oracle = np.array(evaluation.adjusted_classes(y_pred_oracle, oracle_threshold))
+
+                x_test = x_test[(np.where(((y_test == 1) & (y_pred_oracle == 0)) | (y_test == 0)))]
+                y_test = y_test[(np.where(((y_test == 1) & (y_pred_oracle == 0)) | (y_test == 0)))]
+                x_test_supervised = x_test[:, len(x_test[0]) - 1, :]
         try:
-            # y_test_pred, not_by_xgb, not_by_rf, not_by_others = predict_test_based_on_voting(lstm, rf, xg_reg, x_val, x_val_supervised, y_val, x_test, x_test_supervised, y_test)
-            y_test_pred = predict_test_based_on_more_confident(lstm, rf, xg_reg, x_val, x_val_supervised, y_val, x_test, x_test_supervised, y_test)
+            # a, b, c, d, e = 0, 0, 0, 0, 0
+            # y_test_pred, not_by_xgb, not_by_rf, not_found_by_others = predict_test_based_on_voting(lstm, rf, xg_reg, x_val, x_val_supervised, y_val, x_test, x_test_supervised, y_test)
+            # y_test_pred, a, b, c, d, e = predict_test_based_on_more_confident(lstm, rf, xg_reg, x_val, x_val_supervised, y_val, x_test, x_test_supervised, y_test)
+            y_test_pred, a, b, c, d, e = predict_test_based_on_expon(lstm, rf, xg_reg, x_val, x_val_supervised, y_val, x_test, x_test_supervised, y_test)
+            # y_test_pred = predict_test_based_on_sum(lstm, rf, xg_reg, x_val, x_val_supervised, y_val, x_test, x_test_supervised)
             # y_test_pred = predict_test_based_on_more_confident_and_majority_voting(lstm, rf, xg_reg, x_val, x_val_supervised, y_val, x_test, x_test_supervised, y_test)
             # not_found_by_xgboost += not_by_xgb
             # not_by_rf += not_by_rf
@@ -241,6 +431,13 @@ def repeat_experiment_n_times(lstm, rf, xg_reg, scenario, times_to_repeat=100):
             fp_s.append(fp)
             fn_s.append(fn)
             f1_s.append(f1)
+
+            num_decisions_taken_by_lstm += a
+            num_decisions_taken_by_rf += b
+            num_decisions_taken_by_xgb += c
+            num_decisions_correctly_taken_from_lstm += d
+            num_decisions_correctly_taken_from_lstm_and_not_from_xgb_or_rf += e
+
             balanced_accuracies.append(balanced_accuracy)
             precisions.append(precision)
             recalls.append(recall)
@@ -249,9 +446,11 @@ def repeat_experiment_n_times(lstm, rf, xg_reg, scenario, times_to_repeat=100):
         except RuntimeError:
             i -= 1
 
-    print("Frauds found by lstm and not by xgboost:", not_found_by_xgboost/times_to_repeat)
-    print("Frauds found by lstm and not by rf:", not_found_by_rf/times_to_repeat)
-    print("Frauds found by lstm and not by the other models:", not_found_by_others/times_to_repeat)
+    print("Num decisions taken from lstm: ", num_decisions_taken_by_lstm / times_to_repeat)
+    print("Num decisions taken by rf: ", num_decisions_taken_by_rf / times_to_repeat)
+    print("Num decisions taken by xgb: ", num_decisions_taken_by_xgb / times_to_repeat)
+    print("Num decisions taken by lstm correctly taken: ", num_decisions_correctly_taken_from_lstm / times_to_repeat)
+    print("Num decisions taken by lstm correctly taken and not by others: ", num_decisions_correctly_taken_from_lstm_and_not_from_xgb_or_rf / times_to_repeat)
     evaluation.print_results(np.array(tn_s).mean(), np.array(fp_s).mean(), np.array(fn_s).mean(), np.array(tp_s).mean(), np.array(f1_s).mean(), np.array(balanced_accuracies).mean(), np.array(precisions).mean(), np.array(recalls).mean(), np.array(aucpr_s).mean(), np.array(roc_aucs).mean())
 
 
@@ -263,41 +462,16 @@ x_train_supervised = x_train[:, look_back, :]
 y_train_supervised = y_train
 
 print("Training models...")
-lstm = LSTM_classifier.create_fit_model(x_train, y_train, look_back)
+lstm = LSTM_classifier.create_fit_model(x_train, y_train, look_back, params={'layers': {'input': 64, 'hidden1': 64, 'output': 1}, 'epochs': 10, 'dropout_rate': 0.3, 'batch_size': 32})
+rf = RF.create_model(x_train_supervised, y_train_supervised)
+xg_reg = xgboost_classifier.create_model(x_train_supervised, y_train_supervised)
 
-best_lstm_model = {'layers': {'input': 128, 'hidden1': 32, 'output': 1}, 'epochs': 2, 'dropout_rate': 0.5, 'batch_size': 30}
-# lstm = LSTM_classifier.create_model(best_lstm_model["layers"], best_lstm_model["dropout_rate"], len(x_train[0]) - 1, len(x_train_supervised[0]))
-# lstm.fit(x_train, y_train, epochs=best_lstm_model["epochs"], batch_size=best_lstm_model["batch_size"])
-
-best_params_xgboost = {'subsample': 0.8, 'min_child_weight': 5, 'max_depth': 5, 'gamma': 1.5, 'colsample_bytree': 0.6}
-'''
-xg_reg = xgb.XGBClassifier(subsample=best_params_xgboost["subsample"],
-                           min_child_weight=best_params_xgboost["min_child_weight"],
-                           max_depth=best_params_xgboost["max_depth"],
-                           gamma=best_params_xgboost["gamma"],
-                           colsample_bytree=best_params_xgboost["colsample_bytree"])
-'''
-xg_reg = xgb.XGBClassifier()
-xg_reg.fit(x_train_supervised, y_train_supervised)
-
-best_params_rf = {'n_estimators': 100, 'min_samples_split': 5, 'min_samples_leaf': 4, 'max_features': 'auto', 'max_depth': 10, 'bootstrap': True}
-'''
-rf = RandomForestClassifier(n_estimators=best_params_rf["n_estimators"],
-                            min_samples_split=best_params_rf["min_samples_split"],
-                            min_samples_leaf=best_params_rf["min_samples_leaf"],
-                            max_features=best_params_rf["max_features"],
-                            max_depth=best_params_rf["max_depth"],
-                            bootstrap=best_params_rf["bootstrap"])
-'''
-rf = RandomForestClassifier()
-rf.fit(x_train_supervised, y_train_supervised)
-
-if DATASET_TYPE == INJECTED_DATASET:
+if DATASET_TYPE == INJECTED_DATASET or DATASET_TYPE == OLD_DATASET:
     scenarios = [FIRST_SCENARIO, SECOND_SCENARIO, THIRD_SCENARIO, FOURTH_SCENARIO, FIFTH_SCENARIO, SIXTH_SCENARIO, SEVENTH_SCENARIO, EIGHTH_SCENARIO, NINTH_SCENARIO, ALL_SCENARIOS]
+    scenarios = [ALL_SCENARIOS]
     for scenario in scenarios:
         print("-------------------", scenario, "scenario --------------------------")
-        repeat_experiment_n_times(lstm, rf, xg_reg, scenario, times_to_repeat=10)
+        repeat_experiment_n_times(lstm, rf, xg_reg, scenario, times_to_repeat=10, adversarial_attack=False, evasion_attack=False, is_white_box_attack=False, use_lstm_for_adversarial=True)
 
 if DATASET_TYPE == REAL_DATASET:
-    # x_test_set, y_test_set = sequences_crafting_for_classification.create_test_set(look_back)
-    repeat_experiment_n_times(lstm, rf, xg_reg, False, times_to_repeat=10)
+    repeat_experiment_n_times(lstm, rf, xg_reg, False, times_to_repeat=10, adversarial_attack=False, evasion_attack=True, is_white_box_attack=True, use_lstm_for_adversarial=True)

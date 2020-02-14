@@ -58,7 +58,10 @@ def create_sequences(dataset, look_back=1):
     x = []
     y = []
 
+    i = 0
     for user in bonifici_by_user.groups.keys():
+        print(i, ") User: ", user)
+        i += 1
         transactions = bonifici_by_user.get_group(user).sort_values("Timestamp").reset_index(drop=True)
         sequence_x_train, sequence_y_train = get_sequences_from_user(transactions, look_back)
 
@@ -100,27 +103,30 @@ def create_test_set(look_back, train_path, test_path):
     dataset_test = pd.read_csv(test_path, parse_dates=True)
     dataset_test = dataset_test.drop(["IP", "IBAN", "IBAN_CC", "CC_ASN"], axis=1)
 
-    print("len test set before injecting training transactions", len(dataset_test))
+    print("Test set length before injecting training transactions into testing: ", len(dataset_test))
     # in test set, insert lookback transactions for each user taking them from training set.
     # in this way, all the transactions in test set will be used.
     dataset_test = insert_lookback_transactions_from_training_set(dataset_train, dataset_test, look_back)
-    print("len test set after injecting training transactions", len(dataset_test))
+    print("Test set length after injecting training transactions into testing: ", len(dataset_test))
     x_test, y_test = create_sequences(dataset_test, look_back)
     return x_test, y_test
 
 def get_file_name(dataset_type=constants.DATASET_TYPE, scenario_type=constants.ALL_SCENARIOS):
     if dataset_type == constants.INJECTED_DATASET:
-        path = "test_696_users_" + scenario_type + "_scenario"
-        train_path = "train_696_users_" + scenario_type + "_scenario"
-        # path = "test_4072_users_" + scenario_type + "_scenario"
-        # train_path = "train_4072_users_" + scenario_type + "_scenario"
+        path = "test_696_users_" + scenario_type + "_scenario_extendend_features"
+        train_path = "train_696_users_" + scenario_type + "_scenario_extendend_features"
+        path = "test_4072_users_" + scenario_type + "_scenario_extendend_features"
+        train_path = "train_4072_users_" + scenario_type + "_scenario_extendend_features"
     if dataset_type == constants.FRAUD_BUSTER_DATASET:
         path = "fraud_buster_test_250_users_" + scenario_type + "_scenario"
     if dataset_type == constants.REAL_DATASET:
-        path = "real_dataset_test_696_users"
-        train_path = "real_dataset_train_696_users"
-        # path = "real_dataset_test_4072_users"
-        # train_path = "real_dataset_train_4072_users"
+        path = "real_dataset_test_696_users_extendend_features"
+        train_path = "real_dataset_train_696_users_extendend_features"
+        path = "real_dataset_test_4072_users_extendend_features"
+        train_path = "real_dataset_train_4072_users_extendend_features"
+    if dataset_type == constants.OLD_DATASET:
+        path = "old_test_1705_users_" + scenario_type + "_scenario_extendend_features"
+        train_path = "old_train_1705_users_" + scenario_type + "_scenario_extendend_features"
     return train_path, path
 
 # used from other models to get the train set (without recreate the sequences if they already exists)
@@ -172,3 +178,4 @@ def main(dataset_type=constants.DATASET_TYPE, scenario=constants.ALL_SCENARIOS):
 
 if __name__ == "__main__":
     main()
+    print("Done.")

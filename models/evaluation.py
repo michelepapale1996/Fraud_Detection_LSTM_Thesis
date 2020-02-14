@@ -126,6 +126,9 @@ def print_results(tn, fp, fn, tp, f1, balanced_accuracy, precision, recall, aucp
     print("aucpr: ", aucpr)
     print("Roc_auc score:", roc_auc)
 
+# takes real and predicted output of a model and print results.
+# If the threshold is set to False, then sets are divided in val and test set to find the right threshold
+# If the threshold is set, then real and predicted are used only for testing.
 def evaluate_n_times(real, predicted, times_to_repeat=100, threshold=False):
     tp = 0
     tn = 0

@@ -36,7 +36,6 @@ def get_probabilities(y, y_pred, distribution):
     return distribution.pdf(np.absolute(y[:, 0:len(y[0]) - 1] - y_pred))
 
 # This function adjusts class predictions based on the prediction threshold (t).
-# todo: use builtin sklearn function
 def adjusted_classes(y_scores, t):
     return [1 if y >= t else 0 for y in y_scores]
 

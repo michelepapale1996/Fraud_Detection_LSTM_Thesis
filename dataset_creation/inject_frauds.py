@@ -155,9 +155,7 @@ def craft_frauds(dataset, real_dataset, scenario_type, last_date_train_set, all_
 def craft_single_fraud(user_dataset, real_dataset, index, fraud_type, all_users, last_date_train_set, time_lapse=False):
     # resetting the index. In this way it's simpler to get the previous transaction
     user_dataset = user_dataset.reset_index(drop=True)
-
     ip = real_dataset.loc[random.choice(real_dataset.index), "IP"]
-
     timestamp_previous_trx = pd.Timestamp(user_dataset.loc[index - 1, "Timestamp"])
 
     if time_lapse == False:
@@ -170,6 +168,7 @@ def craft_single_fraud(user_dataset, real_dataset, index, fraud_type, all_users,
 
     msgErrore = real_dataset.loc[random.choice(real_dataset.index), "MsgErrore"]
     userID = user_dataset.loc[index, "UserID"]
+    tipoOperazione = user_dataset.loc[index, "TipoOperazione"]
     numConfermaSMS = real_dataset.loc[random.choice(real_dataset.index), "NumConfermaSMS"]
     asn = real_dataset.loc[random.choice(real_dataset.index), "CC_ASN"][2:]
 
@@ -186,7 +185,7 @@ def craft_single_fraud(user_dataset, real_dataset, index, fraud_type, all_users,
     importo, iban_cc, cc_asn, isFraud = dispatcher[fraud_type]()
 
     if DATASET_TYPE != FRAUD_BUSTER_DATASET:
-        new_row = [ip, timestamp_fraud, importo, msgErrore, userID, iban, numConfermaSMS, iban_cc, cc_asn, isFraud]
+        new_row = [ip, timestamp_fraud, tipoOperazione, importo, msgErrore, userID, iban, numConfermaSMS, iban_cc, cc_asn, isFraud]
     else:
         new_row = [timestamp_fraud, importo, userID, iban, iban_cc, cc_asn, asn, ip, isFraud]
 
