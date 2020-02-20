@@ -1,8 +1,9 @@
+import sys
+sys.path.append("/home/mpapale/thesis")
 import xgboost as xgb
-from sklearn.model_selection import RandomizedSearchCV
+from sklearn.model_selection import RandomizedSearchCV, GridSearchCV
 from dataset_creation import sequences_crafting_for_classification, constants
-from models import LSTM_classifier, evaluation
-from dataset_creation.constants import BEST_PARAMS_XGBOOST
+from models import LSTM_classifier, evaluation, resampling_dataset, explainability
 
 def model_selection(x_train, y_train):
     xg_reg = xgb.XGBClassifier()
@@ -17,14 +18,7 @@ def model_selection(x_train, y_train):
         'colsample_bytree': [0.2, 0.4, 0.6, 0.8, 1.0]
     }
 
-    xgb_random = RandomizedSearchCV(estimator=xg_reg,
-                                    param_distributions=random_grid,
-                                    n_iter=500,
-                                    cv=3,
-                                    verbose=2,
-                                    scoring="roc_auc",
-                                    random_state=42,
-                                    n_jobs=-1)
+    xgb_random = GridSearchCV(estimator=xg_reg, param_grid=random_grid, cv=3, verbose=2, scoring="roc_auc",  n_jobs=-1)
     xgb_random.fit(x_train, y_train)
 
     print("Best params: ", xgb_random.best_params_)
@@ -33,12 +27,20 @@ def model_selection(x_train, y_train):
 
 def create_model(x_train, y_train, params=None):
     if not params:
-        if constants.DATASET_TYPE == constants.INJECTED_DATASET:
-            params = BEST_PARAMS_XGBOOST
-        if constants.DATASET_TYPE == constants.REAL_DATASET:
-            params = constants.BEST_PARAMS_XGBOOST_REAL_DATASET
-        if constants.DATASET_TYPE == constants.OLD_DATASET:
-            params = constants.BEST_PARAMS_XGBOOST_OLD_DATASET
+        if constants.USING_AGGREGATED_FEATURES:
+            if constants.DATASET_TYPE == constants.INJECTED_DATASET:
+                params = constants.BEST_PARAMS_XGBOOST_AGGREGATED
+            if constants.DATASET_TYPE == constants.REAL_DATASET:
+                params = constants.BEST_PARAMS_XGBOOST_REAL_DATASET_AGGREGATED
+            if constants.DATASET_TYPE == constants.OLD_DATASET:
+                params = constants.BEST_PARAMS_XGBOOST_OLD_DATASET_AGGREGATED
+        else:
+            if constants.DATASET_TYPE == constants.INJECTED_DATASET:
+                params = constants.BEST_PARAMS_XGBOOST_NO_AGGREGATED
+            if constants.DATASET_TYPE == constants.REAL_DATASET:
+                params = constants.BEST_PARAMS_XGBOOST_REAL_DATASET_NO_AGGREGATED
+            if constants.DATASET_TYPE == constants.OLD_DATASET:
+                params = constants.BEST_PARAMS_XGBOOST_OLD_DATASET_NO_AGGREGATED
 
     xg_reg = xgb.XGBClassifier(subsample=params["subsample"],
                                min_child_weight=params["min_child_weight"],
@@ -56,14 +58,20 @@ if __name__ == "__main__":
     x_train, y_train = sequences_crafting_for_classification.get_train_set()
     x_test, y_test = sequences_crafting_for_classification.get_test_set()
 
+    # if the dataset is the real one -> contrast imbalanced dataset problem
+    if constants.DATASET_TYPE == constants.REAL_DATASET:
+        x_train, y_train = resampling_dataset.oversample_set(x_train, y_train)
+
     # adapt train and test set to supervised learning without time windows
     x_train_sup = x_train[:, look_back, :]
     x_test_sup = x_test[:, look_back, :]
 
     print("Fitting model...")
-    # model = model_selection(x_train_sup, y_train)
-    model = create_model(x_train_sup, y_train)
+    model = model_selection(x_train_sup, y_train)
+    # model = create_model(x_train_sup, y_train)
 
     print("Evaluating model...")
     y_pred = model.predict_proba(x_test_sup)
     evaluation.evaluate_n_times(y_test, y_pred[:, 1])
+
+    # explainability.explain_dataset(model, x_train_sup, x_test_sup, y_test)

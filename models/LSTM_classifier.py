@@ -10,7 +10,7 @@ from keras.wrappers import scikit_learn
 from sklearn.model_selection import GridSearchCV, RandomizedSearchCV, PredefinedSplit
 import sys
 sys.path.append("/home/mpapale/thesis")
-
+from models import resampling_dataset
 from keras.layers.recurrent import LSTM, GRU
 from keras.callbacks import EarlyStopping
 from keras.layers.core import Dense, Activation, Dropout, RepeatVector
@@ -18,7 +18,7 @@ from keras.optimizers import Adam, RMSprop
 from keras.models import Sequential
 from sklearn.datasets import make_classification
 from dataset_creation import feature_engineering, sequences_crafting_for_classification, constants
-from models import evaluation
+from models import evaluation, explainability
 
 from sklearn.model_selection import train_test_split
 # in order to print all the columns
@@ -37,12 +37,20 @@ np.random.seed(seed)
 
 def create_fit_model(x_train, y_train, look_back, params=None):
     if not params:
-        if constants.DATASET_TYPE == constants.INJECTED_DATASET:
-            params = constants.BEST_PARAMS_LSTM
-        if constants.DATASET_TYPE == constants.REAL_DATASET:
-            params = constants.BEST_PARAMS_LSTM_REAL_DATASET
-        if constants.DATASET_TYPE == constants.OLD_DATASET:
-            params = constants.BEST_PARAMS_LSTM_OLD_DATASET
+        if constants.USING_AGGREGATED_FEATURES:
+            if constants.DATASET_TYPE == constants.INJECTED_DATASET:
+                params = constants.BEST_PARAMS_LSTM_AGGREGATED
+            if constants.DATASET_TYPE == constants.REAL_DATASET:
+                params = constants.BEST_PARAMS_LSTM_REAL_DATASET_AGGREGATED
+            if constants.DATASET_TYPE == constants.OLD_DATASET:
+                params = constants.BEST_PARAMS_LSTM_OLD_DATASET_AGGREGATED
+        else:
+            if constants.DATASET_TYPE == constants.INJECTED_DATASET:
+                params = constants.BEST_PARAMS_LSTM_NO_AGGREGATED
+            if constants.DATASET_TYPE == constants.REAL_DATASET:
+                params = constants.BEST_PARAMS_LSTM_REAL_DATASET_NO_AGGREGATED
+            if constants.DATASET_TYPE == constants.OLD_DATASET:
+                params = constants.BEST_PARAMS_LSTM_OLD_DATASET_NO_AGGREGATED
 
     # model = create_simple_model(x_train, y_train, look_back)
     model = create_model(params["layers"], params["dropout_rate"], look_back, len(x_train[0, 0]))
@@ -110,19 +118,22 @@ def runtime_testing_fraud_buster(model):
 
 def create_model(layers, dropout_rate, look_back, num_features):
     model = Sequential()
+    # -2 because there are the input and the output layer
+    # +1 because range is 0-indexed
     n_hidden = len(layers) - 2
-    if n_hidden > 2:
-        model.add(LSTM(layers['input'], input_shape=(look_back+1, num_features), return_sequences=True))
-
+    if n_hidden > 0:
+        model.add(LSTM(layers['input'], input_shape=(look_back+1, num_features), return_sequences=False))
+        model.add(Dropout(dropout_rate))
         # add hidden layers return sequence true
-        for i in range(2, n_hidden):
-            model.add(LSTM(layers["hidden" + str(i)], return_sequences=True))
+        for i in range(1, n_hidden):
+            model.add(Dense(layers["hidden" + str(i)]))
             model.add(Dropout(dropout_rate))
         # add hidden_last return Sequences False
-        model.add(LSTM(layers['hidden' + str(n_hidden)], return_sequences=False))
+        model.add(Dense(layers['hidden' + str(n_hidden)]))
         model.add(Dropout(dropout_rate))
     else:
         model.add(LSTM(layers['input'], input_shape=(look_back+1, num_features), return_sequences=False))
+        model.add(Dropout(dropout_rate))
 
     model.add(Dense(layers['output'], activation='sigmoid'))
     model.compile(loss="mse", optimizer="adam")
@@ -132,14 +143,14 @@ def create_model(layers, dropout_rate, look_back, num_features):
 
 def model_selection(x, y, look_back):
     # define the grid search parameters
-    batch_size = [5, 10, 30, 64]
-    epochs = [10, 50, 100]
-    layers = [{'input': 32, 'hidden1': 32, 'output': 1},
-              {'input': 64, 'hidden1': 64, 'output': 1},
-              {'input': 96, 'hidden1': 32, 'output': 1},
-              {'input': 128, 'hidden1': 64, 'hidden2': 32, 'output': 1},
+    batch_size = [16, 64, 128]
+    epochs = [10, 25, 50]
+    layers = [{'input': 64, 'output': 1},
+              {'input': 128, 'output': 1},
+              {'input': 256, 'output': 1},
+              {'input': 128, 'hidden1': 64, 'output': 1},
               {'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}]
-    dropout_rate = [0.3, 0.5, 0.8]
+    dropout_rate = [0.2, 0.5, 0.8]
 
     # batch_size = np.random.choice(batch_size, int(len(batch_size) / 2))
     # epochs = np.random.choice(epochs, int(len(epochs) / 2))
@@ -158,7 +169,8 @@ def model_selection(x, y, look_back):
     grid = RandomizedSearchCV(estimator=model, param_distributions=param_grid, n_iter=100, n_jobs=-1, cv=ps, scoring="roc_auc", verbose=1)
     '''
 
-    grid = RandomizedSearchCV(estimator=model, param_distributions=param_grid, n_iter=50, n_jobs=-1, cv=3, scoring="roc_auc", verbose=0)
+    # grid = RandomizedSearchCV(estimator=model, param_distributions=param_grid, n_iter=50, n_jobs=-1, cv=3, scoring="roc_auc", verbose=0)
+    grid = GridSearchCV(estimator=model, param_grid=param_grid, n_jobs=-1, cv=3, scoring="roc_auc", verbose=3)
 
     grid_result = grid.fit(x, y)
     print("Best: %f using %s" % (grid_result.best_score_, grid_result.best_params_))
@@ -169,16 +181,20 @@ if __name__ == "__main__":
     look_back = constants.LOOK_BACK
     print("Lookback using: ", look_back)
     x_train, y_train = sequences_crafting_for_classification.get_train_set()
+
+    # if the dataset is the real one -> contrast imbalanced dataset problem
+    if constants.DATASET_TYPE == constants.REAL_DATASET:
+        x_train, y_train = resampling_dataset.oversample_set(x_train, y_train)
+
     x_test, y_test = sequences_crafting_for_classification.get_test_set()
-
-
+    '''
     model = create_fit_model(x_train, y_train, look_back)
     testPredict = model.predict(x_test)
     evaluation.evaluate_n_times(y_test, testPredict)
+    explainability.explain_dataset(model, x_test, y_test)
     '''
 
     model = model_selection(x_train, y_train, look_back)
     y_pred = model.predict_proba(x_test)
     evaluation.evaluate_n_times(y_test, y_pred[:, 1])
     # runtime_testing_fraud_buster(model)
-    '''

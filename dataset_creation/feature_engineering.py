@@ -221,6 +221,7 @@ def create_aggregated_features(dataset):
 
     return dataset_with_aggregated_features
 
+# scale features using MinMax
 def scale_features(train, test):
     scaler = MinMaxScaler()
 
@@ -228,6 +229,8 @@ def scale_features(train, test):
     selected_dtypes = [np.dtype('int64'), np.dtype('int8'), np.dtype('float64')]
     selected_cols = [True if x in selected_dtypes else False for x in df_dtypes]
     col_names = train.loc[:, selected_cols].columns
+
+    print("Rescaling features: ", col_names)
 
     train_features_to_scale = train.loc[:, selected_cols]
     test_features_to_scale = test.loc[:, selected_cols]

@@ -1,11 +1,9 @@
 from models import LSTM_classifier, evaluation
 import numpy as np
-import xgboost as xgb
-from sklearn.ensemble import RandomForestClassifier
 from dataset_creation import sequences_crafting_for_classification
 from dataset_creation.constants import *
 from adversarial_attacks import fgsm
-from models import MultiLayerPerceptron, xgboost_classifier, RF
+from models import MultiLayerPerceptron, xgboost_classifier, RF, resampling_dataset
 from scipy import stats
 
 def get_predictions_for_each_model(lstm, rf, xg_reg, x, x_supervised):
@@ -270,6 +268,7 @@ def predict_test_based_on_expon(lstm, rf, xg_reg, x_val, x_val_supervised, y_val
     num_decisions_correctly_taken_from_lstm_and_not_from_xgb_or_rf = 0
     num_decisions_taken_by_rf = 0
     num_decisions_taken_by_xgb = 0
+    indices_decisions_taken_by_rf = []
     y_test_pred = []
     for i in range(len(y_pred_lstm)):
         max_value = max(abs(samples_lstm[i] - lstm_mean) / lstm_std, abs(samples_rf[i] - rf_mean) / rf_std, abs(samples_xgb[i] - xgb_mean) / xgb_std)
@@ -290,6 +289,9 @@ def predict_test_based_on_expon(lstm, rf, xg_reg, x_val, x_val_supervised, y_val
 
         elif abs(samples_rf[i] - rf_mean) / rf_std == max_value:
             num_decisions_taken_by_rf += 1
+            rf_decision = 1 if samples_rf[i] > threshold_rf else 0
+            if rf_decision:
+                indices_decisions_taken_by_rf.append(i)
             y_test_pred.append(1 if samples_rf[i] > threshold_rf else 0)
 
         elif abs(samples_xgb[i] - xgb_mean) / xgb_std == max_value:
@@ -299,22 +301,6 @@ def predict_test_based_on_expon(lstm, rf, xg_reg, x_val, x_val_supervised, y_val
         else:
             print("errore")
 
-    '''
-    loc_lstm, scale_lstm = stats.expon.fit(y_val_pred_lstm)
-    loc_rf, scale_rf = stats.expon.fit(y_val_pred_rf)
-    loc_xgb, scale_xgb = stats.expon.fit(y_val_pred_xgb)
-    samples = stats.expon.cdf(y_val_pred_lstm, scale=scale_lstm, loc=loc_lstm) * np.array(len(y_val_pred_lstm) * [0.333])
-    samples += stats.expon.cdf(y_val_pred_rf, scale=scale_rf, loc=loc_rf) * np.array(len(y_val_pred_lstm) * [0.333])
-    samples += stats.expon.cdf(y_val_pred_xgb, scale=scale_xgb, loc=loc_xgb) * np.array(len(y_val_pred_lstm) * [0.333])
-    threshold = evaluation.find_best_threshold_fixed_fpr(y_val, samples)
-
-    y_pred_lstm, y_pred_rf, y_pred_xgb = get_predictions_for_each_model(lstm, rf, xg_reg, x_test, x_test_supervised)
-
-    samples = stats.expon.cdf(y_pred_lstm, scale=scale_lstm, loc=loc_lstm) * np.array(len(y_pred_lstm) * [0.333])
-    samples += stats.expon.cdf(y_pred_rf, scale=scale_rf, loc=loc_rf) * np.array(len(y_pred_lstm) * [0.333])
-    samples += stats.expon.cdf(y_pred_xgb, scale=scale_xgb, loc=loc_xgb) * np.array(len(y_pred_lstm) * [0.333])
-    y_test_pred = evaluation.adjusted_classes(samples, threshold)
-    '''
     return y_test_pred, num_decisions_taken_by_lstm, num_decisions_taken_by_rf, num_decisions_taken_by_xgb, num_decisions_correctly_taken_from_lstm, num_decisions_correctly_taken_from_lstm_and_not_from_xgb_or_rf
 # --------------------------- end of the types of ensembles ----------------------------
 
@@ -377,9 +363,15 @@ def repeat_experiment_n_times(lstm, rf, xg_reg, scenario, times_to_repeat=100, a
                     print("The attacker will use a LSTM network")
                     # train the network using the right params
                     if is_white_box_attack:
-                        params = BEST_PARAMS_LSTM_REAL_DATASET
+                        if USING_AGGREGATED_FEATURES:
+                            params = BEST_PARAMS_LSTM_REAL_DATASET_AGGREGATED
+                        else:
+                            params = BEST_PARAMS_LSTM_REAL_DATASET_NO_AGGREGATED
                     else:
-                        params = BEST_PARAMS_LSTM_OLD_DATASET
+                        if USING_AGGREGATED_FEATURES:
+                            params = BEST_PARAMS_LSTM_OLD_DATASET_AGGREGATED
+                        else:
+                            params = BEST_PARAMS_LSTM_OLD_DATASET_NO_AGGREGATED
                     adversarial_model = LSTM_classifier.create_fit_model(x_train, y_train, look_back, params=params)
                     frauds = x_test[np.where(y_test == 1)]
                     adversarial_samples = fgsm.craft_sample(frauds, adversarial_model, epsilon=0.01)
@@ -390,9 +382,15 @@ def repeat_experiment_n_times(lstm, rf, xg_reg, scenario, times_to_repeat=100, a
                 print("Crafting an evasion attack")
                 # train the network using the right params
                 if is_white_box_attack:
-                    params = BEST_PARAMS_RF
+                    if USING_AGGREGATED_FEATURES:
+                        params = BEST_PARAMS_RF_REAL_DATASET_AGGREGATED
+                    else:
+                        params = BEST_PARAMS_RF_REAL_DATASET_NO_AGGREGATED
                 else:
-                    params = BEST_PARAMS_RF_OLD_DATASET
+                    if USING_AGGREGATED_FEATURES:
+                        params = BEST_PARAMS_RF_OLD_DATASET_AGGREGATED
+                    else:
+                        params = BEST_PARAMS_RF_OLD_DATASET_NO_AGGREGATED
                 # training the oracle
                 oracle = RF.create_model(x_train_supervised, y_train, params=params)
 
@@ -411,8 +409,8 @@ def repeat_experiment_n_times(lstm, rf, xg_reg, scenario, times_to_repeat=100, a
         try:
             # a, b, c, d, e = 0, 0, 0, 0, 0
             # y_test_pred, not_by_xgb, not_by_rf, not_found_by_others = predict_test_based_on_voting(lstm, rf, xg_reg, x_val, x_val_supervised, y_val, x_test, x_test_supervised, y_test)
-            # y_test_pred, a, b, c, d, e = predict_test_based_on_more_confident(lstm, rf, xg_reg, x_val, x_val_supervised, y_val, x_test, x_test_supervised, y_test)
-            y_test_pred, a, b, c, d, e = predict_test_based_on_expon(lstm, rf, xg_reg, x_val, x_val_supervised, y_val, x_test, x_test_supervised, y_test)
+            y_test_pred, a, b, c, d, e = predict_test_based_on_more_confident(lstm, rf, xg_reg, x_val, x_val_supervised, y_val, x_test, x_test_supervised, y_test)
+            # y_test_pred, a, b, c, d, e = predict_test_based_on_expon(lstm, rf, xg_reg, x_val, x_val_supervised, y_val, x_test, x_test_supervised, y_test)
             # y_test_pred = predict_test_based_on_sum(lstm, rf, xg_reg, x_val, x_val_supervised, y_val, x_test, x_test_supervised)
             # y_test_pred = predict_test_based_on_more_confident_and_majority_voting(lstm, rf, xg_reg, x_val, x_val_supervised, y_val, x_test, x_test_supervised, y_test)
             # not_found_by_xgboost += not_by_xgb
@@ -457,12 +455,17 @@ def repeat_experiment_n_times(lstm, rf, xg_reg, scenario, times_to_repeat=100, a
 look_back = LOOK_BACK
 print("Lookback using: ", look_back)
 x_train, y_train = sequences_crafting_for_classification.get_train_set()
+
+# if the dataset is the real one -> contrast imbalanced dataset problem
+if DATASET_TYPE == REAL_DATASET:
+    x_train, y_train = resampling_dataset.oversample_set(x_train, y_train)
+
 # train model for supervised models (xgboost/rf)
 x_train_supervised = x_train[:, look_back, :]
 y_train_supervised = y_train
 
 print("Training models...")
-lstm = LSTM_classifier.create_fit_model(x_train, y_train, look_back, params={'layers': {'input': 64, 'hidden1': 64, 'output': 1}, 'epochs': 10, 'dropout_rate': 0.3, 'batch_size': 32})
+lstm = LSTM_classifier.create_fit_model(x_train, y_train, look_back)
 rf = RF.create_model(x_train_supervised, y_train_supervised)
 xg_reg = xgboost_classifier.create_model(x_train_supervised, y_train_supervised)
 
@@ -471,7 +474,7 @@ if DATASET_TYPE == INJECTED_DATASET or DATASET_TYPE == OLD_DATASET:
     scenarios = [ALL_SCENARIOS]
     for scenario in scenarios:
         print("-------------------", scenario, "scenario --------------------------")
-        repeat_experiment_n_times(lstm, rf, xg_reg, scenario, times_to_repeat=10, adversarial_attack=False, evasion_attack=False, is_white_box_attack=False, use_lstm_for_adversarial=True)
+        repeat_experiment_n_times(lstm, rf, xg_reg, scenario, times_to_repeat=100, adversarial_attack=False, evasion_attack=False, is_white_box_attack=False, use_lstm_for_adversarial=True)
 
 if DATASET_TYPE == REAL_DATASET:
-    repeat_experiment_n_times(lstm, rf, xg_reg, False, times_to_repeat=10, adversarial_attack=False, evasion_attack=True, is_white_box_attack=True, use_lstm_for_adversarial=True)
+    repeat_experiment_n_times(lstm, rf, xg_reg, False, times_to_repeat=100, adversarial_attack=False, evasion_attack=False, is_white_box_attack=True, use_lstm_for_adversarial=True)

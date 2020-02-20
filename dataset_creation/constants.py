@@ -4,11 +4,10 @@ FRAUD_BUSTER_DATASET = "FraudBuster"
 INJECTED_DATASET = "Injected"
 REAL_DATASET = "Real"
 OLD_DATASET = "Old"
-
-DATASET_TYPE = REAL_DATASET
+DATASET_TYPE = INJECTED_DATASET
+USING_AGGREGATED_FEATURES = False
 
 LOOK_BACK = 10
-
 FIRST_SCENARIO = "FIRST"
 SECOND_SCENARIO = "SECOND"
 THIRD_SCENARIO = "THIRD"
@@ -20,23 +19,38 @@ EIGHTH_SCENARIO = "EIGHTH"
 NINTH_SCENARIO = "NINTH"
 ALL_SCENARIOS = "ALL"
 
-# these params has been found using hyperparameter tuning
-# using as dataset, 2014/2015 without aggregated features, lookback = 10, synthetic frauds.
-BEST_PARAMS_XGBOOST = {'subsample': 1.0, 'min_child_weight': 1, 'max_depth': 5, 'learning_rate': 0.2, 'gamma': 1.5, 'colsample_bytree': 0.8}
-BEST_PARAMS_RF = {'n_estimators': 100, 'min_samples_split': 2, 'min_samples_leaf': 1, 'max_features': 'auto', 'max_depth': None, 'bootstrap': True}
-BEST_PARAMS_LSTM = {'layers': {'input': 128, 'hidden1': 64, 'hidden2': 32, 'output': 1}, 'epochs': 10, 'dropout_rate': 0.3, 'batch_size': 5}
+# these params has been found using hyperparameter tuning WITHOUT USING SMOTE
+# using as dataset, 2014/2015 with aggregated features, lookback = 10, synthetic frauds.
+BEST_PARAMS_XGBOOST_AGGREGATED = {'colsample_bytree': 0.2, 'gamma': 0, 'learning_rate': 0.1, 'max_depth': 8, 'min_child_weight': 1, 'subsample': 1.0}
+BEST_PARAMS_RF_AGGREGATED = {'bootstrap': False, 'max_depth': 10, 'max_features': 'sqrt', 'min_samples_leaf': 1, 'min_samples_split': 10, 'n_estimators': 550}
+BEST_PARAMS_LSTM_AGGREGATED = {'batch_size': 64, 'dropout_rate': 0.2, 'epochs': 50, 'layers': {'input': 128, 'hidden1': 64, 'output': 1}}
+# using as dataset, 2013/2014 with aggregated features, lookback = 10, synthetic frauds.
+# todo: hyper param tuning old dataset
+BEST_PARAMS_XGBOOST_OLD_DATASET_AGGREGATED = {'subsample': 1.0, 'min_child_weight': 1, 'max_depth': 8, 'learning_rate': 0.3, 'gamma': 1, 'colsample_bytree': 0.8}
+BEST_PARAMS_RF_OLD_DATASET_AGGREGATED = {'n_estimators': 900, 'min_samples_split': 20, 'min_samples_leaf': 4, 'max_features': 'auto', 'max_depth': 20, 'bootstrap': True}
+BEST_PARAMS_LSTM_OLD_DATASET_AGGREGATED = {'layers': {'input': 128, 'hidden1': 64, 'hidden2': 32, 'output': 1}, 'epochs': 10, 'dropout_rate': 0.8, 'batch_size': 10}
+# using as dataset, 2014/2015 with aggregated features, with real frauds, lookback = 10, synthetic frauds.
+BEST_PARAMS_XGBOOST_REAL_DATASET_AGGREGATED = {'colsample_bytree': 1.0, 'gamma': 5, 'learning_rate': 0.3, 'max_depth': 5, 'min_child_weight': 1, 'subsample': 0.6}
+BEST_PARAMS_RF_REAL_DATASET_AGGREGATED = {'bootstrap': False, 'max_depth': 100, 'max_features': 'auto', 'min_samples_leaf': 10, 'min_samples_split': 20, 'n_estimators': 100}
+BEST_PARAMS_LSTM_REAL_DATASET_AGGREGATED = {'batch_size': 128, 'dropout_rate': 0.2, 'epochs': 25, 'layers': {'input': 128, 'hidden1': 64, 'output': 1}}
 
-# these params has been found using hyperparameter tuning
-# using as dataset, 2013/2014 without aggregated features, lookback = 10, synthetic frauds.
-BEST_PARAMS_XGBOOST_OLD_DATASET = {'subsample': 1.0, 'min_child_weight': 1, 'max_depth': 8, 'learning_rate': 0.3, 'gamma': 1, 'colsample_bytree': 0.8}
-BEST_PARAMS_RF_OLD_DATASET = {'n_estimators': 900, 'min_samples_split': 20, 'min_samples_leaf': 4, 'max_features': 'auto', 'max_depth': 20, 'bootstrap': True}
-BEST_PARAMS_LSTM_OLD_DATASET = {'layers': {'input': 128, 'hidden1': 64, 'hidden2': 32, 'output': 1}, 'epochs': 10, 'dropout_rate': 0.8, 'batch_size': 10}
-
-# these params has been found using hyperparameter tuning
-# using as dataset, 2014/2015 without aggregated features, with real frauds, lookback = 10, synthetic frauds.
-BEST_PARAMS_XGBOOST_REAL_DATASET = {'subsample': 0.8, 'min_child_weight': 10, 'max_depth': 8, 'learning_rate': 0.3, 'gamma': 2, 'colsample_bytree': 0.4}
-BEST_PARAMS_RF_REAL_DATASET = {'n_estimators': 1000, 'min_samples_split': 10, 'min_samples_leaf': 1, 'max_features': 'auto', 'max_depth': 10, 'bootstrap': True}
-BEST_PARAMS_LSTM_REAL_DATASET = {'layers': {'input': 64, 'hidden1': 64, 'output': 1}, 'epochs': 50, 'dropout_rate': 0.8, 'batch_size': 5}
+# ---------------------------------------------------------------------------------
+# these params has been found using hyperparameter tuning WITHOUT USING SMOTE
+# using as dataset, 2014/2015 WITHOUT aggregated features, lookback = 10, synthetic frauds.
+BEST_PARAMS_XGBOOST_NO_AGGREGATED = {'colsample_bytree': 0.8, 'gamma': 0, 'learning_rate': 0.3, 'max_depth': 10, 'min_child_weight': 1, 'subsample': 1.0}
+BEST_PARAMS_RF_NO_AGGREGATED = {'bootstrap': True, 'max_depth': 100, 'max_features': 'sqrt', 'min_samples_leaf': 1, 'min_samples_split': 20, 'n_estimators': 1000}
+# todo: hyper param tuning injected dataset for only lstm
+BEST_PARAMS_LSTM_NO_AGGREGATED = {'batch_size': 64, 'dropout_rate': 0.2, 'epochs': 50, 'layers': {'input': 128, 'hidden1': 64, 'output': 1}}
+# using as dataset, 2013/2014 with aggregated features, lookback = 10, synthetic frauds.
+# todo: hyper param tuning old dataset
+BEST_PARAMS_XGBOOST_OLD_DATASET_NO_AGGREGATED = {'subsample': 1.0, 'min_child_weight': 1, 'max_depth': 8, 'learning_rate': 0.3, 'gamma': 1, 'colsample_bytree': 0.8}
+BEST_PARAMS_RF_OLD_DATASET_NO_AGGREGATED = {'n_estimators': 900, 'min_samples_split': 20, 'min_samples_leaf': 4, 'max_features': 'auto', 'max_depth': 20, 'bootstrap': True}
+BEST_PARAMS_LSTM_OLD_DATASET_NO_AGGREGATED = {'layers': {'input': 128, 'hidden1': 64, 'hidden2': 32, 'output': 1}, 'epochs': 10, 'dropout_rate': 0.8, 'batch_size': 10}
+# todo: hyper param tuning real dataset
+# using as dataset, 2014/2015 with aggregated features, with real frauds, lookback = 10, synthetic frauds.
+BEST_PARAMS_XGBOOST_REAL_DATASET_NO_AGGREGATED = {'colsample_bytree': 1.0, 'gamma': 5, 'learning_rate': 0.3, 'max_depth': 5, 'min_child_weight': 1, 'subsample': 0.6}
+BEST_PARAMS_RF_REAL_DATASET_NO_AGGREGATED = {'bootstrap': False, 'max_depth': 100, 'max_features': 'auto', 'min_samples_leaf': 10, 'min_samples_split': 20, 'n_estimators': 100}
+BEST_PARAMS_LSTM_REAL_DATASET_NO_AGGREGATED = {'batch_size': 128, 'dropout_rate': 0.2, 'epochs': 25, 'layers': {'input': 128, 'hidden1': 64, 'output': 1}}
 
 # these are users with more than x transactions in dataset 2014/2015 (found by dataset_creation/dataset_statistics.py)
 users_with_more_than_100_trx_train_5_trx_test = ['003b255561d93cf8ccd1d02bc2136674', '0080ce2427ac82239b8dfebee9e60d31', '079fee0af27f1d2a688020b0dc34d9b4', '07f4a369e34fd00d8efe9a87837766ed', '0948a360d702a8416b5132f0d5fd6288', '0cc687fa52bd1b01d9cc89bad15526ac', '0f1a2f9e0118b7f7d391f84178b8893b', '1046968a41107d189dc94b517d4cb636', '10fdb11b13fff4b822ddc239ad6f3969', '1101d241eb41f2a8f88fd0701f2b45b1', '137568440d8a2419ff4c4535c939da3a', '1931881718bc44830b52eb56a2d2ed8e', '1a8c092938b42e392ee607a846373b62', '1baea0b11d10dc85a67f5292b6d0f3a5', '1e3c57462baaf8adb98765717186732c', '1ed695ef00fb255a1a1ba3ddde6dfc7c', '1ee9d176749b36d581bac7c8b5304a4e', '214a4bc5fdb7d209759e8d40be0d6567', '220e192627b600d00eaa6b42ce8844da', '237331a9aa09d164864337b4a27820d5', '2465e4faea2954eb10a09c7392c49ad5', '247b5a9351d999d1e145b178e30f786f', '2616b84eac790f81cb270088f22a98e2', '26e3a0d922c11e2cc50d77a436743ff7', '2839f0a5a89791f2a75b7f58f4717058', '2b0b68bade3cf710dd87fc51f0aa9ca4', '2f607c32eb934e72b7e6e10ef0654449', '313851878d2939a5cfb14113931b4d76', '3150546ebd9433812fe9985559e2c508', '31c1daca3f4a4238bd9de191acb57a21', '32bbf6714eefd226eab56e7b380d7737', '33e8c6442cf278b7bb1e79a213f3498d', '348244bda1df56288652467559fed878', '3766bbb1c2845922040c7cf8bbe97ae1', '3ade08ddf886e01f8d92095225175f8b', '3c387bb14b369cdd3a86c65e6fda7db0', '3c739651d41b06ade9c365c67f8688b5', '3d01aa89ac96d0d0b73a42a68b1556e7', '3d9d15bfe2d6685f7bb26bd6612a6878', '3ec4a89981706891f74161bf2b396229', '42d6eb23855cb77b4a286e44b7afedd7', '434f463902f2c11e1d68822bcdc8c6d9', '4391d38c4c2985b7774fd23a545cc7b2', '4502d44446b6110f99e6e6d55df0c739', '45fc7689baf3f74ce186cbfef1c04533', '47f901056bd358540f85e15191ff9a29', '49553df019ccb70420075d06f0d13597', '4bd99e4adceeffae72b8a755d8fbb6b9', '4bf4b5eec955b90394af4b86d8ec53a5', '4c2b9d0f7cba90b19c61b5da5fffefcf', '4d0051770a7a7e9731a67f97ac2f260a', '4fc51906dc8be35095328f0d0b5a7390', '506821eae86510011b8ed0e73e0e38b2', '521dd402456b75b3c8a49b064e3f1c99', '53458d08e1d5ff271ca298ec1c9df847', '542aba60f688c1850f773b2f4f25f26d', '5505fc6908d31949bf7f9573bf50a295', '5a3ba6fa8d765bcdf8a254cf4b8db90a', '5af938281e3a0bb02cc9946d369af1bf', '5b0344d6e5dd71daaaa8ba77f7db9cbd', '5b12a585eb7d4de9e3796949c0846bee', '5bcccf9e3bc643bcc1e114534a36c3e3', '5ebe3a30b486e493d1f017fbfb9fd05c', '60b234fe5110937c1821e87e92b87a4b', '63bd81168c762bc5345ced8513bd538b', '64b43b7c1fdfe8da6d8e039045c6b852', '683d2d9d78902f561c03a9faca5fa4f5', '6bd2a7d9016cb091e1db44001da14c43', '6e67ba79f2ed12171a67938dbe5f9b9d', '6fe0b4546887d8806fae5efe371f4a00', '7785be915ba569363d621405889ca17e', '7a2c9db3b10b5bd6afc53a7b454e9912', '7aecb68effb1791085e9c2b871c17404', '7bc8f1e3d7938f3572e749725a1778ae', '7ce81e1e1986a323fa6286f0718e329c', '7de5f11d5231df0b0411bb03bf0f74d2', '7e2aad413eeb6d349d978d2c00d1db3f', '7eae7902ef8da390a059393470ce401b', '7f260a20df6fe985217b7bb8a8bee9bd', '80284c73fa77108b49aace97c1c50576', '80293ff0392587375fac62c75ae461da', '818a285e006953c2bf5c1cb0fa94012e', '83e464735d321ad83eb1a2d242e67e00', '8bad707362ce32358d1a570d6de21102', '8ec99c1f30876c1c6315e989c6e30f39', '8fa91c1b0b6de5e6a082ef9f388f36b3', '9225cb6730b178cf606978a95d6e9c5f', '9766dfa6244e523591012c4c71a84b63', '97d1c77cb77d202a7f1a5aab13a8361d', '97d8acecea4c52057760c684c508dd73', '98c4d98c6f0663a7a3b4e337b66698e7', '9b0784cf039acbd966b30583772dc4ce', '9b0e3eb39e5cadcb476b3fe9a2a9fed5', '9b6d55ea75451e53aa86ac7b7395b1c0', '9d897a0a0b1ae4a2e79ea673b08d6fd6', '9f166bceeaf04e95dad81bcca3cfa29c', '9f509f80ff65f2f09904d548e89dea59', 'a205e0ca260b713013d6212509a7581f', 'a2756a4678fff7a48e63a5921aff55c7', 'a30b92774149292dd426cb208e1af147', 'a38c5268e0f8dd13acf95eabeb82a83e', 'a6743420e69cfa08e102ecafe7139d7e', 'a7eecc077ef9ffb9df8cc2c3075bb2e4', 'a83132078295d6bb99c7598ddea2fbba', 'aad1057ff459268156f141a09dfa756d', 'aca754a700be29d91c37cb55ee06b7f0', 'aef39eb5c8439046a23099bfda36b73a', 'afcbf06fbe767ea95a6f3e1ce1c4c4c7', 'b18fdfacc7d7549b128f93e0e95dd6fb', 'b2472473041ce54f69b850aeaa449ec7', 'b281aa7f775de0200cb9bd830f1ead7a', 'b2bf76bada84fc5c86f68c24d2c7aa2c', 'b4c861f3835c7c3a6f2c5b93d2bf54df', 'b4ef80e85930be2dd0aab1bfaef352ae', 'b97e2250374aa3b55edad9d1029a40d5', 'bc716423a427f3c725f73fa7456f0d52', 'be0fd01382d30d2ad32abea5dae246c7', 'be8de0ce300905ef34b96d07b64a5c0b', 'c0511c0d7e42b3a979599a082d9c04ea', 'c2482c4d96700150796a0082830b0b26', 'c779dfba2a7ed95c3344eaa53d64eb53', 'c79e23c4bbccd247f86a18125a7893f1', 'c9a1c3c4258c9f019e6b0c55bc785bf5', 'ca16d7a8e82e4b678c5f655249027da6', 'cab6334e87472911f08b2798124e8d4a', 'cde18b636c96a83e3f3137f6e84a2f1c', 'ce14e89a137cd1ccd4145a316584a906', 'ce98a7df704b77637f1a5e3746fb4c70', 'cf0fc58b8efe540199dc0eb3cdaf1003', 'cf29db60f28b49596e39a6137c883017', 'd1b443805b7a8eae5b04ee1902ae298c', 'd2a99c6d753f4db73c1a520699185216', 'd47928417bd21ab8df82ffd86b954149', 'd70f57b9e07f2aa34e2b2c91860c5e03', 'd77deba4471050f03fdbd1a4a49209ee', 'd786df842b00ae3a2566396a88d6804d', 'd79d855229df5bce728330680bf3194b', 'd88aa9fa459bfe9c8825798c16d0c5f8', 'db8ea05f29796f92c0acfea846f1e2b1', 'db97ac32982dc748251eb1d0795cf2e2', 'dd5b4ef0b1570819e9fc52ac5ec29631', 'de99c74be6be0fa1e7c0bf9cd3803a54', 'dee99bb3f905c13dd6d25212d5f88ad5', 'df796e05d87b4ad21ef991387687e4c2', 'dfdca7642971dbe151c7320c249448e8', 'e209ea9f9188f16b849731c16f0b0dcf', 'e28b19dcf0dbb731318edc0815a40c8e', 'e4fbf62987648e19f7b6cf02c6210bdb', 'e56c290cb0339f281e6c8a11e7b34ac9', 'e5ef1b408a9f0c25a5d92a6a93ed3dd1', 'e8fa1826555ad408092b0b803c1b5391', 'ed6e15388ea2ef408728f00a22147699', 'ee8667d9b98087aad0a257c723c1b0e9', 'eeb103439d8a61cf546f64f1840b4a55', 'eef554a8159936fe0a6c957320996554', 'ef2c6ad17139d71b36313cfb1ff4db0c', 'f060d384a8ef3ef6b401d38314a22f3c', 'f088d9702b111739eaeaba70ddfc0132', 'f13ac3ad54e314aeea70184d052eeb30', 'f1d149c81e3d3af14bbed2df6fc33152', 'f4d897ee15afff881abea4545a605609', 'f7f9b6758f79f44ec372023e8ef7fde5', 'faf236abafd765cbbd97b20609ec01ff', 'fcd52e904e1a093d7f7fc92cfc6f06b6', 'fd508f2b37de15483946c810ad4669e1', 'fdbe4b7e23d4e9b23a29441564c00d6a', 'fffddb7c733c73bfc76c2822a17e84e4']

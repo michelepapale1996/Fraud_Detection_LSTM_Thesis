@@ -2,7 +2,7 @@ import numpy as np
 from sklearn.ensemble import RandomForestClassifier
 from dataset_creation import sequences_crafting_for_classification
 from dataset_creation.constants import *
-from models import MultiLayerPerceptron, LSTM_classifier, RF, xgboost_classifier, evaluation
+from models import MultiLayerPerceptron, LSTM_classifier, RF, xgboost_classifier, evaluation, resampling_dataset
 from adversarial_attacks import fgsm
 
 # adversarial attack creates frauds starting from the frauds and using FGSM
@@ -72,9 +72,15 @@ def repeat_experiment_n_times(lstm, rf, xg_reg, scenario, times_to_repeat=100, a
                     print("The attacker will use a LSTM network")
                     # train the network using the right params
                     if is_white_box_attack:
-                        params = BEST_PARAMS_LSTM_REAL_DATASET
+                        if USING_AGGREGATED_FEATURES:
+                            params = BEST_PARAMS_LSTM_REAL_DATASET_AGGREGATED
+                        else:
+                            params = BEST_PARAMS_LSTM_REAL_DATASET_NO_AGGREGATED
                     else:
-                        params = BEST_PARAMS_LSTM_OLD_DATASET
+                        if USING_AGGREGATED_FEATURES:
+                            params = BEST_PARAMS_LSTM_OLD_DATASET_AGGREGATED
+                        else:
+                            params = BEST_PARAMS_LSTM_OLD_DATASET_NO_AGGREGATED
                     frauds = x_test[np.where(y_test == 1)]
                     adversarial_model = LSTM_classifier.create_fit_model(x_train, y_train, look_back, params=params)
                     adversarial_samples = fgsm.craft_sample(frauds, adversarial_model, epsilon=0.01)
@@ -86,9 +92,15 @@ def repeat_experiment_n_times(lstm, rf, xg_reg, scenario, times_to_repeat=100, a
                 print("Crafting an evasion attack")
                 # train the network using the right params
                 if is_white_box_attack:
-                    params = BEST_PARAMS_RF
+                    if USING_AGGREGATED_FEATURES:
+                        params = BEST_PARAMS_RF_REAL_DATASET_AGGREGATED
+                    else:
+                        params = BEST_PARAMS_RF_REAL_DATASET_NO_AGGREGATED
                 else:
-                    params = BEST_PARAMS_RF_OLD_DATASET
+                    if USING_AGGREGATED_FEATURES:
+                        params = BEST_PARAMS_RF_OLD_DATASET_AGGREGATED
+                    else:
+                        params = BEST_PARAMS_RF_OLD_DATASET_NO_AGGREGATED
                 # training the oracle
                 oracle = RF.create_model(x_train_supervised, y_train, params=params)
 
@@ -167,12 +179,17 @@ def repeat_experiment_n_times(lstm, rf, xg_reg, scenario, times_to_repeat=100, a
 look_back = LOOK_BACK
 print("Using as lookback:", look_back)
 x_train, y_train = sequences_crafting_for_classification.get_train_set()
+
+# if the dataset is the real one -> contrast imbalanced dataset problem
+if DATASET_TYPE == REAL_DATASET:
+    x_train, y_train = resampling_dataset.oversample_set(x_train, y_train)
+
 # train model for supervised models (xgboost/rf)
 x_train_supervised = x_train[:, look_back, :]
 y_train_supervised = y_train
 
 print("Training models...")
-lstm = LSTM_classifier.create_fit_model(x_train, y_train, look_back, params={'layers': {'input': 64, 'hidden1': 64, 'output': 1}, 'epochs': 10, 'dropout_rate': 0.3, 'batch_size': 32})
+lstm = LSTM_classifier.create_fit_model(x_train, y_train, look_back)
 xg_reg = xgboost_classifier.create_model(x_train_supervised, y_train_supervised)
 rf = RF.create_model(x_train_supervised, y_train_supervised)
 
@@ -181,7 +198,7 @@ if DATASET_TYPE == INJECTED_DATASET or DATASET_TYPE == OLD_DATASET:
     scenarios = [ALL_SCENARIOS]
     for scenario in scenarios:
         print("-------------------", scenario, "scenario --------------------------")
-        repeat_experiment_n_times(lstm, rf, xg_reg, scenario=scenario, times_to_repeat=10, adversarial_attack=False, evasion_attack=False, is_white_box_attack=False, use_lstm_for_adversarial=True)
+        repeat_experiment_n_times(lstm, rf, xg_reg, scenario=scenario, times_to_repeat=100, adversarial_attack=False, evasion_attack=False, is_white_box_attack=False, use_lstm_for_adversarial=True)
 
 if DATASET_TYPE == REAL_DATASET:
-    repeat_experiment_n_times(lstm, rf, xg_reg, scenario=False, times_to_repeat=10, adversarial_attack=False, evasion_attack=True, is_white_box_attack=True, use_lstm_for_adversarial=True)
+    repeat_experiment_n_times(lstm, rf, xg_reg, scenario=False, times_to_repeat=100, adversarial_attack=False, evasion_attack=False, is_white_box_attack=True, use_lstm_for_adversarial=True)

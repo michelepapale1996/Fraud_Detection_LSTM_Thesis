@@ -1,4 +1,4 @@
-from models import LSTM_classifier, evaluation, RF, xgboost_classifier
+from models import LSTM_classifier, evaluation, RF, xgboost_classifier, resampling_dataset
 import numpy as np
 import xgboost as xgb
 from sklearn.ensemble import RandomForestClassifier
@@ -20,21 +20,21 @@ def predict_test_based_on_more_confident(rf, xg_reg, x_val_supervised, y_val, x_
     y_val_pred_rf, y_val_pred_xgb = get_predictions_for_each_model(rf, xg_reg, x_val_supervised)
 
     # get threshold for each model
-    threshold_rf = evaluation.find_best_threshold_fixed_fpr(y_val, y_val_pred_rf[:, 1])
-    threshold_xgb = evaluation.find_best_threshold_fixed_fpr(y_val, y_val_pred_xgb[:, 1])
+    threshold_rf = evaluation.find_best_threshold_fixed_fpr(y_val, y_val_pred_rf)
+    threshold_xgb = evaluation.find_best_threshold_fixed_fpr(y_val, y_val_pred_xgb)
 
     # get mean for each model
-    rf_mean = np.array(y_val_pred_rf[:, 1]).mean()
-    xgb_mean = np.array(y_val_pred_xgb[:, 1]).mean()
+    rf_mean = np.array(y_val_pred_rf).mean()
+    xgb_mean = np.array(y_val_pred_xgb).mean()
 
     # get std for each model
-    rf_std = np.array(y_val_pred_rf[:, 1]).std()
-    xgb_std = np.array(y_val_pred_xgb[:, 1]).std()
+    rf_std = np.array(y_val_pred_rf).std()
+    xgb_std = np.array(y_val_pred_xgb).std()
 
     # predicting test set
     y_pred_rf, y_pred_xgb = get_predictions_for_each_model(rf, xg_reg, x_test_supervised)
-    y_pred_rf = y_pred_rf[:, 1].ravel()
-    y_pred_xgb = y_pred_xgb[:, 1].ravel()
+    y_pred_rf = y_pred_rf.ravel()
+    y_pred_xgb = y_pred_xgb.ravel()
 
     y_test_pred = []
     for i in range(len(y_pred_rf)):
@@ -86,13 +86,13 @@ def predict_test_based_on_voting(rf, xg_reg, x_val_supervised, y_val, x_test_sup
     y_val_pred_rf, y_val_pred_xgb = get_predictions_for_each_model(rf, xg_reg, x_val_supervised)
 
     # get threshold for each model
-    threshold_rf = evaluation.find_best_threshold_fixed_fpr(y_val, y_val_pred_rf[:, 1])
-    threshold_xgb = evaluation.find_best_threshold_fixed_fpr(y_val, y_val_pred_xgb[:, 1])
+    threshold_rf = evaluation.find_best_threshold_fixed_fpr(y_val, y_val_pred_rf)
+    threshold_xgb = evaluation.find_best_threshold_fixed_fpr(y_val, y_val_pred_xgb)
 
     # predicting test set
     y_pred_rf, y_pred_xgb = get_predictions_for_each_model(rf, xg_reg, x_test_supervised)
-    y_pred_rf = y_pred_rf[:, 1].ravel()
-    y_pred_xgb = y_pred_xgb[:, 1].ravel()
+    y_pred_rf = y_pred_rf.ravel()
+    y_pred_xgb = y_pred_xgb.ravel()
 
     y_pred_rf = evaluation.adjusted_classes(y_pred_rf, threshold_rf)
     y_pred_xgb = evaluation.adjusted_classes(y_pred_xgb, threshold_xgb)
@@ -110,6 +110,10 @@ def predict_test_based_on_voting(rf, xg_reg, x_val_supervised, y_val, x_test_sup
 look_back = LOOK_BACK
 print("Lookback using: ", look_back)
 x_train, y_train = sequences_crafting_for_classification.get_train_set()
+
+# if the dataset is the real one -> contrast imbalanced dataset problem
+if DATASET_TYPE == REAL_DATASET:
+    x_train, y_train = resampling_dataset.oversample_set(x_train, y_train)
 
 x_train_supervised = x_train[:, look_back, :]
 y_train_supervised = y_train
@@ -137,8 +141,8 @@ for i in range(times_to_repeat):
 
     try:
         # y_test_pred = predict_test_based_on_voting(rf, xg_reg, x_val_supervised, y_val, x_test_supervised)
-        # y_test_pred = predict_test_based_on_more_confident(rf, xg_reg, x_val_supervised, y_val, x_test_supervised)
-        y_test_pred = predict_test_based_on_exponential(rf, xg_reg, x_val_supervised, y_val, x_test_supervised)
+        y_test_pred = predict_test_based_on_more_confident(rf, xg_reg, x_val_supervised, y_val, x_test_supervised)
+        # y_test_pred = predict_test_based_on_exponential(rf, xg_reg, x_val_supervised, y_val, x_test_supervised)
         y_test_pred = np.array(y_test_pred)
         confusion, f1, balanced_accuracy, precision, recall, aucpr, roc_auc = evaluation.get_performance(y_test, y_test_pred, threshold=True)
         tn = confusion[0, 0]

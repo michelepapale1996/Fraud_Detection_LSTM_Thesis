@@ -112,21 +112,27 @@ def create_test_set(look_back, train_path, test_path):
     return x_test, y_test
 
 def get_file_name(dataset_type=constants.DATASET_TYPE, scenario_type=constants.ALL_SCENARIOS):
+    # 696 users -> users with more than 50 transactions in training and 5 transactions in testing
+    # 4072 users -> users with more than 10 transactions in training and 5 transactions in testing
     if dataset_type == constants.INJECTED_DATASET:
-        path = "test_696_users_" + scenario_type + "_scenario_extendend_features"
-        train_path = "train_696_users_" + scenario_type + "_scenario_extendend_features"
-        path = "test_4072_users_" + scenario_type + "_scenario_extendend_features"
-        train_path = "train_4072_users_" + scenario_type + "_scenario_extendend_features"
+        path = "test_696_users_" + scenario_type + "_scenario"
+        train_path = "train_696_users_" + scenario_type + "_scenario"
+        path = "test_4072_users_" + scenario_type + "_scenario"
+        train_path = "train_4072_users_" + scenario_type + "_scenario"
     if dataset_type == constants.FRAUD_BUSTER_DATASET:
         path = "fraud_buster_test_250_users_" + scenario_type + "_scenario"
     if dataset_type == constants.REAL_DATASET:
-        path = "real_dataset_test_696_users_extendend_features"
-        train_path = "real_dataset_train_696_users_extendend_features"
-        path = "real_dataset_test_4072_users_extendend_features"
-        train_path = "real_dataset_train_4072_users_extendend_features"
+        path = "real_dataset_test_696_users"
+        train_path = "real_dataset_train_696_users"
+        path = "real_dataset_test_4072_users"
+        train_path = "real_dataset_train_4072_users"
     if dataset_type == constants.OLD_DATASET:
-        path = "old_test_1705_users_" + scenario_type + "_scenario_extendend_features"
-        train_path = "old_train_1705_users_" + scenario_type + "_scenario_extendend_features"
+        path = "old_test_1705_users_" + scenario_type + "_scenario"
+        train_path = "old_train_1705_users_" + scenario_type + "_scenario"
+
+    if constants.USING_AGGREGATED_FEATURES:
+        path = path + "_extendend_features"
+        train_path = train_path + "_extendend_features"
     return train_path, path
 
 # used from other models to get the train set (without recreate the sequences if they already exists)
@@ -165,6 +171,7 @@ def main(dataset_type=constants.DATASET_TYPE, scenario=constants.ALL_SCENARIOS):
 
     train_path = "../datasets/" + train_file_name + ".csv"
     test_path = "../datasets/" + test_file_name + ".csv"
+
     print("Creating train set: ", train_path)
     x_train, y_train = create_train_set(look_back, train_path)
     print("Creating test set: ", test_path)
@@ -177,5 +184,5 @@ def main(dataset_type=constants.DATASET_TYPE, scenario=constants.ALL_SCENARIOS):
 
 
 if __name__ == "__main__":
-    main()
+    # main()
     print("Done.")
