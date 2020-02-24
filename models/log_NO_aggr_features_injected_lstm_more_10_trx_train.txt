@@ -276,3 +276,874 @@ Using TensorFlow backend.
   np_resource = np.dtype([("resource", np.ubyte, 1)])
 WARNING:tensorflow:From /usr/local/lib/python3.6/dist-packages/keras/backend/tensorflow_backend.py:422: The name tf.global_variables is deprecated. Please use tf.compat.v1.global_variables instead.
 
+WARNING:tensorflow:Large dropout rate: 0.8 (>0.5). In TensorFlow 2.x, dropout() uses dropout rate instead of keep_prob. Please ensure that this is intended.
+WARNING:tensorflow:Large dropout rate: 0.8 (>0.5). In TensorFlow 2.x, dropout() uses dropout rate instead of keep_prob. Please ensure that this is intended.
+WARNING:tensorflow:Large dropout rate: 0.8 (>0.5). In TensorFlow 2.x, dropout() uses dropout rate instead of keep_prob. Please ensure that this is intended.
+WARNING:tensorflow:Large dropout rate: 0.8 (>0.5). In TensorFlow 2.x, dropout() uses dropout rate instead of keep_prob. Please ensure that this is intended.
+WARNING:tensorflow:Large dropout rate: 0.8 (>0.5). In TensorFlow 2.x, dropout() uses dropout rate instead of keep_prob. Please ensure that this is intended.
+WARNING:tensorflow:Large dropout rate: 0.8 (>0.5). In TensorFlow 2.x, dropout() uses dropout rate instead of keep_prob. Please ensure that this is intended.
+WARNING:tensorflow:Large dropout rate: 0.8 (>0.5). In TensorFlow 2.x, dropout() uses dropout rate instead of keep_prob. Please ensure that this is intended.
+WARNING:tensorflow:Large dropout rate: 0.8 (>0.5). In TensorFlow 2.x, dropout() uses dropout rate instead of keep_prob. Please ensure that this is intended.
+WARNING:tensorflow:Large dropout rate: 0.8 (>0.5). In TensorFlow 2.x, dropout() uses dropout rate instead of keep_prob. Please ensure that this is intended.
+WARNING:tensorflow:Large dropout rate: 0.8 (>0.5). In TensorFlow 2.x, dropout() uses dropout rate instead of keep_prob. Please ensure that this is intended.
+WARNING:tensorflow:Large dropout rate: 0.8 (>0.5). In TensorFlow 2.x, dropout() uses dropout rate instead of keep_prob. Please ensure that this is intended.
+WARNING:tensorflow:Large dropout rate: 0.8 (>0.5). In TensorFlow 2.x, dropout() uses dropout rate instead of keep_prob. Please ensure that this is intended.
+WARNING:tensorflow:Large dropout rate: 0.8 (>0.5). In TensorFlow 2.x, dropout() uses dropout rate instead of keep_prob. Please ensure that this is intended.
+WARNING:tensorflow:Large dropout rate: 0.8 (>0.5). In TensorFlow 2.x, dropout() uses dropout rate instead of keep_prob. Please ensure that this is intended.
+WARNING:tensorflow:Large dropout rate: 0.8 (>0.5). In TensorFlow 2.x, dropout() uses dropout rate instead of keep_prob. Please ensure that this is intended.
+WARNING:tensorflow:Large dropout rate: 0.8 (>0.5). In TensorFlow 2.x, dropout() uses dropout rate instead of keep_prob. Please ensure that this is intended.
+WARNING:tensorflow:Large dropout rate: 0.8 (>0.5). In TensorFlow 2.x, dropout() uses dropout rate instead of keep_prob. Please ensure that this is intended.
+WARNING:tensorflow:Large dropout rate: 0.8 (>0.5). In TensorFlow 2.x, dropout() uses dropout rate instead of keep_prob. Please ensure that this is intended.
+WARNING:tensorflow:Large dropout rate: 0.8 (>0.5). In TensorFlow 2.x, dropout() uses dropout rate instead of keep_prob. Please ensure that this is intended.
+WARNING:tensorflow:Large dropout rate: 0.8 (>0.5). In TensorFlow 2.x, dropout() uses dropout rate instead of keep_prob. Please ensure that this is intended.
+WARNING:tensorflow:Large dropout rate: 0.8 (>0.5). In TensorFlow 2.x, dropout() uses dropout rate instead of keep_prob. Please ensure that this is intended.
+WARNING:tensorflow:Large dropout rate: 0.8 (>0.5). In TensorFlow 2.x, dropout() uses dropout rate instead of keep_prob. Please ensure that this is intended.
+WARNING:tensorflow:Large dropout rate: 0.8 (>0.5). In TensorFlow 2.x, dropout() uses dropout rate instead of keep_prob. Please ensure that this is intended.
+WARNING:tensorflow:Large dropout rate: 0.8 (>0.5). In TensorFlow 2.x, dropout() uses dropout rate instead of keep_prob. Please ensure that this is intended.
+WARNING:tensorflow:Large dropout rate: 0.8 (>0.5). In TensorFlow 2.x, dropout() uses dropout rate instead of keep_prob. Please ensure that this is intended.
+WARNING:tensorflow:Large dropout rate: 0.8 (>0.5). In TensorFlow 2.x, dropout() uses dropout rate instead of keep_prob. Please ensure that this is intended.
+WARNING:tensorflow:Large dropout rate: 0.8 (>0.5). In TensorFlow 2.x, dropout() uses dropout rate instead of keep_prob. Please ensure that this is intended.
+WARNING:tensorflow:Large dropout rate: 0.8 (>0.5). In TensorFlow 2.x, dropout() uses dropout rate instead of keep_prob. Please ensure that this is intended.
+WARNING:tensorflow:Large dropout rate: 0.8 (>0.5). In TensorFlow 2.x, dropout() uses dropout rate instead of keep_prob. Please ensure that this is intended.
+WARNING:tensorflow:Large dropout rate: 0.8 (>0.5). In TensorFlow 2.x, dropout() uses dropout rate instead of keep_prob. Please ensure that this is intended.
+WARNING:tensorflow:Large dropout rate: 0.8 (>0.5). In TensorFlow 2.x, dropout() uses dropout rate instead of keep_prob. Please ensure that this is intended.
+WARNING:tensorflow:Large dropout rate: 0.8 (>0.5). In TensorFlow 2.x, dropout() uses dropout rate instead of keep_prob. Please ensure that this is intended.
+WARNING:tensorflow:Large dropout rate: 0.8 (>0.5). In TensorFlow 2.x, dropout() uses dropout rate instead of keep_prob. Please ensure that this is intended.
+WARNING:tensorflow:Large dropout rate: 0.8 (>0.5). In TensorFlow 2.x, dropout() uses dropout rate instead of keep_prob. Please ensure that this is intended.
+WARNING:tensorflow:Large dropout rate: 0.8 (>0.5). In TensorFlow 2.x, dropout() uses dropout rate instead of keep_prob. Please ensure that this is intended.
+WARNING:tensorflow:Large dropout rate: 0.8 (>0.5). In TensorFlow 2.x, dropout() uses dropout rate instead of keep_prob. Please ensure that this is intended.
+WARNING:tensorflow:Large dropout rate: 0.8 (>0.5). In TensorFlow 2.x, dropout() uses dropout rate instead of keep_prob. Please ensure that this is intended.
+WARNING:tensorflow:Large dropout rate: 0.8 (>0.5). In TensorFlow 2.x, dropout() uses dropout rate instead of keep_prob. Please ensure that this is intended.
+WARNING:tensorflow:Large dropout rate: 0.8 (>0.5). In TensorFlow 2.x, dropout() uses dropout rate instead of keep_prob. Please ensure that this is intended.
+WARNING:tensorflow:Large dropout rate: 0.8 (>0.5). In TensorFlow 2.x, dropout() uses dropout rate instead of keep_prob. Please ensure that this is intended.
+[CV] batch_size=16, dropout_rate=0.2, epochs=10, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.2, epochs=10, layers={'input': 256, 'output': 1}, score=0.947, total=94.4min
+[CV] batch_size=16, dropout_rate=0.2, epochs=25, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.2, epochs=25, layers={'input': 128, 'output': 1}, score=0.943, total=79.1min
+[CV] batch_size=16, dropout_rate=0.2, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.2, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.933, total=82.1min
+[CV] batch_size=16, dropout_rate=0.2, epochs=50, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.2, epochs=50, layers={'input': 64, 'output': 1}, score=0.931, total=84.6min
+[CV] batch_size=16, dropout_rate=0.2, epochs=50, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.2, epochs=50, layers={'input': 128, 'output': 1}, score=0.945, total=160.2min
+[CV] batch_size=16, dropout_rate=0.2, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.2, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.938, total=164.6min
+[CV] batch_size=16, dropout_rate=0.5, epochs=10, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.5, epochs=10, layers={'input': 64, 'output': 1}, score=0.923, total=17.5min
+[CV] batch_size=16, dropout_rate=0.5, epochs=10, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.5, epochs=10, layers={'input': 128, 'output': 1}, score=0.935, total=30.2min
+[CV] batch_size=16, dropout_rate=0.5, epochs=10, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.5, epochs=10, layers={'input': 256, 'output': 1}, score=0.939, total=91.8min
+[CV] batch_size=16, dropout_rate=0.5, epochs=10, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.5, epochs=10, layers={'input': 256, 'output': 1}, score=0.937, total=87.7min
+[CV] batch_size=16, dropout_rate=0.5, epochs=25, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.5, epochs=25, layers={'input': 64, 'output': 1}, score=0.929, total=29.2min
+[CV] batch_size=16, dropout_rate=0.5, epochs=25, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.5, epochs=25, layers={'input': 64, 'output': 1}, score=0.913, total=23.6min
+[CV] batch_size=16, dropout_rate=0.5, epochs=25, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.5, epochs=25, layers={'input': 128, 'output': 1}, score=0.943, total=30.0min
+[CV] batch_size=16, dropout_rate=0.5, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.5, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.940, total=103.2min
+[CV] batch_size=16, dropout_rate=0.5, epochs=50, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.5, epochs=50, layers={'input': 256, 'output': 1}, score=0.951, total=223.6min
+[CV] batch_size=16, dropout_rate=0.8, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.8, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.500, total=35.8min
+[CV] batch_size=16, dropout_rate=0.8, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.8, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.920, total=30.8min
+[CV] batch_size=16, dropout_rate=0.8, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.8, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.500, total=88.9min
+[CV] batch_size=16, dropout_rate=0.8, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.8, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.909, total=61.5min
+[CV] batch_size=16, dropout_rate=0.8, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.8, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.500, total=181.2min
+[CV] batch_size=64, dropout_rate=0.2, epochs=50, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.2, epochs=50, layers={'input': 128, 'output': 1}, score=0.954, total=31.5min
+[CV] batch_size=64, dropout_rate=0.2, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.2, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.960, total=112.7min
+[CV] batch_size=64, dropout_rate=0.5, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.5, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.942, total=16.4min
+[CV] batch_size=64, dropout_rate=0.5, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.5, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.949, total=56.1min
+[CV] batch_size=64, dropout_rate=0.5, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.5, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.946, total=32.4min
+[CV] batch_size=64, dropout_rate=0.8, epochs=10, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.8, epochs=10, layers={'input': 64, 'output': 1}, score=0.927, total= 3.2min
+[CV] batch_size=64, dropout_rate=0.8, epochs=10, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.8, epochs=10, layers={'input': 64, 'output': 1}, score=0.896, total= 3.2min
+[CV] batch_size=64, dropout_rate=0.8, epochs=10, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.8, epochs=10, layers={'input': 128, 'output': 1}, score=0.907, total= 6.7min
+[CV] batch_size=64, dropout_rate=0.8, epochs=10, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.8, epochs=10, layers={'input': 128, 'output': 1}, score=0.909, total= 6.7min
+[CV] batch_size=64, dropout_rate=0.8, epochs=10, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.8, epochs=10, layers={'input': 256, 'output': 1}, score=0.932, total=22.6min
+[CV] batch_size=64, dropout_rate=0.8, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.8, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.917, total= 6.8min
+[CV] batch_size=64, dropout_rate=0.8, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.8, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.908, total= 6.9min
+[CV] batch_size=64, dropout_rate=0.8, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.8, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.920, total= 6.9min
+[CV] batch_size=64, dropout_rate=0.8, epochs=25, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.8, epochs=25, layers={'input': 64, 'output': 1}, score=0.915, total= 8.0min
+[CV] batch_size=64, dropout_rate=0.8, epochs=25, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.8, epochs=25, layers={'input': 64, 'output': 1}, score=0.914, total= 7.9min
+[CV] batch_size=64, dropout_rate=0.8, epochs=25, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.8, epochs=25, layers={'input': 128, 'output': 1}, score=0.941, total=16.3min
+[CV] batch_size=64, dropout_rate=0.8, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.8, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.921, total=16.7min
+[CV] batch_size=64, dropout_rate=0.8, epochs=50, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.8, epochs=50, layers={'input': 64, 'output': 1}, score=0.921, total=15.7min
+[CV] batch_size=64, dropout_rate=0.8, epochs=50, layers={'input': 64, 'output': 1} [CV] batch_size=16, dropout_rate=0.2, epochs=10, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.2, epochs=10, layers={'input': 128, 'output': 1}, score=0.940, total=28.9min
+[CV] batch_size=16, dropout_rate=0.2, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.2, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.927, total=32.3min
+[CV] batch_size=16, dropout_rate=0.2, epochs=25, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.2, epochs=25, layers={'input': 64, 'output': 1}, score=0.924, total=42.2min
+[CV] batch_size=16, dropout_rate=0.2, epochs=25, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.2, epochs=25, layers={'input': 128, 'output': 1}, score=0.931, total=79.7min
+[CV] batch_size=16, dropout_rate=0.2, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.2, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.931, total=258.5min
+[CV] batch_size=16, dropout_rate=0.2, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.2, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.946, total=168.9min
+[CV] batch_size=16, dropout_rate=0.2, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.2, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.954, total=374.9min
+[CV] batch_size=16, dropout_rate=0.5, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.5, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.927, total=104.5min
+[CV] batch_size=16, dropout_rate=0.5, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.5, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.940, total=78.5min
+[CV] batch_size=16, dropout_rate=0.5, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.5, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.944, total=207.2min
+[CV] batch_size=16, dropout_rate=0.8, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.8, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.500, total=89.9min
+[CV] batch_size=16, dropout_rate=0.8, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.8, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.927, total=62.1min
+[CV] batch_size=64, dropout_rate=0.2, epochs=10, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.2, epochs=10, layers={'input': 64, 'output': 1}, score=0.932, total= 3.0min
+[CV] batch_size=64, dropout_rate=0.2, epochs=10, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.2, epochs=10, layers={'input': 64, 'output': 1}, score=0.936, total= 3.1min
+[CV] batch_size=64, dropout_rate=0.2, epochs=10, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.2, epochs=10, layers={'input': 64, 'output': 1}, score=0.915, total= 3.0min
+[CV] batch_size=64, dropout_rate=0.2, epochs=10, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.2, epochs=10, layers={'input': 128, 'output': 1}, score=0.944, total= 6.5min
+[CV] batch_size=64, dropout_rate=0.2, epochs=10, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.2, epochs=10, layers={'input': 128, 'output': 1}, score=0.926, total= 6.6min
+[CV] batch_size=64, dropout_rate=0.2, epochs=10, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.2, epochs=10, layers={'input': 256, 'output': 1}, score=0.958, total=23.1min
+[CV] batch_size=64, dropout_rate=0.2, epochs=10, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.2, epochs=10, layers={'input': 256, 'output': 1}, score=0.951, total=23.4min
+[CV] batch_size=64, dropout_rate=0.2, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.2, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.934, total=22.9min
+[CV] batch_size=64, dropout_rate=0.2, epochs=25, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.2, epochs=25, layers={'input': 64, 'output': 1}, score=0.939, total= 7.5min
+[CV] batch_size=64, dropout_rate=0.2, epochs=25, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.2, epochs=25, layers={'input': 128, 'output': 1}, score=0.947, total=15.8min
+[CV] batch_size=64, dropout_rate=0.2, epochs=25, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.2, epochs=25, layers={'input': 256, 'output': 1}, score=0.949, total=54.8min
+[CV] batch_size=64, dropout_rate=0.2, epochs=50, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.2, epochs=50, layers={'input': 128, 'output': 1}, score=0.959, total=31.2min
+[CV] batch_size=64, dropout_rate=0.2, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.2, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.949, total=32.5min
+[CV] batch_size=64, dropout_rate=0.5, epochs=10, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.5, epochs=10, layers={'input': 128, 'output': 1}, score=0.930, total= 6.6min
+[CV] batch_size=64, dropout_rate=0.5, epochs=10, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.5, epochs=10, layers={'input': 128, 'output': 1}, score=0.937, total= 6.7min
+[CV] batch_size=64, dropout_rate=0.5, epochs=10, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.5, epochs=10, layers={'input': 256, 'output': 1}, score=0.940, total=22.6min
+[CV] batch_size=64, dropout_rate=0.5, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.5, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.933, total= 6.8min
+[CV] batch_size=64, dropout_rate=0.5, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.5, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.934, total= 6.9min
+[CV] batch_size=64, dropout_rate=0.5, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.5, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.935, total=23.1min
+[CV] batch_size=64, dropout_rate=0.5, epochs=25, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.5, epochs=25, layers={'input': 128, 'output': 1}, score=0.934, total=16.3min
+[CV] batch_size=64, dropout_rate=0.5, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.5, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.936, total=16.9min
+[CV] batch_size=64, dropout_rate=0.5, epochs=50, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.5, epochs=50, layers={'input': 64, 'output': 1}, score=0.934, total=15.5min
+[CV] batch_size=64, dropout_rate=0.5, epochs=50, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.5, epochs=50, layers={'input': 128, 'output': 1}, score=0.953, total=32.6min
+[CV] batch_size=64, dropout_rate=0.5, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.5, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.953, total=33.1min
+[CV] batch_size=64, dropout_rate=0.5, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.5, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.953, total=112.6min
+[CV] batch_size=64, dropout_rate=0.8, epochs=50, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.8, epochs=50, layers={'input': 64, 'output': 1}, score=0.923, total=15.8min[CV] batch_size=16, dropout_rate=0.2, epochs=10, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.2, epochs=10, layers={'input': 128, 'output': 1}, score=0.911, total=29.9min
+[CV] batch_size=16, dropout_rate=0.2, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.2, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.936, total=107.3min
+[CV] batch_size=16, dropout_rate=0.2, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.2, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.945, total=83.6min
+[CV] batch_size=16, dropout_rate=0.2, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.2, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.916, total=255.8min
+[CV] batch_size=16, dropout_rate=0.2, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.2, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.942, total=167.3min
+[CV] batch_size=16, dropout_rate=0.5, epochs=10, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.5, epochs=10, layers={'input': 64, 'output': 1}, score=0.922, total=17.6min
+[CV] batch_size=16, dropout_rate=0.5, epochs=10, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.5, epochs=10, layers={'input': 64, 'output': 1}, score=0.930, total=17.5min
+[CV] batch_size=16, dropout_rate=0.5, epochs=10, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.5, epochs=10, layers={'input': 128, 'output': 1}, score=0.933, total=32.0min
+[CV] batch_size=16, dropout_rate=0.5, epochs=10, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.5, epochs=10, layers={'input': 128, 'output': 1}, score=0.918, total=23.0min
+[CV] batch_size=16, dropout_rate=0.5, epochs=10, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.5, epochs=10, layers={'input': 256, 'output': 1}, score=0.927, total=95.3min
+[CV] batch_size=16, dropout_rate=0.5, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.5, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.927, total=33.6min
+[CV] batch_size=16, dropout_rate=0.5, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.5, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.930, total=26.7min
+[CV] batch_size=16, dropout_rate=0.5, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.5, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.917, total=59.5min
+[CV] batch_size=16, dropout_rate=0.5, epochs=25, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.5, epochs=25, layers={'input': 256, 'output': 1}, score=0.916, total=99.4min
+[CV] batch_size=16, dropout_rate=0.5, epochs=50, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.5, epochs=50, layers={'input': 128, 'output': 1}, score=0.936, total=62.9min
+[CV] batch_size=16, dropout_rate=0.5, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.5, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.943, total=226.0min
+[CV] batch_size=16, dropout_rate=0.8, epochs=25, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.8, epochs=25, layers={'input': 256, 'output': 1}, score=0.924, total=88.4min
+[CV] batch_size=16, dropout_rate=0.8, epochs=50, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.8, epochs=50, layers={'input': 256, 'output': 1}, score=0.943, total=178.9min
+[CV] batch_size=64, dropout_rate=0.2, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.2, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.940, total=22.8min
+[CV] batch_size=64, dropout_rate=0.2, epochs=25, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.2, epochs=25, layers={'input': 128, 'output': 1}, score=0.954, total=15.9min
+[CV] batch_size=64, dropout_rate=0.2, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.2, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.954, total=16.1min
+[CV] batch_size=64, dropout_rate=0.2, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.2, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.945, total=16.1min
+[CV] batch_size=64, dropout_rate=0.2, epochs=50, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.2, epochs=50, layers={'input': 64, 'output': 1}, score=0.941, total=14.6min
+[CV] batch_size=64, dropout_rate=0.2, epochs=50, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.2, epochs=50, layers={'input': 128, 'output': 1}, score=0.951, total=31.0min
+[CV] batch_size=64, dropout_rate=0.2, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.2, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.952, total=32.5min
+[CV] batch_size=64, dropout_rate=0.5, epochs=10, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.5, epochs=10, layers={'input': 64, 'output': 1}, score=0.935, total= 3.2min
+[CV] batch_size=64, dropout_rate=0.5, epochs=10, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.5, epochs=10, layers={'input': 64, 'output': 1}, score=0.924, total= 3.2min
+[CV] batch_size=64, dropout_rate=0.5, epochs=10, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.5, epochs=10, layers={'input': 64, 'output': 1}, score=0.930, total= 3.2min
+[CV] batch_size=64, dropout_rate=0.5, epochs=10, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.5, epochs=10, layers={'input': 128, 'output': 1}, score=0.934, total= 6.6min
+[CV] batch_size=64, dropout_rate=0.5, epochs=10, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.5, epochs=10, layers={'input': 256, 'output': 1}, score=0.948, total=22.8min
+[CV] batch_size=64, dropout_rate=0.5, epochs=10, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.5, epochs=10, layers={'input': 256, 'output': 1}, score=0.942, total=22.8min
+[CV] batch_size=64, dropout_rate=0.5, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.5, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.921, total=22.9min
+[CV] batch_size=64, dropout_rate=0.5, epochs=25, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.5, epochs=25, layers={'input': 256, 'output': 1}, score=0.954, total=55.3min
+[CV] batch_size=64, dropout_rate=0.5, epochs=50, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.5, epochs=50, layers={'input': 128, 'output': 1}, score=0.947, total=32.1min
+[CV] batch_size=64, dropout_rate=0.5, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.5, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.956, total=112.6min
+[CV] batch_size=64, dropout_rate=0.8, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.8, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.919, total=16.7min
+[CV] batch_size=64, dropout_rate=0.8, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.8, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.500, total=56.6min
+[CV] batch_size=64, dropout_rate=0.8, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.8, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.933, total=33.4min[CV] batch_size=16, dropout_rate=0.2, epochs=10, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.2, epochs=10, layers={'input': 64, 'output': 1}, score=0.932, total=13.7min
+[CV] batch_size=16, dropout_rate=0.2, epochs=10, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.2, epochs=10, layers={'input': 256, 'output': 1}, score=0.941, total=97.8min
+[CV] batch_size=16, dropout_rate=0.2, epochs=25, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.2, epochs=25, layers={'input': 256, 'output': 1}, score=0.953, total=247.9min
+[CV] batch_size=16, dropout_rate=0.2, epochs=50, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.2, epochs=50, layers={'input': 128, 'output': 1}, score=0.940, total=162.3min
+[CV] batch_size=16, dropout_rate=0.2, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.2, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.957, total=431.7min
+[CV] batch_size=16, dropout_rate=0.5, epochs=25, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.5, epochs=25, layers={'input': 256, 'output': 1}, score=0.942, total=100.9min
+[CV] batch_size=16, dropout_rate=0.5, epochs=50, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.5, epochs=50, layers={'input': 256, 'output': 1}, score=0.951, total=223.0min
+[CV] batch_size=16, dropout_rate=0.8, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.8, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.895, total=12.6min
+[CV] batch_size=16, dropout_rate=0.8, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.8, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.500, total=37.2min
+[CV] batch_size=16, dropout_rate=0.8, epochs=25, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.8, epochs=25, layers={'input': 128, 'output': 1}, score=0.913, total=29.3min
+[CV] batch_size=16, dropout_rate=0.8, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.8, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.928, total=30.9min
+[CV] batch_size=16, dropout_rate=0.8, epochs=50, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.8, epochs=50, layers={'input': 64, 'output': 1}, score=0.913, total=34.3min
+[CV] batch_size=16, dropout_rate=0.8, epochs=50, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.8, epochs=50, layers={'input': 128, 'output': 1}, score=0.921, total=59.9min
+[CV] batch_size=16, dropout_rate=0.8, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.8, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.918, total=62.4min
+[CV] batch_size=64, dropout_rate=0.2, epochs=10, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.2, epochs=10, layers={'input': 128, 'output': 1}, score=0.929, total= 6.5min
+[CV] batch_size=64, dropout_rate=0.2, epochs=10, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.2, epochs=10, layers={'input': 256, 'output': 1}, score=0.957, total=23.2min
+[CV] batch_size=64, dropout_rate=0.2, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.2, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.936, total= 6.7min
+[CV] batch_size=64, dropout_rate=0.2, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.2, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.928, total= 6.8min
+[CV] batch_size=64, dropout_rate=0.2, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.2, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.933, total= 6.9min
+[CV] batch_size=64, dropout_rate=0.2, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.2, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.940, total=23.2min
+[CV] batch_size=64, dropout_rate=0.2, epochs=25, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.2, epochs=25, layers={'input': 64, 'output': 1}, score=0.940, total= 7.6min
+[CV] batch_size=64, dropout_rate=0.2, epochs=25, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.2, epochs=25, layers={'input': 64, 'output': 1}, score=0.939, total= 7.5min
+[CV] batch_size=64, dropout_rate=0.2, epochs=25, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.2, epochs=25, layers={'input': 256, 'output': 1}, score=0.958, total=55.1min
+[CV] batch_size=64, dropout_rate=0.2, epochs=50, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.2, epochs=50, layers={'input': 64, 'output': 1}, score=0.940, total=14.5min
+[CV] batch_size=64, dropout_rate=0.2, epochs=50, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.2, epochs=50, layers={'input': 256, 'output': 1}, score=0.959, total=110.9min
+[CV] batch_size=64, dropout_rate=0.5, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.5, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.931, total=23.1min
+[CV] batch_size=64, dropout_rate=0.5, epochs=25, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.5, epochs=25, layers={'input': 128, 'output': 1}, score=0.937, total=15.9min
+[CV] batch_size=64, dropout_rate=0.5, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.5, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.944, total=57.0min
+[CV] batch_size=64, dropout_rate=0.5, epochs=50, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.5, epochs=50, layers={'input': 256, 'output': 1}, score=0.954, total=111.6min
+[CV] batch_size=64, dropout_rate=0.8, epochs=25, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.8, epochs=25, layers={'input': 64, 'output': 1}, score=0.909, total= 7.7min
+[CV] batch_size=64, dropout_rate=0.8, epochs=25, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.8, epochs=25, layers={'input': 128, 'output': 1}, score=0.928, total=16.0min
+[CV] batch_size=64, dropout_rate=0.8, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.8, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.918, total=16.5min
+[CV] batch_size=64, dropout_rate=0.8, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.8, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.500, total=56.3min
+[CV] batch_size=64, dropout_rate=0.8, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.8, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.908, total=33.5min
+[CV] batch_size=128, dropout_rate=0.2, epochs=10, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.2, epochs=10, layers={'input': 128, 'output': 1}, score=0.944, total= 5.8min
+[CV] batch_size=128, dropout_rate=0.2, epochs=10, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.2, epochs=10, layers={'input': 128, 'output': 1}, score=0.927, total= 5.9min
+[CV] batch_size=128, dropout_rate=0.2, epochs=10, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.2, epochs=10, layers={'input': 256, 'output': 1}, score=0.951, total=19.5min
+[CV] batch_size=128, dropout_rate=0.2, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.2, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.949, total= 5.9min
+[CV] batch_size=128, dropout_rate=0.2, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1} [CV] batch_size=16, dropout_rate=0.2, epochs=10, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.2, epochs=10, layers={'input': 256, 'output': 1}, score=0.951, total=95.8min
+[CV] batch_size=16, dropout_rate=0.2, epochs=25, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.2, epochs=25, layers={'input': 128, 'output': 1}, score=0.948, total=79.7min
+[CV] batch_size=16, dropout_rate=0.2, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.2, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.950, total=255.0min
+[CV] batch_size=16, dropout_rate=0.2, epochs=50, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.2, epochs=50, layers={'input': 256, 'output': 1}, score=0.942, total=465.7min
+[CV] batch_size=16, dropout_rate=0.5, epochs=25, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.5, epochs=25, layers={'input': 64, 'output': 1}, score=0.932, total=28.8min
+[CV] batch_size=16, dropout_rate=0.5, epochs=25, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.5, epochs=25, layers={'input': 128, 'output': 1}, score=0.941, total=35.0min
+[CV] batch_size=16, dropout_rate=0.5, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.5, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.940, total=30.5min
+[CV] batch_size=16, dropout_rate=0.5, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.5, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.500, total=103.6min
+[CV] batch_size=16, dropout_rate=0.5, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.5, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.943, total=78.9min
+[CV] batch_size=16, dropout_rate=0.8, epochs=10, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.8, epochs=10, layers={'input': 64, 'output': 1}, score=0.929, total= 9.9min
+[CV] batch_size=16, dropout_rate=0.8, epochs=10, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.8, epochs=10, layers={'input': 64, 'output': 1}, score=0.884, total=10.1min
+[CV] batch_size=16, dropout_rate=0.8, epochs=10, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.8, epochs=10, layers={'input': 64, 'output': 1}, score=0.900, total=10.2min
+[CV] batch_size=16, dropout_rate=0.8, epochs=10, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.8, epochs=10, layers={'input': 128, 'output': 1}, score=0.901, total=17.6min
+[CV] batch_size=16, dropout_rate=0.8, epochs=10, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.8, epochs=10, layers={'input': 256, 'output': 1}, score=0.916, total=48.3min
+[CV] batch_size=16, dropout_rate=0.8, epochs=10, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.8, epochs=10, layers={'input': 256, 'output': 1}, score=0.899, total=36.8min
+[CV] batch_size=16, dropout_rate=0.8, epochs=25, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.8, epochs=25, layers={'input': 64, 'output': 1}, score=0.896, total=17.3min
+[CV] batch_size=16, dropout_rate=0.8, epochs=25, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.8, epochs=25, layers={'input': 128, 'output': 1}, score=0.938, total=30.7min
+[CV] batch_size=16, dropout_rate=0.8, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.8, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.928, total=31.0min
+[CV] batch_size=16, dropout_rate=0.8, epochs=50, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.8, epochs=50, layers={'input': 64, 'output': 1}, score=0.894, total=34.7min
+[CV] batch_size=16, dropout_rate=0.8, epochs=50, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.8, epochs=50, layers={'input': 64, 'output': 1}, score=0.900, total=34.6min
+[CV] batch_size=16, dropout_rate=0.8, epochs=50, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.8, epochs=50, layers={'input': 256, 'output': 1}, score=0.904, total=177.5min
+[CV] batch_size=64, dropout_rate=0.2, epochs=25, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.2, epochs=25, layers={'input': 256, 'output': 1}, score=0.959, total=54.7min
+[CV] batch_size=64, dropout_rate=0.2, epochs=50, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.2, epochs=50, layers={'input': 64, 'output': 1}, score=0.946, total=14.3min
+[CV] batch_size=64, dropout_rate=0.2, epochs=50, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.2, epochs=50, layers={'input': 256, 'output': 1}, score=0.961, total=109.7min
+[CV] batch_size=64, dropout_rate=0.5, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.5, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.930, total= 6.7min
+[CV] batch_size=64, dropout_rate=0.5, epochs=25, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.5, epochs=25, layers={'input': 64, 'output': 1}, score=0.938, total= 7.7min
+[CV] batch_size=64, dropout_rate=0.5, epochs=25, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.5, epochs=25, layers={'input': 64, 'output': 1}, score=0.932, total= 7.9min
+[CV] batch_size=64, dropout_rate=0.5, epochs=25, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.5, epochs=25, layers={'input': 128, 'output': 1}, score=0.941, total=15.8min
+[CV] batch_size=64, dropout_rate=0.5, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.5, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.933, total=16.3min
+[CV] batch_size=64, dropout_rate=0.5, epochs=50, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.5, epochs=50, layers={'input': 64, 'output': 1}, score=0.940, total=15.3min
+[CV] batch_size=64, dropout_rate=0.5, epochs=50, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.5, epochs=50, layers={'input': 64, 'output': 1}, score=0.929, total=15.3min
+[CV] batch_size=64, dropout_rate=0.5, epochs=50, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.5, epochs=50, layers={'input': 256, 'output': 1}, score=0.960, total=110.7min
+[CV] batch_size=64, dropout_rate=0.8, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.8, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.500, total=22.9min
+[CV] batch_size=64, dropout_rate=0.8, epochs=25, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.8, epochs=25, layers={'input': 128, 'output': 1}, score=0.920, total=16.3min
+[CV] batch_size=64, dropout_rate=0.8, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.8, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.500, total=56.4min
+[CV] batch_size=64, dropout_rate=0.8, epochs=50, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.8, epochs=50, layers={'input': 256, 'output': 1}, score=0.927, total=111.2min
+[CV] batch_size=128, dropout_rate=0.2, epochs=25, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.2, epochs=25, layers={'input': 64, 'output': 1}, score=0.933, total= 5.7min
+[CV] batch_size=128, dropout_rate=0.2, epochs=25, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.2, epochs=25, layers={'input': 128, 'output': 1}, score=0.951, total=13.9min
+[CV] batch_size=128, dropout_rate=0.2, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.2, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.958, total=54.6min
+[CV] batch_size=128, dropout_rate=0.2, epochs=50, layers={'input': 256, 'output': 1} [CV] batch_size=16, dropout_rate=0.2, epochs=10, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.2, epochs=10, layers={'input': 64, 'output': 1}, score=0.926, total=13.8min
+[CV] batch_size=16, dropout_rate=0.2, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.2, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.941, total=32.2min
+[CV] batch_size=16, dropout_rate=0.2, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.2, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.925, total=100.6min
+[CV] batch_size=16, dropout_rate=0.2, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.2, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.931, total=82.1min
+[CV] batch_size=16, dropout_rate=0.2, epochs=50, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.2, epochs=50, layers={'input': 64, 'output': 1}, score=0.938, total=85.6min
+[CV] batch_size=16, dropout_rate=0.2, epochs=50, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.2, epochs=50, layers={'input': 64, 'output': 1}, score=0.928, total=86.8min
+[CV] batch_size=16, dropout_rate=0.2, epochs=50, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.2, epochs=50, layers={'input': 256, 'output': 1}, score=0.950, total=469.8min
+[CV] batch_size=16, dropout_rate=0.5, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.5, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.926, total=71.1min
+[CV] batch_size=16, dropout_rate=0.5, epochs=25, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.5, epochs=25, layers={'input': 128, 'output': 1}, score=0.931, total=29.4min
+[CV] batch_size=16, dropout_rate=0.5, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.5, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.921, total=31.5min
+[CV] batch_size=16, dropout_rate=0.5, epochs=50, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.5, epochs=50, layers={'input': 64, 'output': 1}, score=0.932, total=44.8min
+[CV] batch_size=16, dropout_rate=0.5, epochs=50, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.5, epochs=50, layers={'input': 128, 'output': 1}, score=0.941, total=60.9min
+[CV] batch_size=16, dropout_rate=0.5, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.5, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.938, total=87.0min
+[CV] batch_size=16, dropout_rate=0.8, epochs=10, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.8, epochs=10, layers={'input': 128, 'output': 1}, score=0.926, total=17.9min
+[CV] batch_size=16, dropout_rate=0.8, epochs=10, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.8, epochs=10, layers={'input': 128, 'output': 1}, score=0.891, total=18.0min
+[CV] batch_size=16, dropout_rate=0.8, epochs=10, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.8, epochs=10, layers={'input': 256, 'output': 1}, score=0.922, total=44.9min
+[CV] batch_size=16, dropout_rate=0.8, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.8, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.901, total=12.7min
+[CV] batch_size=16, dropout_rate=0.8, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.8, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.916, total=13.2min
+[CV] batch_size=16, dropout_rate=0.8, epochs=25, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.8, epochs=25, layers={'input': 64, 'output': 1}, score=0.909, total=17.5min
+[CV] batch_size=16, dropout_rate=0.8, epochs=25, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.8, epochs=25, layers={'input': 64, 'output': 1}, score=0.906, total=17.4min
+[CV] batch_size=16, dropout_rate=0.8, epochs=25, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.8, epochs=25, layers={'input': 256, 'output': 1}, score=0.938, total=88.0min
+[CV] batch_size=16, dropout_rate=0.8, epochs=50, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.8, epochs=50, layers={'input': 128, 'output': 1}, score=0.929, total=61.4min
+[CV] batch_size=16, dropout_rate=0.8, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.8, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.500, total=186.2min
+[CV] batch_size=64, dropout_rate=0.2, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.2, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.951, total=56.2min
+[CV] batch_size=64, dropout_rate=0.2, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.2, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.959, total=112.8min
+[CV] batch_size=64, dropout_rate=0.5, epochs=25, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.5, epochs=25, layers={'input': 256, 'output': 1}, score=0.952, total=56.1min
+[CV] batch_size=64, dropout_rate=0.5, epochs=50, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.5, epochs=50, layers={'input': 256, 'output': 1}, score=0.958, total=110.4min
+[CV] batch_size=64, dropout_rate=0.8, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.8, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.500, total=22.8min
+[CV] batch_size=64, dropout_rate=0.8, epochs=25, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.8, epochs=25, layers={'input': 256, 'output': 1}, score=0.938, total=55.3min
+[CV] batch_size=64, dropout_rate=0.8, epochs=50, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.8, epochs=50, layers={'input': 128, 'output': 1}, score=0.914, total=32.4min
+[CV] batch_size=64, dropout_rate=0.8, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.8, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.500, total=112.8min
+[CV] batch_size=128, dropout_rate=0.2, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.2, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.951, total=15.8min
+[CV] batch_size=128, dropout_rate=0.2, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.2, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.956, total=59.0min
+[CV] batch_size=128, dropout_rate=0.2, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.2, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.957, total=40.1min
+[CV] batch_size=128, dropout_rate=0.5, epochs=10, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.5, epochs=10, layers={'input': 64, 'output': 1}, score=0.933, total= 3.6min
+[CV] batch_size=128, dropout_rate=0.5, epochs=10, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.5, epochs=10, layers={'input': 64, 'output': 1}, score=0.912, total= 3.7min
+[CV] batch_size=128, dropout_rate=0.5, epochs=10, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.5, epochs=10, layers={'input': 128, 'output': 1}, score=0.935, total= 9.0min
+[CV] batch_size=128, dropout_rate=0.5, epochs=10, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.5, epochs=10, layers={'input': 256, 'output': 1}, score=0.947, total=29.5min
+[CV] batch_size=128, dropout_rate=0.2, epochs=10, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.2, epochs=10, layers={'input': 64, 'output': 1}, score=0.931, total= 2.5min
+[CV] batch_size=128, dropout_rate=0.2, epochs=10, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.2, epochs=10, layers={'input': 64, 'output': 1}, score=0.936, total= 2.5min
+[CV] batch_size=128, dropout_rate=0.2, epochs=10, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.2, epochs=10, layers={'input': 64, 'output': 1}, score=0.934, total= 2.5min
+[CV] batch_size=128, dropout_rate=0.2, epochs=10, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.2, epochs=10, layers={'input': 128, 'output': 1}, score=0.931, total= 5.9min
+[CV] batch_size=128, dropout_rate=0.2, epochs=10, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.2, epochs=10, layers={'input': 256, 'output': 1}, score=0.952, total=19.5min
+[CV] batch_size=128, dropout_rate=0.2, epochs=10, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.2, epochs=10, layers={'input': 256, 'output': 1}, score=0.954, total=20.0min
+[CV] batch_size=128, dropout_rate=0.2, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.2, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.950, total=20.0min
+[CV] batch_size=128, dropout_rate=0.2, epochs=25, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.2, epochs=25, layers={'input': 128, 'output': 1}, score=0.955, total=14.0min
+[CV] batch_size=128, dropout_rate=0.2, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.2, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.945, total=15.7min
+[CV] batch_size=128, dropout_rate=0.2, epochs=50, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.2, epochs=50, layers={'input': 64, 'output': 1}, score=0.951, total=12.1min
+[CV] batch_size=128, dropout_rate=0.2, epochs=50, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.2, epochs=50, layers={'input': 64, 'output': 1}, score=0.948, total=11.7min
+[CV] batch_size=128, dropout_rate=0.2, epochs=50, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.2, epochs=50, layers={'input': 128, 'output': 1}, score=0.955, total=38.9min
+[CV] batch_size=128, dropout_rate=0.2, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.2, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.962, total=155.9min
+[CV] batch_size=128, dropout_rate=0.5, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.5, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.946, total=46.4min
+[CV] batch_size=128, dropout_rate=0.5, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.5, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.953, total=72.1min
+[CV] batch_size=128, dropout_rate=0.5, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.5, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.957, total=72.4min
+[CV] batch_size=128, dropout_rate=0.5, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.5, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.955, total=190.1min
+[CV] batch_size=128, dropout_rate=0.8, epochs=50, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.8, epochs=50, layers={'input': 64, 'output': 1}, score=0.907, total=12.0min
+[CV] batch_size=128, dropout_rate=0.8, epochs=50, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.8, epochs=50, layers={'input': 128, 'output': 1}, score=0.933, total=28.3min
+[CV] batch_size=128, dropout_rate=0.8, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.8, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.934, total=29.2min
+
+[CV]  batch_size=64, dropout_rate=0.8, epochs=50, layers={'input': 64, 'output': 1}, score=0.910, total=15.8min
+[CV] batch_size=64, dropout_rate=0.8, epochs=50, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.8, epochs=50, layers={'input': 256, 'output': 1}, score=0.938, total=111.9min
+[CV] batch_size=128, dropout_rate=0.2, epochs=25, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.2, epochs=25, layers={'input': 64, 'output': 1}, score=0.934, total= 5.9min
+[CV] batch_size=128, dropout_rate=0.2, epochs=25, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.2, epochs=25, layers={'input': 64, 'output': 1}, score=0.929, total= 5.9min
+[CV] batch_size=128, dropout_rate=0.2, epochs=25, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.2, epochs=25, layers={'input': 128, 'output': 1}, score=0.957, total=13.9min
+[CV] batch_size=128, dropout_rate=0.2, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.2, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.955, total=15.3min
+[CV] batch_size=128, dropout_rate=0.2, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.2, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.957, total=59.5min
+[CV] batch_size=128, dropout_rate=0.2, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.2, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.957, total=39.9min
+[CV] batch_size=128, dropout_rate=0.2, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.2, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.955, total=186.6min
+[CV] batch_size=128, dropout_rate=0.5, epochs=50, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.5, epochs=50, layers={'input': 64, 'output': 1}, score=0.937, total=22.4min
+[CV] batch_size=128, dropout_rate=0.5, epochs=50, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.5, epochs=50, layers={'input': 128, 'output': 1}, score=0.957, total=32.4min
+[CV] batch_size=128, dropout_rate=0.5, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.5, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.936, total=81.3min
+[CV] batch_size=128, dropout_rate=0.8, epochs=10, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.8, epochs=10, layers={'input': 64, 'output': 1}, score=0.904, total=15.8min
+[CV] batch_size=128, dropout_rate=0.8, epochs=10, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.8, epochs=10, layers={'input': 128, 'output': 1}, score=0.930, total=38.8min
+[CV] batch_size=128, dropout_rate=0.8, epochs=10, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.8, epochs=10, layers={'input': 128, 'output': 1}, score=0.925, total=28.5min
+[CV] batch_size=128, dropout_rate=0.8, epochs=10, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.8, epochs=10, layers={'input': 256, 'output': 1}, score=0.927, total=29.8min
+[CV] batch_size=128, dropout_rate=0.8, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.8, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.919, total= 6.6min
+[CV] batch_size=128, dropout_rate=0.8, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.8, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.921, total= 6.7min
+[CV] batch_size=128, dropout_rate=0.8, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.8, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.919, total= 6.5min
+[CV] batch_size=128, dropout_rate=0.8, epochs=25, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.8, epochs=25, layers={'input': 64, 'output': 1}, score=0.928, total= 6.4min
+[CV] batch_size=128, dropout_rate=0.8, epochs=25, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.8, epochs=25, layers={'input': 64, 'output': 1}, score=0.917, total= 6.4min
+[CV] batch_size=128, dropout_rate=0.8, epochs=25, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.8, epochs=25, layers={'input': 128, 'output': 1}, score=0.941, total=14.7min
+[CV] batch_size=128, dropout_rate=0.8, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.8, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.922, total=14.9min
+[CV] batch_size=128, dropout_rate=0.8, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.8, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.500, total=49.4min
+[CV] batch_size=128, dropout_rate=0.8, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.8, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.930, total=29.6min
+
+[CV]  batch_size=128, dropout_rate=0.2, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.942, total= 6.1min
+[CV] batch_size=128, dropout_rate=0.2, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.2, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.937, total= 6.0min
+[CV] batch_size=128, dropout_rate=0.2, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.2, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.948, total=19.8min
+[CV] batch_size=128, dropout_rate=0.2, epochs=25, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.2, epochs=25, layers={'input': 256, 'output': 1}, score=0.961, total=50.1min
+[CV] batch_size=128, dropout_rate=0.2, epochs=50, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.2, epochs=50, layers={'input': 128, 'output': 1}, score=0.958, total=38.2min
+[CV] batch_size=128, dropout_rate=0.2, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.2, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.950, total=40.3min
+[CV] batch_size=128, dropout_rate=0.5, epochs=10, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.5, epochs=10, layers={'input': 64, 'output': 1}, score=0.919, total= 3.9min
+[CV] batch_size=128, dropout_rate=0.5, epochs=10, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.5, epochs=10, layers={'input': 128, 'output': 1}, score=0.939, total= 9.2min
+[CV] batch_size=128, dropout_rate=0.5, epochs=10, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.5, epochs=10, layers={'input': 128, 'output': 1}, score=0.924, total= 9.0min
+[CV] batch_size=128, dropout_rate=0.5, epochs=10, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.5, epochs=10, layers={'input': 256, 'output': 1}, score=0.943, total=29.2min
+[CV] batch_size=128, dropout_rate=0.5, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.5, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.932, total= 8.8min
+[CV] batch_size=128, dropout_rate=0.5, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.5, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.934, total= 8.9min
+[CV] batch_size=128, dropout_rate=0.5, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.5, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.933, total=37.3min
+[CV] batch_size=128, dropout_rate=0.5, epochs=25, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.5, epochs=25, layers={'input': 128, 'output': 1}, score=0.943, total=46.6min
+[CV] batch_size=128, dropout_rate=0.5, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.5, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.953, total=79.2min
+[CV] batch_size=128, dropout_rate=0.5, epochs=50, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.5, epochs=50, layers={'input': 256, 'output': 1}, score=0.959, total=229.9min
+[CV] batch_size=128, dropout_rate=0.8, epochs=25, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.8, epochs=25, layers={'input': 64, 'output': 1}, score=0.917, total= 6.2min
+[CV] batch_size=128, dropout_rate=0.8, epochs=25, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.8, epochs=25, layers={'input': 128, 'output': 1}, score=0.919, total=14.4min
+[CV] batch_size=128, dropout_rate=0.8, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.8, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.926, total=15.1min
+[CV] batch_size=128, dropout_rate=0.8, epochs=50, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.8, epochs=50, layers={'input': 64, 'output': 1}, score=0.925, total=12.2min
+[CV] batch_size=128, dropout_rate=0.8, epochs=50, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.8, epochs=50, layers={'input': 64, 'output': 1}, score=0.908, total=12.4min
+[CV] batch_size=128, dropout_rate=0.8, epochs=50, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.8, epochs=50, layers={'input': 256, 'output': 1}, score=0.942, total=95.7min
+
+[CV] batch_size=128, dropout_rate=0.5, epochs=10, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.5, epochs=10, layers={'input': 256, 'output': 1}, score=0.946, total=29.2min
+[CV] batch_size=128, dropout_rate=0.5, epochs=25, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.5, epochs=25, layers={'input': 64, 'output': 1}, score=0.942, total= 8.6min
+[CV] batch_size=128, dropout_rate=0.5, epochs=25, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.5, epochs=25, layers={'input': 64, 'output': 1}, score=0.926, total=11.4min
+[CV] batch_size=128, dropout_rate=0.5, epochs=25, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.5, epochs=25, layers={'input': 128, 'output': 1}, score=0.946, total=39.3min
+[CV] batch_size=128, dropout_rate=0.5, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.5, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.939, total=38.1min
+[CV] batch_size=128, dropout_rate=0.5, epochs=50, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.5, epochs=50, layers={'input': 64, 'output': 1}, score=0.942, total=23.8min
+[CV] batch_size=128, dropout_rate=0.5, epochs=50, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.5, epochs=50, layers={'input': 64, 'output': 1}, score=0.934, total=18.4min
+[CV] batch_size=128, dropout_rate=0.5, epochs=50, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.5, epochs=50, layers={'input': 128, 'output': 1}, score=0.952, total=36.7min
+[CV] batch_size=128, dropout_rate=0.5, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.5, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.956, total=225.1min
+[CV] batch_size=128, dropout_rate=0.8, epochs=25, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.8, epochs=25, layers={'input': 256, 'output': 1}, score=0.944, total=48.4min
+[CV] batch_size=128, dropout_rate=0.8, epochs=50, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.8, epochs=50, layers={'input': 256, 'output': 1}, score=0.949, total=95.5min
+[CV] batch_size=16, dropout_rate=0.2, epochs=10, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.2, epochs=10, layers={'input': 128, 'output': 1}, score=0.937, total=29.0min
+[CV] batch_size=16, dropout_rate=0.2, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.2, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.938, total=101.0min
+[CV] batch_size=16, dropout_rate=0.2, epochs=25, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.2, epochs=25, layers={'input': 256, 'output': 1}, score=0.957, total=251.1min
+[CV] batch_size=16, dropout_rate=0.2, epochs=50, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.2, epochs=50, layers={'input': 256, 'output': 1}, score=0.954, total=483.6min
+[CV] batch_size=16, dropout_rate=0.5, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.5, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.918, total=25.3min
+[CV] batch_size=16, dropout_rate=0.5, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.5, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.917, total=60.1min
+[CV] batch_size=16, dropout_rate=0.5, epochs=25, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.5, epochs=25, layers={'input': 256, 'output': 1}, score=0.939, total=99.4min
+[CV] batch_size=16, dropout_rate=0.5, epochs=50, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.5, epochs=50, layers={'input': 128, 'output': 1}, score=0.940, total=60.5min
+[CV] batch_size=16, dropout_rate=0.5, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.5, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.945, total=224.5min
+[CV] batch_size=16, dropout_rate=0.8, epochs=25, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.8, epochs=25, layers={'input': 256, 'output': 1}, score=0.903, total=87.3min
+[CV] batch_size=16, dropout_rate=0.8, epochs=50, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.8, epochs=50, layers={'input': 128, 'output': 1}, score=0.936, total=61.6min
+[CV] batch_size=16, dropout_rate=0.8, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.8, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.500, total=180.8min
+[CV] batch_size=64, dropout_rate=0.2, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.2, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.955, total=55.1min
+[CV] batch_size=64, dropout_rate=0.2, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.2, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.955, total=31.9min
+[CV] batch_size=64, dropout_rate=0.2, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.2, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.952, total=112.8min
+[CV] batch_size=64, dropout_rate=0.5, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.5, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.950, total=56.7min
+[CV] batch_size=64, dropout_rate=0.5, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.5, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.943, total=32.2min
+[CV] batch_size=64, dropout_rate=0.8, epochs=10, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.8, epochs=10, layers={'input': 64, 'output': 1}, score=0.896, total= 3.1min
+[CV] batch_size=64, dropout_rate=0.8, epochs=10, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.8, epochs=10, layers={'input': 128, 'output': 1}, score=0.925, total= 6.6min
+[CV] batch_size=64, dropout_rate=0.8, epochs=10, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.8, epochs=10, layers={'input': 256, 'output': 1}, score=0.931, total=22.7min
+[CV] batch_size=64, dropout_rate=0.8, epochs=10, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.8, epochs=10, layers={'input': 256, 'output': 1}, score=0.928, total=22.8min
+[CV] batch_size=64, dropout_rate=0.8, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.8, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.500, total=22.6min
+[CV] batch_size=64, dropout_rate=0.8, epochs=25, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.8, epochs=25, layers={'input': 256, 'output': 1}, score=0.924, total=55.2min
+[CV] batch_size=64, dropout_rate=0.8, epochs=50, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.8, epochs=50, layers={'input': 128, 'output': 1}, score=0.935, total=32.0min
+[CV] batch_size=64, dropout_rate=0.8, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.8, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.500, total=112.0min
+[CV] batch_size=128, dropout_rate=0.2, epochs=25, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.2, epochs=25, layers={'input': 256, 'output': 1}, score=0.957, total=53.4min
+[CV] batch_size=128, dropout_rate=0.2, epochs=50, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.2, epochs=50, layers={'input': 256, 'output': 1}, score=0.961, total=138.5min
+[CV] batch_size=128, dropout_rate=0.5, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.5, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.935, total=39.3min
+[CV] batch_size=128, dropout_rate=0.5, epochs=25, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.5, epochs=25, layers={'input': 256, 'output': 1}, score=0.959, total=107.0min
+[CV] batch_size=128, dropout_rate=0.5, epochs=50, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.5, epochs=50, layers={'input': 256, 'output': 1}, score=0.961, total=227.2min
+[CV] batch_size=128, dropout_rate=0.8, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.8, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.500, total=21.9min
+[CV] batch_size=128, dropout_rate=0.8, epochs=25, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.8, epochs=25, layers={'input': 128, 'output': 1}, score=0.920, total=14.1min
+[CV] batch_size=128, dropout_rate=0.8, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.8, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.500, total=49.7min
+[CV] batch_size=128, dropout_rate=0.8, epochs=50, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.8, epochs=50, layers={'input': 256, 'output': 1}, score=0.944, total=95.9min
+
+[CV]  batch_size=128, dropout_rate=0.2, epochs=50, layers={'input': 256, 'output': 1}, score=0.958, total=139.1min
+[CV] batch_size=128, dropout_rate=0.5, epochs=25, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.5, epochs=25, layers={'input': 64, 'output': 1}, score=0.932, total= 8.8min
+[CV] batch_size=128, dropout_rate=0.5, epochs=25, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.5, epochs=25, layers={'input': 128, 'output': 1}, score=0.944, total=35.4min
+[CV] batch_size=128, dropout_rate=0.5, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.5, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.936, total=44.0min
+[CV] batch_size=128, dropout_rate=0.5, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.5, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.952, total=71.2min
+[CV] batch_size=128, dropout_rate=0.5, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.5, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.952, total=72.6min
+[CV] batch_size=128, dropout_rate=0.8, epochs=10, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.8, epochs=10, layers={'input': 64, 'output': 1}, score=0.907, total=15.5min
+[CV] batch_size=128, dropout_rate=0.8, epochs=10, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.8, epochs=10, layers={'input': 64, 'output': 1}, score=0.912, total=16.4min
+[CV] batch_size=128, dropout_rate=0.8, epochs=10, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.8, epochs=10, layers={'input': 128, 'output': 1}, score=0.921, total=37.1min
+[CV] batch_size=128, dropout_rate=0.8, epochs=10, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.8, epochs=10, layers={'input': 256, 'output': 1}, score=0.928, total=47.3min
+[CV] batch_size=128, dropout_rate=0.8, epochs=10, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.8, epochs=10, layers={'input': 256, 'output': 1}, score=0.922, total=21.9min
+[CV] batch_size=128, dropout_rate=0.8, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.8, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.500, total=21.3min
+[CV] batch_size=128, dropout_rate=0.8, epochs=25, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.8, epochs=25, layers={'input': 256, 'output': 1}, score=0.928, total=48.6min
+[CV] batch_size=128, dropout_rate=0.8, epochs=50, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.8, epochs=50, layers={'input': 128, 'output': 1}, score=0.928, total=28.1min
+[CV] batch_size=128, dropout_rate=0.8, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.8, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.500, total=95.4min
+
+[CV] batch_size=64, dropout_rate=0.8, epochs=50, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.8, epochs=50, layers={'input': 128, 'output': 1}, score=0.940, total=33.0min
+[CV] batch_size=64, dropout_rate=0.8, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.8, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.931, total=33.5min
+[CV] batch_size=64, dropout_rate=0.8, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.8, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.500, total=114.9min
+[CV] batch_size=128, dropout_rate=0.2, epochs=50, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.2, epochs=50, layers={'input': 64, 'output': 1}, score=0.949, total=11.7min
+[CV] batch_size=128, dropout_rate=0.2, epochs=50, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.2, epochs=50, layers={'input': 128, 'output': 1}, score=0.956, total=38.1min
+[CV] batch_size=128, dropout_rate=0.2, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.2, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.961, total=153.6min
+[CV] batch_size=128, dropout_rate=0.5, epochs=25, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.5, epochs=25, layers={'input': 256, 'output': 1}, score=0.956, total=106.7min
+[CV] batch_size=128, dropout_rate=0.5, epochs=50, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.5, epochs=50, layers={'input': 256, 'output': 1}, score=0.960, total=228.9min
+[CV] batch_size=128, dropout_rate=0.8, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.8, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.500, total=21.5min
+[CV] batch_size=128, dropout_rate=0.8, epochs=25, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.8, epochs=25, layers={'input': 256, 'output': 1}, score=0.938, total=49.0min
+[CV] batch_size=128, dropout_rate=0.8, epochs=50, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.8, epochs=50, layers={'input': 128, 'output': 1}, score=0.919, total=28.2min
+[CV] batch_size=128, dropout_rate=0.8, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.8, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.500, total=96.0min
+2020-02-21 23:38:11.345497: I tensorflow/core/platform/profile_utils/cpu_utils.cc:94] CPU Frequency: 2800000000 Hz
+2020-02-21 23:38:11.347540: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x497b000 executing computations on platform Host. Devices:
+2020-02-21 23:38:11.347589: I tensorflow/compiler/xla/service/service.cc:175]   StreamExecutor device (0): <undefined>, <undefined>
+2020-02-21 23:38:11.412235: W tensorflow/compiler/jit/mark_for_compilation_pass.cc:1412] (One-time warning): Not using XLA:CPU for cluster because envvar TF_XLA_FLAGS=--tf_xla_cpu_global_jit was not set.  If you want XLA:CPU, either set that envvar, or use experimental_jit_scope to enable XLA:CPU.  To confirm that XLA is active, pass --vmodule=xla_compilation_cache=1 (as a proper command-line flag, not via TF_XLA_FLAGS) or set the envvar XLA_FLAGS=--xla_hlo_profile.
+[Parallel(n_jobs=-1)]: Done  16 tasks      | elapsed: 133.5min
+[Parallel(n_jobs=-1)]: Done 112 tasks      | elapsed: 1375.8min
+[Parallel(n_jobs=-1)]: Done 272 tasks      | elapsed: 2182.0min
+[Parallel(n_jobs=-1)]: Done 405 out of 405 | elapsed: 3010.1min finished
+WARNING:tensorflow:From /usr/local/lib/python3.6/dist-packages/keras/backend/tensorflow_backend.py:422: The name tf.global_variables is deprecated. Please use tf.compat.v1.global_variables instead.
+
+[CV] batch_size=16, dropout_rate=0.2, epochs=10, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.2, epochs=10, layers={'input': 64, 'output': 1}, score=0.931, total=14.1min
+[CV] batch_size=16, dropout_rate=0.2, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.2, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.933, total=32.7min
+[CV] batch_size=16, dropout_rate=0.2, epochs=25, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.2, epochs=25, layers={'input': 64, 'output': 1}, score=0.939, total=42.4min
+[CV] batch_size=16, dropout_rate=0.2, epochs=25, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.2, epochs=25, layers={'input': 64, 'output': 1}, score=0.927, total=44.1min
+[CV] batch_size=16, dropout_rate=0.2, epochs=25, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.2, epochs=25, layers={'input': 256, 'output': 1}, score=0.919, total=246.6min
+[CV] batch_size=16, dropout_rate=0.2, epochs=50, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.2, epochs=50, layers={'input': 128, 'output': 1}, score=0.943, total=170.1min
+[CV] batch_size=16, dropout_rate=0.2, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.2, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.956, total=413.9min
+[CV] batch_size=16, dropout_rate=0.5, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.5, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.925, total=30.6min
+[CV] batch_size=16, dropout_rate=0.5, epochs=50, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.5, epochs=50, layers={'input': 64, 'output': 1}, score=0.922, total=42.5min
+[CV] batch_size=16, dropout_rate=0.5, epochs=50, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.5, epochs=50, layers={'input': 64, 'output': 1}, score=0.925, total=36.7min
+[CV] batch_size=16, dropout_rate=0.5, epochs=50, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.5, epochs=50, layers={'input': 256, 'output': 1}, score=0.942, total=220.9min
+[CV] batch_size=16, dropout_rate=0.8, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.8, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.500, total=36.4min
+[CV] batch_size=16, dropout_rate=0.8, epochs=25, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.8, epochs=25, layers={'input': 128, 'output': 1}, score=0.923, total=29.4min
+[CV] batch_size=16, dropout_rate=0.8, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.8, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.500, total=88.4min
+[CV] batch_size=16, dropout_rate=0.8, epochs=50, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=16, dropout_rate=0.8, epochs=50, layers={'input': 256, 'output': 1}, score=0.921, total=182.9min
+[CV] batch_size=64, dropout_rate=0.2, epochs=25, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.2, epochs=25, layers={'input': 128, 'output': 1}, score=0.950, total=15.6min
+[CV] batch_size=64, dropout_rate=0.2, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.2, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.951, total=16.1min
+[CV] batch_size=64, dropout_rate=0.2, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.2, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.959, total=54.9min
+[CV] batch_size=64, dropout_rate=0.2, epochs=50, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.2, epochs=50, layers={'input': 256, 'output': 1}, score=0.959, total=111.1min
+[CV] batch_size=64, dropout_rate=0.5, epochs=25, layers={'input': 64, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.5, epochs=25, layers={'input': 64, 'output': 1}, score=0.928, total= 7.5min
+[CV] batch_size=64, dropout_rate=0.5, epochs=25, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.5, epochs=25, layers={'input': 256, 'output': 1}, score=0.959, total=55.6min
+[CV] batch_size=64, dropout_rate=0.5, epochs=50, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.5, epochs=50, layers={'input': 128, 'output': 1}, score=0.943, total=31.8min
+[CV] batch_size=64, dropout_rate=0.5, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.5, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.952, total=112.8min
+[CV] batch_size=64, dropout_rate=0.8, epochs=25, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.8, epochs=25, layers={'input': 256, 'output': 1}, score=0.942, total=55.6min
+[CV] batch_size=64, dropout_rate=0.8, epochs=50, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=64, dropout_rate=0.8, epochs=50, layers={'input': 256, 'output': 1}, score=0.934, total=110.7min
+[CV] batch_size=128, dropout_rate=0.2, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.2, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.944, total=19.5min
+[CV] batch_size=128, dropout_rate=0.2, epochs=25, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.2, epochs=25, layers={'input': 256, 'output': 1}, score=0.953, total=50.3min
+[CV] batch_size=128, dropout_rate=0.2, epochs=50, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.2, epochs=50, layers={'input': 256, 'output': 1}, score=0.962, total=137.2min
+[CV] batch_size=128, dropout_rate=0.5, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.5, epochs=10, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.932, total= 8.8min
+[CV] batch_size=128, dropout_rate=0.5, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.5, epochs=10, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.937, total=38.4min
+[CV] batch_size=128, dropout_rate=0.5, epochs=25, layers={'input': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.5, epochs=25, layers={'input': 256, 'output': 1}, score=0.957, total=107.5min
+[CV] batch_size=128, dropout_rate=0.5, epochs=50, layers={'input': 128, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.5, epochs=50, layers={'input': 128, 'output': 1}, score=0.951, total=37.8min
+[CV] batch_size=128, dropout_rate=0.5, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.5, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.954, total=221.4min
+[CV] batch_size=128, dropout_rate=0.8, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.8, epochs=25, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.932, total=14.4min
+[CV] batch_size=128, dropout_rate=0.8, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.8, epochs=25, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.500, total=48.5min
+[CV] batch_size=128, dropout_rate=0.8, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.8, epochs=50, layers={'input': 128, 'hidden1': 64, 'output': 1}, score=0.939, total=28.6min
+[CV] batch_size=128, dropout_rate=0.8, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1} 
+[CV]  batch_size=128, dropout_rate=0.8, epochs=50, layers={'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}, score=0.500, total=94.0min
+Best: 0.960398 using {'batch_size': 128, 'dropout_rate': 0.2, 'epochs': 50, 'layers': {'input': 256, 'output': 1}}
+Confusion Matrix:
+28359.67 12062.33
+208.59 10450.41
+f1:  0.6300988687068038
+balanced accuracy:  0.8410102988826731
+precision:  0.4642323610015501
+recall (tpr):  0.9804306220095694
+fpr:  0.2984100242442234
+aucpr:  0.7243732487146981
+Roc_auc score: 0.8410102988826731
