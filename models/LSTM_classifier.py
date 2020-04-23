@@ -10,17 +10,12 @@ from keras.wrappers import scikit_learn
 from sklearn.model_selection import GridSearchCV, RandomizedSearchCV, PredefinedSplit
 import sys
 sys.path.append("/home/mpapale/thesis")
-from models import resampling_dataset
-from keras.layers.recurrent import LSTM, GRU
-from keras.callbacks import EarlyStopping
-from keras.layers.core import Dense, Activation, Dropout, RepeatVector
-from keras.optimizers import Adam, RMSprop
-from keras.models import Sequential
-from sklearn.datasets import make_classification
 from dataset_creation import feature_engineering, sequences_crafting_for_classification, constants
+from keras.layers.recurrent import LSTM, GRU
+from keras.layers.core import Dense, Activation, Dropout, RepeatVector
+from keras.models import Sequential
 from models import evaluation, explainability
-
-from sklearn.model_selection import train_test_split
+from scipy import stats
 # in order to print all the columns
 pd.set_option('display.max_columns', 100)
 sns.set(style="white", color_codes=True)
@@ -35,7 +30,7 @@ np.random.seed(seed)
 # --------------------------Main idea: creating an LSTM classifier ------------------------------
 # -----------------------------------------------------------------------------------------------
 
-def create_fit_model(x_train, y_train, look_back, params=None):
+def create_fit_model(x_train, y_train, look_back, params=None, times_to_repeat=1):
     if not params:
         if constants.USING_AGGREGATED_FEATURES:
             if constants.DATASET_TYPE == constants.INJECTED_DATASET:
@@ -52,12 +47,119 @@ def create_fit_model(x_train, y_train, look_back, params=None):
             if constants.DATASET_TYPE == constants.OLD_DATASET:
                 params = constants.BEST_PARAMS_LSTM_OLD_DATASET_NO_AGGREGATED
 
+    avg_threshold = 0
+    for i in range(times_to_repeat):
+        print("iteration: ", i, "of", times_to_repeat)
+        _x_val, _y_val, _x_train, _y_train = evaluation.get_val_test_set(x_train, y_train, 0.25)
+
+        model = create_model(params["layers"], params["dropout_rate"], look_back, len(x_train[0, 0]))
+        model.fit(_x_train, _y_train, epochs=params["epochs"], verbose=1, batch_size=params["batch_size"])
+        y_pred = model.predict(_x_val)
+        avg_threshold += evaluation.find_best_threshold_fixed_fpr(_y_val, y_pred)
+
     # model = create_simple_model(x_train, y_train, look_back)
     model = create_model(params["layers"], params["dropout_rate"], look_back, len(x_train[0, 0]))
-    es = EarlyStopping(monitor='val_loss', mode='min', verbose=1, patience=10)
-    # model.fit(x_train, y_train, epochs=20, verbose=1, validation_split=0.2, shuffle=False, callbacks=[es])
     model.fit(x_train, y_train, epochs=params["epochs"], verbose=1, batch_size=params["batch_size"])
-    return model
+    return model, avg_threshold / times_to_repeat
+
+def create_fit_model_for_ensemble(x_train, y_train, look_back, params=None, times_to_repeat=1):
+    def min_max_rescaling(values, min_, max_):
+        return [(ith_element - min_) / (max_ - min_) for ith_element in values]
+
+    if not params:
+        if constants.USING_AGGREGATED_FEATURES:
+            if constants.DATASET_TYPE == constants.INJECTED_DATASET:
+                params = constants.BEST_PARAMS_LSTM_AGGREGATED
+            if constants.DATASET_TYPE == constants.REAL_DATASET:
+                params = constants.BEST_PARAMS_LSTM_REAL_DATASET_AGGREGATED
+            if constants.DATASET_TYPE == constants.OLD_DATASET:
+                params = constants.BEST_PARAMS_LSTM_OLD_DATASET_AGGREGATED
+        else:
+            if constants.DATASET_TYPE == constants.INJECTED_DATASET:
+                params = constants.BEST_PARAMS_LSTM_NO_AGGREGATED
+            if constants.DATASET_TYPE == constants.REAL_DATASET:
+                params = constants.BEST_PARAMS_LSTM_REAL_DATASET_NO_AGGREGATED
+            if constants.DATASET_TYPE == constants.OLD_DATASET:
+                params = constants.BEST_PARAMS_LSTM_OLD_DATASET_NO_AGGREGATED
+
+    avg_threshold = []
+    avg_min = []
+    avg_max = []
+    avg_mean = []
+    for i in range(times_to_repeat):
+        print("iteration: ", i, "of", times_to_repeat)
+        _x_val, _y_val, _x_train, _y_train = evaluation.get_val_test_set(x_train, y_train, 0.25)
+
+        model = create_model(params["layers"], params["dropout_rate"], look_back, len(x_train[0, 0]))
+        model.fit(_x_train, _y_train, epochs=params["epochs"], verbose=1, batch_size=params["batch_size"])
+        y_pred = model.predict(_x_val)
+        min_ = min(y_pred)
+        max_ = max(y_pred)
+        mean_ = np.array(y_pred).mean()
+        avg_min.append(min_)
+        avg_max.append(max_)
+        avg_mean.append(mean_)
+
+        y_pred = min_max_rescaling(y_pred, min_, max_)
+        avg_threshold.append(evaluation.find_best_threshold_fixed_fpr(_y_val, y_pred))
+
+    model = create_model(params["layers"], params["dropout_rate"], look_back, len(x_train[0, 0]))
+    model.fit(x_train, y_train, epochs=params["epochs"], verbose=1, batch_size=params["batch_size"])
+    return model, np.array(avg_threshold).mean(), np.array(avg_min).mean(), np.array(avg_max).mean(), np.array(avg_mean).mean()
+
+def create_fit_model_for_ensemble_based_on_cdf(x_train, y_train, look_back, params=None, times_to_repeat=1):
+    if not params:
+        if constants.USING_AGGREGATED_FEATURES:
+            if constants.DATASET_TYPE == constants.INJECTED_DATASET:
+                params = constants.BEST_PARAMS_LSTM_AGGREGATED
+            if constants.DATASET_TYPE == constants.REAL_DATASET:
+                params = constants.BEST_PARAMS_LSTM_REAL_DATASET_AGGREGATED
+            if constants.DATASET_TYPE == constants.OLD_DATASET:
+                params = constants.BEST_PARAMS_LSTM_OLD_DATASET_AGGREGATED
+        else:
+            if constants.DATASET_TYPE == constants.INJECTED_DATASET:
+                params = constants.BEST_PARAMS_LSTM_NO_AGGREGATED
+            if constants.DATASET_TYPE == constants.REAL_DATASET:
+                params = constants.BEST_PARAMS_LSTM_REAL_DATASET_NO_AGGREGATED
+            if constants.DATASET_TYPE == constants.OLD_DATASET:
+                params = constants.BEST_PARAMS_LSTM_OLD_DATASET_NO_AGGREGATED
+
+    scales, locs, means, stds, thresholds = [], [], [], [], []
+    for i in range(times_to_repeat):
+        print("iteration: ", i, "of", times_to_repeat)
+
+        _x_val, _y_val, _x_train, _y_train = evaluation.get_val_test_set(x_train, y_train, 0.25)
+        model = create_model(params["layers"], params["dropout_rate"], look_back, len(x_train[0, 0]))
+        model.fit(_x_train, _y_train, epochs=params["epochs"], verbose=1, batch_size=params["batch_size"])
+        y_val_pred_lstm = model.predict(_x_val)
+
+        '''
+        to get the shape of the distribution
+        prova = y_val_pred_lstm.tolist()
+        buckets = {}
+        for i in range(0, 101):
+            buckets[i / 100] = 0
+        for i in prova:
+            buckets[round(i, 2)] += 1
+        plt.plot(list(buckets.keys()), ",", list(buckets.values())
+        plt.show()
+        '''
+
+        loc_lstm, scale_lstm = stats.expon.fit(y_val_pred_lstm)
+        samples_lstm = stats.expon.cdf(y_val_pred_lstm, scale=scale_lstm, loc=loc_lstm)
+        lstm_mean = samples_lstm.mean()
+        lstm_std = samples_lstm.std()
+        threshold_lstm = evaluation.find_best_threshold_fixed_fpr(_y_val, samples_lstm)
+
+        scales.append(scale_lstm)
+        locs.append(loc_lstm)
+        means.append(lstm_mean)
+        stds.append(lstm_std)
+        thresholds.append(threshold_lstm)
+    model = create_model(params["layers"], params["dropout_rate"], look_back, len(x_train[0, 0]))
+    model.fit(x_train, y_train, epochs=params["epochs"], verbose=1, batch_size=params["batch_size"])
+    return model, np.array(scales).mean(), np.array(locs).mean(), np.array(means).mean(), np.array(stds).mean(), np.array(thresholds).mean()
+
 
 def create_simple_model(x_train, y_train, look_back):
     print("Creating the lstm model...")
@@ -148,8 +250,7 @@ def model_selection(x, y, look_back):
     layers = [{'input': 64, 'output': 1},
               {'input': 128, 'output': 1},
               {'input': 256, 'output': 1},
-              {'input': 128, 'hidden1': 64, 'output': 1},
-              {'input': 256, 'hidden1': 64, 'hidden2': 256, 'output': 1}]
+              {'input': 128, 'hidden1': 64, 'output': 1}]
     dropout_rate = [0.2, 0.5, 0.8]
 
     # batch_size = np.random.choice(batch_size, int(len(batch_size) / 2))
@@ -174,27 +275,25 @@ def model_selection(x, y, look_back):
 
     grid_result = grid.fit(x, y)
     print("Best: %f using %s" % (grid_result.best_score_, grid_result.best_params_))
-    return grid_result
+    params = grid_result.best_params_
+    return create_fit_model(x_train, y_train, look_back, params=params, times_to_repeat=1)
 
 
 if __name__ == "__main__":
     look_back = constants.LOOK_BACK
     print("Lookback using: ", look_back)
-    x_train, y_train = sequences_crafting_for_classification.get_train_set()
+    x_train, y_train = sequences_crafting_for_classification.get_train_set(scenario=constants.EIGHTH_SCENARIO)
 
     # if the dataset is the real one -> contrast imbalanced dataset problem
-    if constants.DATASET_TYPE == constants.REAL_DATASET:
-        x_train, y_train = resampling_dataset.oversample_set(x_train, y_train)
+    # if constants.DATASET_TYPE == constants.REAL_DATASET:
+    #    x_train, y_train = resampling_dataset.oversample_set(x_train, y_train)
 
-    x_test, y_test = sequences_crafting_for_classification.get_test_set()
-    '''
-    model = create_fit_model(x_train, y_train, look_back)
+
+    x_test, y_test = sequences_crafting_for_classification.get_test_set(scenario=constants.EIGHTH_SCENARIO)
+
+    # model, threshold = create_fit_model(x_train, y_train, look_back, times_to_repeat=1)
+    model, threshold = model_selection(x_train, y_train, look_back)
     testPredict = model.predict(x_test)
-    evaluation.evaluate_n_times(y_test, testPredict)
-    explainability.explain_dataset(model, x_test, y_test)
-    '''
-
-    model = model_selection(x_train, y_train, look_back)
-    y_pred = model.predict_proba(x_test)
-    evaluation.evaluate_n_times(y_test, y_pred[:, 1])
+    evaluation.evaluate(y_test, testPredict, threshold)
+    # explainability.explain_dataset(model, x_train, x_test, threshold, y_test)
     # runtime_testing_fraud_buster(model)

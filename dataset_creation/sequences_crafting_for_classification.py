@@ -4,7 +4,6 @@ from sklearn import preprocessing
 import seaborn as sns
 # seaborn can generate several warnings, we ignore them
 import warnings
-from datetime import timedelta
 from dataset_creation import constants
 import os
 # in order to print all the columns
@@ -117,18 +116,20 @@ def get_file_name(dataset_type=constants.DATASET_TYPE, scenario_type=constants.A
     if dataset_type == constants.INJECTED_DATASET:
         path = "test_696_users_" + scenario_type + "_scenario"
         train_path = "train_696_users_" + scenario_type + "_scenario"
-        path = "test_4072_users_" + scenario_type + "_scenario"
-        train_path = "train_4072_users_" + scenario_type + "_scenario"
+        # path = "test_4072_users_" + scenario_type + "_scenario"
+        # train_path = "train_4072_users_" + scenario_type + "_scenario"
     if dataset_type == constants.FRAUD_BUSTER_DATASET:
         path = "fraud_buster_test_250_users_" + scenario_type + "_scenario"
     if dataset_type == constants.REAL_DATASET:
         path = "real_dataset_test_696_users"
         train_path = "real_dataset_train_696_users"
-        path = "real_dataset_test_4072_users"
-        train_path = "real_dataset_train_4072_users"
+        # path = "real_dataset_test_4072_users"
+        # train_path = "real_dataset_train_4072_users"
     if dataset_type == constants.OLD_DATASET:
-        path = "old_test_1705_users_" + scenario_type + "_scenario"
-        train_path = "old_train_1705_users_" + scenario_type + "_scenario"
+        path = "old_test_916_users_" + scenario_type + "_scenario"
+        train_path = "old_train_916_users_" + scenario_type + "_scenario"
+        # path = "old_test_1705_users_" + scenario_type + "_scenario"
+        # train_path = "old_train_1705_users_" + scenario_type + "_scenario"
 
     if constants.USING_AGGREGATED_FEATURES:
         path = path + "_extendend_features"

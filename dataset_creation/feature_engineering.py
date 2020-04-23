@@ -1,13 +1,6 @@
 import pandas as pd
 import numpy as np
-from sklearn import preprocessing
-from sklearn.preprocessing import MinMaxScaler, minmax_scale
-import seaborn as sns
-import matplotlib.pyplot as plt
-# seaborn can generate several warnings, we ignore them
 from datetime import timedelta
-import warnings
-warnings.filterwarnings("ignore")
 import sys
 sys.path.append("/home/mpapale/thesis")
 from dataset_creation import inject_frauds, constants
@@ -17,10 +10,6 @@ import random
 import math
 import datetime
 
-# in order to print all the columns
-pd.set_option('display.max_columns', 100)
-sns.set(style="white", color_codes=True)
-sns.set_context(rc={"font.family":'sans',"font.size":24,"axes.titlesize":24,"axes.labelsize":24})
 
 # -----------------------------------------------------------------------------------------------
 # -------------------------- Feature engineering module -----------------------------------------
@@ -115,7 +104,7 @@ def create_engineered_features(dataset):
     return dataset
 
 # get transactions of a given user and returns the user transactions with new, aggregated, features
-def create_user_aggregated_features(user_transactions):
+def create_user_time_related_features(user_transactions):
     user_transactions = user_transactions.sort_values("Timestamp").reset_index(drop=True)
 
     for i in range(len(user_transactions)):
@@ -130,81 +119,82 @@ def create_user_aggregated_features(user_transactions):
         time_delta = time_delta.total_seconds()
         user_transactions.at[i, "time_delta"] = time_delta
 
-    # time window: one week, one month and global
-    # 1000 is used because in the dataset there are less than 1000 days in dataset -> get all past transactions
-    for time_window in [1, 7]:
-        already_seen_ibans = {}
-        for i in range(len(user_transactions)):
-            window = user_transactions.iloc[:i]
-            # when creating aggregated features, do not consider frauds
-            window = window[window.isFraud == 0]
-            window = window[window.Timestamp > user_transactions.iloc[i].Timestamp - timedelta(time_window)]
-            count_trx = len(window.Importo)
+    if constants.USING_AGGREGATED_FEATURES:
+        # time window: one week, one month and global
+        # 1000 is used because in the dataset there are less than 1000 days in dataset -> get all past transactions
+        for time_window in [1, 7]:
+            already_seen_ibans = {}
+            for i in range(len(user_transactions)):
+                window = user_transactions.iloc[:i]
+                # when creating aggregated features, do not consider frauds
+                window = window[window.isFraud == 0]
+                window = window[window.Timestamp > user_transactions.iloc[i].Timestamp - timedelta(time_window)]
+                count_trx = len(window.Importo)
 
-            # if the current iteration involves the first transaction of the user
-            if i == 0:
-                w1 = user_transactions.iloc[:i + 1]
-                w1 = w1[w1.isFraud == 0]
-                w1 = w1[w1.Timestamp > user_transactions.iloc[i].Timestamp - timedelta(time_window)]
-                mean_amount = w1.Importo.mean()
+                # if the current iteration involves the first transaction of the user
+                if i == 0:
+                    w1 = user_transactions.iloc[:i + 1]
+                    w1 = w1[w1.isFraud == 0]
+                    w1 = w1[w1.Timestamp > user_transactions.iloc[i].Timestamp - timedelta(time_window)]
+                    mean_amount = w1.Importo.mean()
 
-                w1 = user_transactions.iloc[:i + 2]
-                w1 = w1[w1.isFraud == 0]
-                w1 = w1[w1.Timestamp > user_transactions.iloc[i].Timestamp - timedelta(time_window)]
-                stdev_amount = w1.Importo.std()
+                    w1 = user_transactions.iloc[:i + 2]
+                    w1 = w1[w1.isFraud == 0]
+                    w1 = w1[w1.Timestamp > user_transactions.iloc[i].Timestamp - timedelta(time_window)]
+                    stdev_amount = w1.Importo.std()
 
-            # if the window is empty
-            if count_trx == 0:
-                mean_amount = 0
-                stdev_amount = 0
+                # if the window is empty
+                if count_trx == 0:
+                    mean_amount = 0
+                    stdev_amount = 0
 
-            if math.isnan(mean_amount) or math.isnan(stdev_amount):
-                print("ERRORE: ", i)
-                raise RuntimeError("nan in mean or stdev when creating aggregated features. Error generated due to " + str(i) + "transaction for user " + str(user_transactions.iloc[0].UserID))
-            count_different_iban_ccs = len(np.unique(window.IBAN_CC.values))
-            count_different_asn_ccs = len(np.unique(window.CC_ASN.values))
+                if math.isnan(mean_amount) or math.isnan(stdev_amount):
+                    print("ERRORE: ", i)
+                    raise RuntimeError("nan in mean or stdev when creating aggregated features. Error generated due to " + str(i) + "transaction for user " + str(user_transactions.iloc[0].UserID))
+                count_different_iban_ccs = len(np.unique(window.IBAN_CC.values))
+                count_different_asn_ccs = len(np.unique(window.CC_ASN.values))
 
-            if user_transactions.iloc[i]["IBAN_CC"] in window.IBAN_CC.values:
-                is_new_iban_cc = 0
-            else:
-                is_new_iban_cc = 1
+                if user_transactions.iloc[i]["IBAN_CC"] in window.IBAN_CC.values:
+                    is_new_iban_cc = 0
+                else:
+                    is_new_iban_cc = 1
 
 
-            if user_transactions.iloc[i]["CC_ASN"] in window.CC_ASN.values:
-                is_new_asn_cc = 0
-            else:
-                is_new_asn_cc = 1
+                if user_transactions.iloc[i]["CC_ASN"] in window.CC_ASN.values:
+                    is_new_asn_cc = 0
+                else:
+                    is_new_asn_cc = 1
 
-            if user_transactions.iloc[i]["IBAN"] in window.IBAN.values:
-                count_trx_iban = already_seen_ibans[user_transactions.iloc[i]["IBAN"]]
-                already_seen_ibans[user_transactions.iloc[i]["IBAN"]] += 1
-                # is_new_iban = 0
-            else:
-                already_seen_ibans[user_transactions.iloc[i]["IBAN"]] = 1
-                # is_new_iban = 1
-                count_trx_iban = 0
+                if user_transactions.iloc[i]["IBAN"] in window.IBAN.values:
+                    count_trx_iban = already_seen_ibans[user_transactions.iloc[i]["IBAN"]]
+                    already_seen_ibans[user_transactions.iloc[i]["IBAN"]] += 1
+                    # is_new_iban = 0
+                else:
+                    already_seen_ibans[user_transactions.iloc[i]["IBAN"]] = 1
+                    # is_new_iban = 1
+                    count_trx_iban = 0
 
-            '''
-            if user_transactions.iloc[i]["IP"] in window.IP.values:
-                is_new_ip = 0
-            else:
-                is_new_ip = 1
-            '''
+                '''
+                if user_transactions.iloc[i]["IP"] in window.IP.values:
+                    is_new_ip = 0
+                else:
+                    is_new_ip = 1
+                '''
 
-            # print(count_different_iban_ccs, count_different_asn_ccs, count_trx, mean_amount, stdev_amount, count_trx_iban)
-            user_transactions.at[i, "count_different_iban_ccs_" + str(time_window) + "_window"] = count_different_iban_ccs
-            user_transactions.at[i, "count_different_asn_ccs_" + str(time_window) + "_window"] = count_different_asn_ccs
-            # user_transactions.at[i, "count_trx_" + str(time_window) + "_window"] = count_trx
-            user_transactions.at[i, "mean_amount_" + str(time_window) + "_window"] = mean_amount
-            user_transactions.at[i, "stdev_amount_" + str(time_window) + "_window"] = stdev_amount
-            user_transactions.at[i, "count_trx_iban_" + str(time_window) + "_window"] = count_trx_iban
-            user_transactions.at[i, "is_new_asn_cc_" + str(time_window) + "_window"] = is_new_asn_cc
-            # user_transactions.at[i, "is_new_iban_" + str(time_window) + "_window"] = is_new_iban
-            user_transactions.at[i, "is_new_iban_cc_" + str(time_window) + "_window"] = is_new_iban_cc
-            # user_transactions.at[i, "is_new_ip_" + str(time_window) + "_window"] = is_new_ip
+                # print(count_different_iban_ccs, count_different_asn_ccs, count_trx, mean_amount, stdev_amount, count_trx_iban)
+                user_transactions.at[i, "count_different_iban_ccs_" + str(time_window) + "_window"] = count_different_iban_ccs
+                user_transactions.at[i, "count_different_asn_ccs_" + str(time_window) + "_window"] = count_different_asn_ccs
+                # user_transactions.at[i, "count_trx_" + str(time_window) + "_window"] = count_trx
+                user_transactions.at[i, "mean_amount_" + str(time_window) + "_window"] = mean_amount
+                user_transactions.at[i, "stdev_amount_" + str(time_window) + "_window"] = stdev_amount
+                user_transactions.at[i, "count_trx_iban_" + str(time_window) + "_window"] = count_trx_iban
+                user_transactions.at[i, "is_new_asn_cc_" + str(time_window) + "_window"] = is_new_asn_cc
+                # user_transactions.at[i, "is_new_iban_" + str(time_window) + "_window"] = is_new_iban
+                user_transactions.at[i, "is_new_iban_cc_" + str(time_window) + "_window"] = is_new_iban_cc
+                # user_transactions.at[i, "is_new_ip_" + str(time_window) + "_window"] = is_new_ip
     return user_transactions
 
-def create_aggregated_features(dataset):
+def create_time_related_features(dataset):
     print("Creating aggregated features...")
     dataset_by_user = dataset.groupby("UserID")
     counter = 0
@@ -212,10 +202,10 @@ def create_aggregated_features(dataset):
         print(counter, ") user: ", user)
         counter += 1
         group = dataset_by_user.get_group(user).sort_values(by='Timestamp', ascending=True).reset_index(drop=True)
-        group_with_aggregated_features = create_user_aggregated_features(group)
+        group_with_aggregated_features = create_user_time_related_features(group)
         try:
             dataset_with_aggregated_features = dataset_with_aggregated_features.append(group_with_aggregated_features, ignore_index=True)
-        # if it is the first iteration, dataset_with_aggregated_features is not defined
+        # at the first iteration, dataset_with_aggregated_features is not defined
         except NameError:
             dataset_with_aggregated_features = group_with_aggregated_features
 
@@ -255,7 +245,8 @@ if __name__ == "__main__":
         # N.B. CONSIDER ONLY GENUINE TRANSACTIONS
         dataset = complete_dataset[complete_dataset.isFraud == 0]
         dataset = dataset.reset_index(drop=True)
-        users = constants.users_with_more_than_10_trx_train_5_trx_test
+        print("Using users with more than 50 transactions in training and 5 in testing")
+        users = constants.users_with_more_than_50_trx_train_5_trx_test
         print("In total, there are ", len(users), "users")
         # considering only users with more transactions
         dataset = dataset[dataset.UserID.isin(users)]
@@ -263,7 +254,8 @@ if __name__ == "__main__":
     if constants.DATASET_TYPE == constants.OLD_DATASET:
         complete_dataset = read_old_dataset()
         dataset = complete_dataset.reset_index(drop=True)
-        users = constants.users_with_more_than_10_trx_train_5_trx_test_OLD_DATASET
+        print("Using users with more than 10 transactions in training and 5 in testing")
+        users = constants.users_with_more_than_50_trx_train_5_trx_test_OLD_DATASET
         print("In total, there are ", len(users), "users")
         # considering only users with more transactions
         dataset = dataset[dataset.UserID.isin(users)]
@@ -278,14 +270,14 @@ if __name__ == "__main__":
     if constants.DATASET_TYPE == constants.REAL_DATASET:
         complete_dataset = read_dataset()
         dataset = complete_dataset.reset_index(drop=True)
-        users = constants.users_with_more_than_10_trx_train_5_trx_test
+        print("Using users with more than 50 transactions in training and 5 in testing")
+        users = constants.users_with_more_than_50_trx_train_5_trx_test
         dataset = dataset[dataset.UserID.isin(users)]
 
     thirty_days = timedelta(30)
     first_date = min(dataset.Timestamp)
     last_date = max(dataset.Timestamp)
     last_date_train_set = last_date - thirty_days
-    scaler = MinMaxScaler()
     dataset_by_user = dataset.groupby("UserID")
 
     if constants.DATASET_TYPE != constants.REAL_DATASET:
@@ -294,7 +286,7 @@ if __name__ == "__main__":
         d_test = dataset[dataset.Timestamp >= last_date_train_set]
 
         scenarios = [FIRST_SCENARIO, SECOND_SCENARIO, THIRD_SCENARIO, FOURTH_SCENARIO, FIFTH_SCENARIO, SIXTH_SCENARIO, SEVENTH_SCENARIO, EIGHTH_SCENARIO, NINTH_SCENARIO, ALL_SCENARIOS]
-        scenarios = [ALL_SCENARIOS]
+        # scenarios = [FIRST_SCENARIO, SECOND_SCENARIO, THIRD_SCENARIO, FOURTH_SCENARIO, FIFTH_SCENARIO, SIXTH_SCENARIO, SEVENTH_SCENARIO, EIGHTH_SCENARIO, NINTH_SCENARIO]
         for scenario_type in scenarios:
             print("New scenario: ", scenario_type)
 
@@ -305,37 +297,53 @@ if __name__ == "__main__":
 
             d = to_boolean(d)
             d = create_engineered_features(d)
-            dataset_with_aggregated_features = create_aggregated_features(d)
 
+            dataset_with_aggregated_features = create_time_related_features(d)
             dataset_train_with_aggregated_features = dataset_with_aggregated_features[dataset_with_aggregated_features.Timestamp < last_date_train_set]
             dataset_test_with_aggregated_features = dataset_with_aggregated_features[dataset_with_aggregated_features.Timestamp >= last_date_train_set]
 
             dataset_train_with_aggregated_features, dataset_test_with_aggregated_features = scale_features(dataset_train_with_aggregated_features, dataset_test_with_aggregated_features)
 
             # saving the dataset
-            if constants.DATASET_TYPE == constants.INJECTED_DATASET:
-                dataset_train_with_aggregated_features.to_csv("../datasets/train_" + str(len(dataset.UserID.value_counts())) + "_users_" + scenario_type + "_scenario_extendend_features.csv", index=False)
-                dataset_test_with_aggregated_features.to_csv("../datasets/test_" + str(len(dataset.UserID.value_counts())) + "_users_" + scenario_type + "_scenario_extendend_features.csv", index=False)
-            elif constants.DATASET_TYPE == constants.OLD_DATASET:
-                dataset_train_with_aggregated_features.to_csv("../datasets/old_train_" + str(len(dataset.UserID.value_counts())) + "_users_" + scenario_type + "_scenario_extendend_features.csv", index=False)
-                dataset_test_with_aggregated_features.to_csv("../datasets/old_test_" + str(len(dataset.UserID.value_counts())) + "_users_" + scenario_type + "_scenario_extendend_features.csv", index=False)
-            else:
+            if constants.DATASET_TYPE == constants.FRAUD_BUSTER_DATASET:
                 # FRAUBUSTER DATASET CASE
-                dataset_train_with_aggregated_features.to_csv("../datasets/fraud_buster_train_" + str(len(dataset.UserID.value_counts())) + "_users_" + scenario_type + "_scenario.csv", index=False)
-                dataset_test_with_aggregated_features.to_csv("../datasets/fraud_buster_test_" + str(len(dataset.UserID.value_counts())) + "_users_" + scenario_type + "_scenario.csv", index=False)
+                train_path = "../datasets/fraud_buster_train_" + str(len(dataset.UserID.value_counts())) + "_users_" + scenario_type + "_scenario.csv"
+                test_path = "../datasets/fraud_buster_test_" + str(len(dataset.UserID.value_counts())) + "_users_" + scenario_type + "_scenario.csv"
+            elif constants.DATASET_TYPE == constants.INJECTED_DATASET:
+                if constants.USING_AGGREGATED_FEATURES:
+                    train_path = "../datasets/train_" + str(len(dataset.UserID.value_counts())) + "_users_" + scenario_type + "_scenario_extendend_features.csv"
+                    test_path = "../datasets/test_" + str(len(dataset.UserID.value_counts())) + "_users_" + scenario_type + "_scenario_extendend_features.csv"
+                else:
+                    train_path = "../datasets/train_" + str(len(dataset.UserID.value_counts())) + "_users_" + scenario_type + "_scenario.csv"
+                    test_path = "../datasets/test_" + str(len(dataset.UserID.value_counts())) + "_users_" + scenario_type + "_scenario.csv"
+            elif constants.DATASET_TYPE == constants.OLD_DATASET:
+                if constants.USING_AGGREGATED_FEATURES:
+                    train_path = "../datasets/old_train_" + str(len(dataset.UserID.value_counts())) + "_users_" + scenario_type + "_scenario_extendend_features.csv"
+                    test_path = "../datasets/old_test_" + str(len(dataset.UserID.value_counts())) + "_users_" + scenario_type + "_scenario_extendend_features.csv"
+                else:
+                    train_path = "../datasets/old_train_" + str(len(dataset.UserID.value_counts())) + "_users_" + scenario_type + "_scenario.csv"
+                    test_path = "../datasets/old_test_" + str(len(dataset.UserID.value_counts())) + "_users_" + scenario_type + "_scenario.csv"
 
+            dataset_train_with_aggregated_features.to_csv(train_path, index=False)
+            dataset_test_with_aggregated_features.to_csv(test_path, index=False)
     else:
         # in real dataset there is not the injection of the frauds
         dataset = to_boolean(dataset)
         dataset = create_engineered_features(dataset)
-        dataset_with_aggregated_features = create_aggregated_features(dataset)
+        dataset_with_aggregated_features = create_time_related_features(dataset)
 
         dataset_train_with_aggregated_features = dataset_with_aggregated_features[dataset_with_aggregated_features.Timestamp < last_date_train_set]
         dataset_test_with_aggregated_features = dataset_with_aggregated_features[dataset_with_aggregated_features.Timestamp >= last_date_train_set]
 
         dataset_train_with_aggregated_features, dataset_test_with_aggregated_features = scale_features(dataset_train_with_aggregated_features, dataset_test_with_aggregated_features)
 
-        dataset_train_with_aggregated_features.to_csv("../datasets/real_dataset_train_" + str(len(dataset.UserID.value_counts())) + "_users_extendend_features.csv", index=False)
-        dataset_test_with_aggregated_features.to_csv("../datasets/real_dataset_test_" + str(len(dataset.UserID.value_counts())) + "_users_extendend_features.csv",index=False)
+        if not constants.USING_AGGREGATED_FEATURES:
+            train_path = "../datasets/real_dataset_train_" + str(len(dataset.UserID.value_counts())) + "_users.csv"
+            test_path = "../datasets/real_dataset_test_" + str(len(dataset.UserID.value_counts())) + "_users.csv"
+        else:
+            train_path = "../datasets/real_dataset_train_" + str(len(dataset.UserID.value_counts())) + "_users_extendend_features.csv"
+            test_path = "../datasets/real_dataset_test_" + str(len(dataset.UserID.value_counts())) + "_users_extendend_features.csv"
 
+        dataset_train_with_aggregated_features.to_csv(train_path, index=False)
+        dataset_test_with_aggregated_features.to_csv(test_path, index=False)
     print("Done.")

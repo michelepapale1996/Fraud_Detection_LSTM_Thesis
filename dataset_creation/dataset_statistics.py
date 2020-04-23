@@ -27,8 +27,8 @@ def read_dataset():
          "ProfSicurezza", "NumConto", "ABI", "CAB", "Intestatario", "Indirizzo"], axis=1)
     bonifici.set_index('indice', inplace=True)
     segnalaz.set_index('indice', inplace=True)
-    bonifici = bonifici.drop(["DataValuta", "DataEsecuzione", "Nominativo", "TipoOperazione"], axis=1)
-    segnalaz = segnalaz.drop(["DataValuta", "DataEsecuzione", "Nominativo", "TipoOperazione"], axis=1)
+    # bonifici = bonifici.drop(["DataValuta", "DataEsecuzione", "Nominativo", "TipoOperazione"], axis=1)
+    # segnalaz = segnalaz.drop(["DataValuta", "DataEsecuzione", "Nominativo", "TipoOperazione"], axis=1)
     bonifici.Timestamp = pd.to_datetime(bonifici.Timestamp)
 
     # datasets merge into bonifici
@@ -53,7 +53,7 @@ def read_old_dataset():
     return bonifici
 
 
-bonifici = read_old_dataset()
+bonifici = read_dataset()
 
 users = []
 thirty_days = timedelta(30)
@@ -69,7 +69,22 @@ for user in bonifici_by_user.groups.keys():
     group_train = group[group.Timestamp < last_date_train_set]
     group_test = group[group.Timestamp >= last_date_train_set]
 
-    if len(group_test) > 5 and len(group_train) > 10:
+    if len(group_test) > 5 and len(group_train) > 50:
         print("user: ", user, ", len: ", len(group), "len test: ", len(group_test))
         users.append(user)
 print(users)
+
+
+
+bins = [0, 10, 25, 50, 100, 500, 1200]
+count, division = np.histogram(bonifici.Importo, bins=bins)
+# bonifici.groupby(bonifici["timestamp"].dt.hour).count().plot(kind="bar")
+
+labels = []
+for ith_bin in range(len(bins) - 1):
+    labels.append(str(bins[ith_bin]) + "-" + str(bins[ith_bin + 1]))
+plt.bar(labels, count)
+plt.grid(True)
+plt.xlabel("Number of transactions", fontsize=10)
+plt.ylabel("Number of users", fontsize=10)
+plt.savefig("adversarial_different_dataset.pdf", bbox_inches='tight')

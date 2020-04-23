@@ -2,10 +2,51 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="782d7ebb-6452-46b8-84e4-cfc81e4c3351" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dataset_creation/plotting.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/Fraud_Detection_LSTM_Thesis.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Fraud_Detection_LSTM_Thesis.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/adversarial_attacks/fgsm.py" beforeDir="false" afterPath="$PROJECT_DIR$/adversarial_attacks/fgsm.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataset_creation/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/dataset_creation/constants.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataset_creation/dataset_statistics.py" beforeDir="false" afterPath="$PROJECT_DIR$/dataset_creation/dataset_statistics.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataset_creation/feature_engineering.py" beforeDir="false" afterPath="$PROJECT_DIR$/dataset_creation/feature_engineering.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataset_creation/sequences_crafting_for_anomaly_detection.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataset_creation/sequences_crafting_for_classification.py" beforeDir="false" afterPath="$PROJECT_DIR$/dataset_creation/sequences_crafting_for_classification.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/LSTM.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/LSTM_AD/LSTM_AD.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/LSTM_AD/LSTM_AD_per_user.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/LSTM_AD/feature_engineering.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/LSTM_AD/gaussian_evaluation.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/LSTM_AD/mae_evaluation.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/LSTM_AD/rf_evaluation.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/LSTM_EncDec.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/LSTM_classifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/LSTM_classifier.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/MultiLayerPerceptron.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/MultiLayerPerceptron.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/RF.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/RF.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/architectures_comparator.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/architectures_comparator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/ensemble_rf_xgboost.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/ensemble_rf_xgboost.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/evaluation.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/evaluation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/explainability.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/explainability.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/log_NO_aggr_features_injected_RF_more_10_trx_train.txt" beforeDir="false" afterPath="$PROJECT_DIR$/hyper_param_tuning_logs_old/log_NO_aggr_features_injected_RF_more_10_trx_train.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/log_NO_aggr_features_injected_lstm_more_10_trx_train.txt" beforeDir="false" afterPath="$PROJECT_DIR$/hyper_param_tuning_logs_old/log_NO_aggr_features_injected_lstm_more_10_trx_train.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/log_NO_aggr_features_injected_xgboost_more_10_trx_train.txt" beforeDir="false" afterPath="$PROJECT_DIR$/hyper_param_tuning_logs_old/log_NO_aggr_features_injected_xgboost_more_10_trx_train.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/log_NO_aggr_features_real_RF_more_10_trx_train.txt" beforeDir="false" afterPath="$PROJECT_DIR$/hyper_param_tuning_logs_old/log_NO_aggr_features_real_RF_more_10_trx_train.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/log_NO_aggr_features_real_lstm_more_10_trx_train.txt" beforeDir="false" afterPath="$PROJECT_DIR$/hyper_param_tuning_logs_old/log_NO_aggr_features_real_lstm_more_10_trx_train.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/log_NO_aggr_features_real_xgboost_more_10_trx_train.txt" beforeDir="false" afterPath="$PROJECT_DIR$/hyper_param_tuning_logs_old/log_NO_aggr_features_real_xgboost_more_10_trx_train.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/log_aggr_features_injected_RF_more_10_trx_train.txt" beforeDir="false" afterPath="$PROJECT_DIR$/hyper_param_tuning_logs_old/log_aggr_features_injected_RF_more_10_trx_train.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/log_aggr_features_injected_lstm_more_10_trx_train.txt" beforeDir="false" afterPath="$PROJECT_DIR$/hyper_param_tuning_logs_old/log_aggr_features_injected_lstm_more_10_trx_train.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/log_aggr_features_injected_xgboost_more_10_trx_train.txt" beforeDir="false" afterPath="$PROJECT_DIR$/hyper_param_tuning_logs_old/log_aggr_features_injected_xgboost_more_10_trx_train.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/log_aggr_features_real_RF_more_10_trx_train.txt" beforeDir="false" afterPath="$PROJECT_DIR$/hyper_param_tuning_logs_old/log_aggr_features_real_RF_more_10_trx_train.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/log_aggr_features_real_lstm_more_10_trx_train.txt" beforeDir="false" afterPath="$PROJECT_DIR$/hyper_param_tuning_logs_old/log_aggr_features_real_lstm_more_10_trx_train.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/log_aggr_features_real_xgboost_more_10_trx_train.txt" beforeDir="false" afterPath="$PROJECT_DIR$/hyper_param_tuning_logs_old/log_aggr_features_real_xgboost_more_10_trx_train.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/resampling_dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/resampling_dataset.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/xgboost_classifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/xgboost_classifier.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/papale_thesis_latex copia/apssamp.bib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/papale_thesis_latex copia/apssamp.tex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/papale_thesis_latex copia/images/injected_dataset-no_aggregated_features-no_smote-50_trx_in_training.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/papale_thesis_latex copia/images/injected_dataset-no_aggregated_features-no_smote-50_trx_in_training.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/papale_thesis_latex copia/images/old_dataset-no_aggregated_features-no_smote-50_trx_in_training.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/papale_thesis_latex copia/images/old_dataset-no_aggregated_features-no_smote-50_trx_in_training.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/papale_thesis_latex copia/images/real_dataset-no_aggregated_features-no_smote-50_trx_in_training.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/papale_thesis_latex copia/images/real_dataset-no_aggregated_features-no_smote-50_trx_in_training.pdf" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -24,22 +65,33 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1S4Gw0UgMQJRM3XijC534IGAPZd" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file:///Users/michele/Fraud_Detection_LSTM_Thesis/models/LSTM.py" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/models" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+  </component>
+  <component name="PyConsoleOptionsProvider">
+    <option name="myPythonConsoleState">
+      <console-settings>
+        <option name="useSoftWraps" value="true" />
+      </console-settings>
+    </option>
   </component>
   <component name="PyDebuggerOptionsProvider">
     <option name="mySaveCallSignatures" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/classification/dataset_10_lookback_old" />
+      <recent name="$PROJECT_DIR$/datasets_old" />
+      <recent name="$PROJECT_DIR$/hyper_param_tuning_logs" />
       <recent name="$PROJECT_DIR$/models" />
-      <recent name="$PROJECT_DIR$/dataset_creation" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -54,7 +106,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.LSTM_classificator">
+  <component name="RunManager" selected="Python.dataset_statistics">
     <configuration name="LSTM_classificator" type="PythonConfigurationType" factoryName="Python">
       <module name="Fraud_Detection_LSTM_Thesis" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -63,12 +115,34 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/models" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/models/LSTM_classifier.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="RF" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Fraud_Detection_LSTM_Thesis" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/models" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/models/RF.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -99,7 +173,29 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="feature_engineering (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="chrisper" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Fraud_Detection_LSTM_Thesis" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/papale_thesis_latex copia" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/papale_thesis_latex copia/chrisper" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="dataset_statistics" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Fraud_Detection_LSTM_Thesis" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -112,7 +208,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/dataset_creation/samples_creation.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/dataset_creation/dataset_statistics.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -121,7 +217,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="feature_engineering" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="ensemble_rf_xgboost" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Fraud_Detection_LSTM_Thesis" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -129,12 +225,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/models" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/dataset_creation/feature_engineering.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/models/ensemble_rf_xgboost.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -143,7 +239,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="main_LSTM" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="sequences_crafting_for_classification" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Fraud_Detection_LSTM_Thesis" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -151,56 +247,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/dataset_creation" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/models/LSTM_AD.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="true" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="prova" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="Fraud_Detection_LSTM_Thesis" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/prova.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="true" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="prova1" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="Fraud_Detection_LSTM_Thesis" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/prova1.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/dataset_creation/sequences_crafting_for_classification.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -211,19 +263,19 @@
     </configuration>
     <list>
       <item itemvalue="Python.LSTM_classificator" />
-      <item itemvalue="Python.main_LSTM" />
-      <item itemvalue="Python.feature_engineering" />
-      <item itemvalue="Python.prova" />
-      <item itemvalue="Python.prova1" />
-      <item itemvalue="Python.feature_engineering (1)" />
+      <item itemvalue="Python.ensemble_rf_xgboost" />
+      <item itemvalue="Python.sequences_crafting_for_classification" />
+      <item itemvalue="Python.dataset_statistics" />
+      <item itemvalue="Python.chrisper" />
+      <item itemvalue="Python.RF" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.feature_engineering (1)" />
-        <item itemvalue="Python.prova1" />
-        <item itemvalue="Python.prova" />
-        <item itemvalue="Python.feature_engineering" />
-        <item itemvalue="Python.main_LSTM" />
+        <item itemvalue="Python.dataset_statistics" />
+        <item itemvalue="Python.RF" />
+        <item itemvalue="Python.chrisper" />
+        <item itemvalue="Python.sequences_crafting_for_classification" />
+        <item itemvalue="Python.ensemble_rf_xgboost" />
       </list>
     </recent_temporary>
   </component>
@@ -254,6 +306,26 @@
       <workItem from="1572257574920" duration="9067000" />
       <workItem from="1572280298440" duration="2894000" />
       <workItem from="1572284641466" duration="51000" />
+      <workItem from="1582547492487" duration="33852000" />
+      <workItem from="1582667525503" duration="111000" />
+      <workItem from="1582707573588" duration="35100000" />
+      <workItem from="1582991413337" duration="2670000" />
+      <workItem from="1582994448912" duration="10925000" />
+      <workItem from="1583153799656" duration="67000" />
+      <workItem from="1583182588544" duration="948000" />
+      <workItem from="1583255395240" duration="25797000" />
+      <workItem from="1583850624348" duration="23944000" />
+      <workItem from="1584001690577" duration="18185000" />
+      <workItem from="1584192852758" duration="11069000" />
+      <workItem from="1584319567542" duration="334000" />
+      <workItem from="1584437314851" duration="35077000" />
+      <workItem from="1584871007925" duration="82000" />
+      <workItem from="1584871123833" duration="562000" />
+      <workItem from="1584877870027" duration="1580000" />
+      <workItem from="1584892169151" duration="1206000" />
+      <workItem from="1584904828536" duration="5650000" />
+      <workItem from="1584958754763" duration="3675000" />
+      <workItem from="1586188339048" duration="87000" />
     </task>
     <servers />
   </component>
@@ -272,5 +344,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Fraud_Detection_LSTM_Thesis$RF.coverage" NAME="RF Coverage Results" MODIFIED="1583319642572" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/models" />
+    <SUITE FILE_PATH="coverage/Fraud_Detection_LSTM_Thesis$lime_base.coverage" NAME="lime_base Coverage Results" MODIFIED="1583318583228" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../Library/Caches/PyCharm2019.2/remote_sources/-176034481/-1382175924/lime" />
   </component>
 </project>

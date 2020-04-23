@@ -100,4 +100,4 @@ if __name__ == "__main__":
 
     print("Evaluating model...")
     y_pred = model.predict_proba(x_test_sup)
-    evaluation.evaluate_n_times(y_test, y_pred.ravel())
+    evaluation.evaluate(y_test, y_pred.ravel(), threshold)
